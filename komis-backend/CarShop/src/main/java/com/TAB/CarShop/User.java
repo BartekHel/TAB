@@ -2,7 +2,6 @@ package com.TAB.CarShop;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.catalina.Manager;
 
 @Getter
 @Setter
@@ -34,15 +33,15 @@ public class User {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "user")
     private Client client;
 
-    //@OneToOne(mappedBy = "users")
-    //private Dealer dealer;
+    @OneToOne(mappedBy = "user")
+    private Dealer dealer;
 
-    //@OneToOne(mappedBy = "users")
-    //private Manager manager;
+    @OneToOne(mappedBy = "user")
+    private Manager manager;
 
-    //@OneToOne(mappedBy = "users")
-    //private Repairer repairer
+    @OneToOne(mappedBy = "user")
+    private Repairer repairer;
 }

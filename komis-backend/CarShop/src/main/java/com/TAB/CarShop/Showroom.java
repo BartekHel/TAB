@@ -20,12 +20,12 @@ public class Showroom {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @OneToMany(mappedBy = "showrooms")
+    @OneToMany(mappedBy = "showroom")
     private Set<Order> orders;
 
-    @OneToMany(mappedBy = "showrooms")
+    @OneToMany(mappedBy = "showroom")
     private Set<Vehicle> vehicles;
 
-    //@OneToOne(mappedBy = "showrooms")
-    //private Manager manager;
+    @OneToOne(mappedBy = "showroom")
+    private Manager manager;
 }

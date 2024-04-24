@@ -15,9 +15,9 @@ public class Service {
     @Column(name = "service_id", nullable = false)
     private int service_id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "vehicle_id", nullable = false)
-//    private Vehicle vehicle_id;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
+    private Vehicle vehicle_id;
 
     @ManyToOne
     @JoinColumn(name = "repairer_id", nullable = false)

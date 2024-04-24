@@ -38,7 +38,7 @@ public class Order {
     @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
     private Vehicle vehicle;
 
-    //@ManyToOne
-    //@JoinColumn(name = "dealer_id", nullable = false)
-    //private Dealer dealer;
+    @ManyToOne
+    @JoinColumn(name = "dealer_id", nullable = false)
+    private Dealer dealer;
 }

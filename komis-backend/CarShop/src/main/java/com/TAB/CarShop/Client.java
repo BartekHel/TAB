@@ -18,9 +18,9 @@ public class Client {
     private int client_id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "clients")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private Set<Order> orders;
 }

@@ -16,16 +16,12 @@ public class Repairer {
     private int repairer_id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "repairer_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id", referencedColumnName = "repairer_id", nullable = false)
+    @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
-
-    @OneToOne
-    @JoinColumn(name = "service_id", referencedColumnName = "repairer_id", nullable = false)
-    private Service service;
 
     @OneToMany(mappedBy = "repairer")
     private Set<Service> services;

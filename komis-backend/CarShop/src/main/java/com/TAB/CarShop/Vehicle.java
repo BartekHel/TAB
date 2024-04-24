@@ -32,7 +32,7 @@ public class Vehicle {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @OneToOne(mappedBy = "vehicles")
+    @OneToOne(mappedBy = "vehicle")
     private Order order;
 
     @ManyToOne
