@@ -14,7 +14,7 @@ const Navbar = ({counter}:Props) => {
     }, [counter]);
 
   return (
-    <div className='navbar'>Navbar {counter}</div>
+    <div className='navbar'><h5>Car Dealership</h5></div>
   )
 }
 
