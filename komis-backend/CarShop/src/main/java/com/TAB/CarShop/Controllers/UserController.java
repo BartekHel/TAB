@@ -2,11 +2,8 @@ package com.TAB.CarShop.Controllers;
 
 import com.TAB.CarShop.Entities.User;
 import com.TAB.CarShop.Repositories.UserRepository;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,11 +14,11 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @ApiIgnore
-    @RequestMapping(value="/")
-    public void redirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/swagger-ui.html");
-    }
+//    @ApiIgnore
+//    @RequestMapping(value="/")
+//    public void redirect(HttpServletResponse response) throws IOException {
+//        response.sendRedirect("/swagger-ui.html");
+//    }
 
     @GetMapping("/users")
     List<User> getAllUsers() {
