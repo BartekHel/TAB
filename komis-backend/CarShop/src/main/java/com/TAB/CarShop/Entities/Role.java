@@ -1,4 +1,4 @@
-package com.TAB.CarShop;
+package com.TAB.CarShop.Entities;
 
 public enum Role {
     ADMIN,

@@ -1,5 +1,6 @@
-package com.TAB.CarShop;
+package com.TAB.CarShop.Repositories;
 
+import com.TAB.CarShop.Entities.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

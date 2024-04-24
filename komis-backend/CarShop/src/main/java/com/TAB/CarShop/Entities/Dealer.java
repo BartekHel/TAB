@@ -1,4 +1,4 @@
-package com.TAB.CarShop;
+package com.TAB.CarShop.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
