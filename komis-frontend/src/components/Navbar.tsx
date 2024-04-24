@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import '../css/Navbar.css'
 
 interface Props{
     counter:number;
@@ -14,7 +14,7 @@ const Navbar = ({counter}:Props) => {
     }, [counter]);
 
   return (
-    <div style={{width:'500px',height:'400px',backgroundColor:'red'}}>Navbar {counter}</div>
+    <div className='navbar'>Navbar {counter}</div>
   )
 }
 
