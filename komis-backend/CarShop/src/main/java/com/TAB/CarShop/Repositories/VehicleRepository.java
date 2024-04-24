@@ -1,4 +1,4 @@
-package com.TAB.CarShop;
+package com.TAB.CarShop.Repositories;
 
 import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
 
