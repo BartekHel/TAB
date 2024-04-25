@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import '../css/Navbar.css'
+import { Link } from 'react-router-dom'
 
-interface Props{
-    counter:number;
-}
-const Navbar = ({counter}:Props) => {
+const Navbar = () => {
 
-    const [cos, setCos] = useState(0);
-
-    useEffect(() => {
-        console.log('cos')
-        setCos(1)
-    }, [counter]);
-
+    
   return (
-    <div className='navbar'><h5>Car Dealership</h5></div>
+    <nav>
+      <Link to="/">Home</Link>
+      <ul>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+      </ul>
+    </nav>
   )
 }
 

@@ -1,12 +1,34 @@
-.navbar{
-    background-color: aqua;
-    height: 100px;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+nav {
+  background-color: #333; /* Ustaw kolor tła */
+  padding: 10px 20px; /* Dodaj wypełnienie wewnątrz nawigacji */
+  color: #fff; /* Ustaw kolor tekstu */
+  display: flex; /* Ustaw kontener nawigacji jako flexbox */
+  align-items: center; /* Wyśrodkuj elementy względem osi pionowej */
+  justify-content: space-between; /* Ustaw odstępy między elementami */
+  width: 100%;
+}
 
-  
+nav a {
+  color: #fff; /* Kolor tekstu dla linków */
+  text-decoration: none; /* Usuń domyślne podkreślenie dla linków */
+  margin-right: 20px; /* Dodaj odstęp między linkami */
+}
 
-  
+nav a:hover {
+  text-decoration: underline; /* Podkreśl linki po najechaniu myszką */
+}
+
+ul {
+  list-style-type: none; 
+  padding: 0; 
+  display: flex; 
+  align-items: center; /* Wyśrodkuj elementy listy na osi pionowej */
+}
+
+ul li {
+  margin-right: 10px;
+}
+
+ul li:last-child {
+  margin-right: 0; /* Usuń odstęp z ostatniego elementu listy */
+}

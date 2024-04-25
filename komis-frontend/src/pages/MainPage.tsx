@@ -9,7 +9,7 @@ function App() {
   const x=0;
   return (
     <>
-      <Navbar counter={count+45}/>
+      Main page
     </>
     
   )
