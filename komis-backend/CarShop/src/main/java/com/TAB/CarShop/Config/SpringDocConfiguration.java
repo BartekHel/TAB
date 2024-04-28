@@ -1,4 +1,4 @@
-package com.TAB.CarShop.config;
+package com.TAB.CarShop.Config;
 
 import com.TAB.CarShop.CarShopApplication;
 import io.swagger.v3.oas.models.Components;

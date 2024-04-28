@@ -45,6 +45,17 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Repairer repairer;
 
+    public User() {}
+
+    public User(String login, String password, String email, String name, String surname) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.role = Role.KLIENT;
+        this.name = name;
+        this.surname = surname;
+    }
+
     public long getUser_id() {
         return user_id;
     }
@@ -92,4 +103,8 @@ public class User {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public Role getRole() { return role; }
+
+    public void setRole(Role role) { this.role = role; }
 }
