@@ -1,4 +1,4 @@
-package com.project.gameHubBackend.infrastructure.security;
+package com.TAB.CarShop.config;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SecurityConfiguration {
 
-    private JwtAuthenticationFilter jwtAuthFilter;
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -44,43 +42,6 @@ public class SecurityConfiguration {
         return source;
     }
 
-
-    @Bean
-    public AuthenticationManager authManager(
-            HttpSecurity http,
-            PasswordEncoder passwordEncoder,
-            UserDetailsService userDetailService
-    )
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
-    }
-
-    @Bean
-    @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
-    SecurityFilterChain securityEnabled(HttpSecurity http, AuthenticationManager authManager) throws Exception {
-
-
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(configurer->
-                        configurer.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(configurer -> configurer
-                        .requestMatchers(HttpMethod.GET,"/purchases").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/auth/authenticate","/auth/register","/auth/userData",
-                                "/games/**","/platforms/**", "/categories/**","/purchases").permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(configurer -> configurer
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationManager(authManager)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
 
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")

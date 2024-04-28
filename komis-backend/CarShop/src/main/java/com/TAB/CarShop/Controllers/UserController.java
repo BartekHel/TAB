@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -14,23 +15,18 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-//    @ApiIgnore
-//    @RequestMapping(value="/")
-//    public void redirect(HttpServletResponse response) throws IOException {
-//        response.sendRedirect("/swagger-ui.html");
-//    }
 
-    @GetMapping("/users")
+    @GetMapping
     List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     User getUserById(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null); //to moze byc do poprawy xd
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/{id}")
     User replaceUser(@PathVariable Long id, @RequestBody User newUser) {
         return userRepository.findById(id)
                 .map(user -> {
@@ -47,7 +43,7 @@ public class UserController {
                 });
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
