@@ -6,6 +6,7 @@ nav {
   align-items: center; /* Wyśrodkuj elementy względem osi pionowej */
   justify-content: space-between; /* Ustaw odstępy między elementami */
   width: 100%;
+  height: 90px;
 }
 
 nav a {
