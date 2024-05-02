@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import '../css/Auth.css'
+import ApiClient from '../service/ApiClient'
+
+const apiClient = new ApiClient();
 
 const Login = () => {
     const [ login, setLogin ] = useState('')
@@ -9,7 +12,7 @@ const Login = () => {
     const handleLogin = () => {
         if(!(password =="" || login==""))
         {
-            alert("tutaj się coś stanie jak będzie backend");
+            apiClient.Login( login, password);
         }
     }
 

@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import '../css/Auth.css'
+import axios from 'axios'
+import ApiClient from '../service/ApiClient';
+
+const apiClient=new ApiClient();
 
 const Register = () => {
     const [ login, setLogin ] = useState('')
@@ -38,7 +42,8 @@ const Register = () => {
     const handleRegister = () => {
         if(!(emailIncorrect || email == "" || passwordIncorrect || password =="" || login=="" || name=="" || surname=="" ))
         {
-            alert("tutaj się coś stanie jak będzie backend");
+            
+            apiClient.Register( login, password, email, name, surname );
         }
     }
 
