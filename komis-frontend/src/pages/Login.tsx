@@ -5,14 +5,17 @@ import ApiClient from '../service/ApiClient'
 const apiClient = new ApiClient();
 
 const Login = () => {
+
     const [ login, setLogin ] = useState('')
     const [ password, setPassword ] = useState('')
     
 
-    const handleLogin = () => {
+    const handleLogin = async() => {
         if(!(password =="" || login==""))
         {
-            apiClient.Login( login, password);
+            const resp = await apiClient.Login( login, password)
+            console.log(resp)
+            
         }
     }
 

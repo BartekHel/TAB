@@ -39,11 +39,13 @@ const Register = () => {
         }
     }
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         if(!(emailIncorrect || email == "" || passwordIncorrect || password =="" || login=="" || name=="" || surname=="" ))
         {
             
-            apiClient.Register( login, password, email, name, surname );
+            const resp = await apiClient.Register( login, password, email, name, surname )
+
+            console.log(resp)
         }
     }
 
