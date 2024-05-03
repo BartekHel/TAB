@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import '../css/Navbar.css'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../css/Navbar.css';
+import ReactLogo from '../assets/car.svg';
 
 const Navbar = () => {
-
-    
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      <ul>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-      </ul>
-    </nav>
-  )
-}
+    <nav className="navbar">
+      <Link to="/" className="nav-link">
+        <img src={ReactLogo} alt="React Logo" className="react-logo" /> {}
+      </Link>
 
-export default Navbar
+      <div className="nav-buttons">
+        <Link to="/login" className="nav-button">Login</Link>
+        <Link to="/register" className="nav-button">Register</Link>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
