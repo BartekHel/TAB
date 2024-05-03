@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../css/Auth.css'
 import axios from 'axios'
 import ApiClient from '../service/ApiClient';
+import { setUserInfo, useUserInfo } from '../PageInfo';
 
 const apiClient=new ApiClient();
 
@@ -9,6 +10,7 @@ const Register = () => {
     const [ login, setLogin ] = useState('')
     const [ name, setName ] = useState('')
     const [ surname, setSurname ] = useState('')
+    const [ errorInfo, setErrorInfo ] = useState('')
 
     const [email, setEmail] = useState('')
     const [ emailIncorrect, setEmailIncorrect ] = useState(false)
@@ -46,6 +48,15 @@ const Register = () => {
             const resp = await apiClient.Register( login, password, email, name, surname )
 
             console.log(resp)
+
+            if(resp[0])
+            {
+                setUserInfo('logged', true)
+            }
+            else
+            {
+                setErrorInfo(resp[1])
+            }
         }
     }
 
@@ -86,6 +97,7 @@ const Register = () => {
                 name="Surname" 
                 placeholder="Surname"
                 onChange={(e) => setSurname(e.target.value)}/>
+            <h3 id="errorInfo">{errorInfo}</h3>
             <button 
                 name = "register"
                 onClick={handleRegister}

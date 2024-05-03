@@ -61,7 +61,8 @@ h3 {
     margin-bottom: 5px;
 }
 
-/* Zmniejszenie marginesu tylko gdy h3 jest nad inputem */
-h3 + input {
-    margin-top: 5px;
+
+#errorInfo
+{
+    color: red;
 }
