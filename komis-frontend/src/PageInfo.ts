@@ -2,10 +2,7 @@ import { createGlobalState } from "react-hooks-global-state";
 
 const {setUserInfo, useUserInfo} = createGlobalState({
     logged: false,
-    userName: '',
-    userSurname: '',
-    userEmail: '',
-    userRole: ''
+    userId: 0
 })
 
 export {useUserInfo, setUserInfo}
