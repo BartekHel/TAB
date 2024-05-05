@@ -33,17 +33,17 @@ public class UserController {
     @PostMapping("/reg")
     RegResponse registerUser(@RequestBody RegRequest regRequest) {
         if(!userRepository.findByLogin(regRequest.getLogin()).isEmpty()) {
-            return new RegResponse(false, "Username already exists");
+            return new RegResponse(false, 0, null, "Username already exists");
         }
         if(!userRepository.findByEmail(regRequest.getEmail()).isEmpty()) {
-            return new RegResponse(false, "Email already exists");
+            return new RegResponse(false, 0, null,"Email already exists");
         }
         try {
             User newUser = new User(regRequest.getLogin(), regRequest.getPassword(), regRequest.getEmail(), regRequest.getName(), regRequest.getSurname());
             newUser = userRepository.saveAndFlush(newUser);
-            return new RegResponse(true, "Registration successful");
+            return new RegResponse(true, newUser.getUser_id(), newUser.getLogin(), "Registration successful");
         } catch (Exception e) {
-            return new RegResponse(false, e.getMessage());
+            return new RegResponse(false, 0, null, e.getMessage());
         }
     }
 
@@ -51,12 +51,12 @@ public class UserController {
     AuthResponse loginUser(@RequestBody AuthRequest authRequest) {
         List<User> user = userRepository.findByLogin(authRequest.getLogin());
         if(user.isEmpty()) {
-            return new AuthResponse(false, null);
+            return new AuthResponse(false, 0, null, null);
         }
         if(user.get(0).getPassword().equals(authRequest.getPassword())) {
-            return new AuthResponse(true, user.get(0).getRole());
+            return new AuthResponse(true, user.get(0).getUser_id(), user.get(0).getLogin() ,user.get(0).getRole());
         } else {
-            return new AuthResponse(false, null);
+            return new AuthResponse(false, 0, null, null);
         }
     }
 
