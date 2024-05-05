@@ -1,15 +1,30 @@
 import React, { useState } from 'react'
 import '../css/Auth.css'
+import ApiClient from '../service/ApiClient'
+import { setUserInfo, useUserInfo } from '../PageInfo';
+
+const apiClient = new ApiClient();
 
 const Login = () => {
+
     const [ login, setLogin ] = useState('')
     const [ password, setPassword ] = useState('')
-    
+    const [ errorInfo, setErrorInfo ] = useState('')
 
-    const handleLogin = () => {
+    const handleLogin = async() => {
         if(!(password =="" || login==""))
         {
-            alert("tutaj się coś stanie jak będzie backend");
+            const resp = await apiClient.Login( login, password)
+            console.log(resp)
+            if(resp[0])
+            {
+                setUserInfo('logged', true)
+            }
+            else
+            {
+                setErrorInfo("Nieprawidłowy login lub hasło")
+            }
+            
         }
     }
 
@@ -30,6 +45,8 @@ const Login = () => {
                 type='password'
                 onChange={(e) => setPassword(e.target.value)}/>
             
+            <h3 id="errorInfo">{errorInfo}</h3>
+
             <button 
                 name = "login"
                 onClick={handleLogin}

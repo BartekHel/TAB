@@ -1,34 +1,37 @@
-nav {
-  background-color: #333; /* Ustaw kolor tła */
-  padding: 10px 20px; /* Dodaj wypełnienie wewnątrz nawigacji */
-  color: #fff; /* Ustaw kolor tekstu */
-  display: flex; /* Ustaw kontener nawigacji jako flexbox */
-  align-items: center; /* Wyśrodkuj elementy względem osi pionowej */
-  justify-content: space-between; /* Ustaw odstępy między elementami */
+.navbar {
   width: 100%;
+  height: 7vh;
+  background-color: #333;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-nav a {
-  color: #fff; /* Kolor tekstu dla linków */
-  text-decoration: none; /* Usuń domyślne podkreślenie dla linków */
-  margin-right: 20px; /* Dodaj odstęp między linkami */
-}
-
-nav a:hover {
-  text-decoration: underline; /* Podkreśl linki po najechaniu myszką */
-}
-
-ul {
-  list-style-type: none; 
-  padding: 0; 
-  display: flex; 
-  align-items: center; /* Wyśrodkuj elementy listy na osi pionowej */
-}
-
-ul li {
+.nav-link,
+.nav-button {
+  color: #fff;
+  text-decoration: none;
   margin-right: 10px;
+  padding: 5px 8px;
+  font-size: 0.5em;
 }
 
-ul li:last-child {
-  margin-right: 0; /* Usuń odstęp z ostatniego elementu listy */
+.nav-link {
+  margin-top: 10px;
+  padding: 1px;
+}
+
+.nav-buttons {
+  display: flex;
+}
+
+.nav-button {
+  background-color: #555;
+  border: none;
+  border-radius: 10px;
+}
+
+.nav-button:hover {
+  background-color: #777;
 }
