@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient'
-import { setUserInfo, useUserInfo } from '../PageInfo';
+import { setUserInfo } from '../PageInfo';
 
 const apiClient = new ApiClient();
 
