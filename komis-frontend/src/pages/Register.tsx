@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import '../css/Auth.css'
 import axios from 'axios'
 import ApiClient from '../service/ApiClient';
-import { setUserInfo, useUserInfo } from '../PageInfo';
+import userContext from '../PageInfo';
+//import { setUserInfo, useUserInfo } from '../PageInfo';
 
 const apiClient=new ApiClient();
 
 const Register = () => {
+
+    const{setLogged, setUserId} = useContext(userContext);
     const [ login, setLogin ] = useState('')
     const [ name, setName ] = useState('')
     const [ surname, setSurname ] = useState('')
@@ -51,7 +54,8 @@ const Register = () => {
 
             if(resp[0])
             {
-                setUserInfo('logged', true)
+                setLogged(true);
+                setUserId(resp[2]);
             }
             else
             {

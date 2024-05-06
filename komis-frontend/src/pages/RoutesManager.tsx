@@ -5,10 +5,11 @@ import App from './MainPage'
 import Login from './Login'
 import Register from './Register'
 import CarDetails from './CarDetails'
-
+import { UserProvider } from '../PageInfo'
 const RoutesManager = () => {
   return (
     <div>
+      <UserProvider>
       <Navbar/>
       <Routes>
         <Route path="/" element={<App/>}/>
@@ -16,8 +17,9 @@ const RoutesManager = () => {
         <Route path="/register" element={<Register/>}/>
         <Route path="/carDetails/:carId" element={<CarDetails/>}/>
       </Routes>
+      </UserProvider>
     </div>
   )
 }
 
-export default RoutesManager
+export default RoutesManager;

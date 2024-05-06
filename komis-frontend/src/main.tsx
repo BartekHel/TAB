@@ -11,9 +11,11 @@ import RoutesManager from './pages/RoutesManager.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     
-    <BrowserRouter>
-    <RoutesManager/>
-    </BrowserRouter>
+      <BrowserRouter>
+        <RoutesManager/>
+      </BrowserRouter>
+    
+    
     
   </React.StrictMode>,
 )

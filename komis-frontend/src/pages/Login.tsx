@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient'
-import { setUserInfo } from '../PageInfo';
+import userContext from '../PageInfo';
 
 const apiClient = new ApiClient();
 
 const Login = () => {
 
-    const [ login, setLogin ] = useState('')
-    const [ password, setPassword ] = useState('')
-    const [ errorInfo, setErrorInfo ] = useState('')
+    const [ login, setLogin ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ errorInfo, setErrorInfo ] = useState('');
+    const{setLogged, setUserId} = useContext(userContext);
 
     const handleLogin = async() => {
         if(!(password =="" || login==""))
@@ -18,11 +19,12 @@ const Login = () => {
             console.log(resp)
             if(resp[0])
             {
-                setUserInfo('logged', true)
+                setLogged(true);
+                setUserId(resp[2]);
             }
             else
             {
-                setErrorInfo("Nieprawidłowy login lub hasło")
+                setErrorInfo("Incorrect login or password");
             }
             
         }

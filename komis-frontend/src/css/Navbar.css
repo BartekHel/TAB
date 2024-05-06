@@ -35,3 +35,8 @@
 .nav-button:hover {
   background-color: #777;
 }
+
+h3{
+  margin: 10px;
+  color: #fff;
+}
