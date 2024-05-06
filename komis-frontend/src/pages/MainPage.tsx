@@ -15,7 +15,86 @@ function App() {
 
   const filterAndSortOffers = (minPrice, maxPrice, sort) => {};
 
+  const handleShow = (offerName) => {
+    // Tutaj dodaj swoje
+  };
+
   const nextPage = (direction) => {};
+
+  const initialOffers = [
+    {
+      name: "Audi A4",
+      price: 45000,
+      year: 2022,
+      mileage: 20000,
+      icon: "/car.svg",
+    },
+    {
+      name: "BMW X5",
+      price: 65000,
+      year: 2021,
+      mileage: 15000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Mercedes-Benz",
+      price: 50000,
+      year: 2020,
+      mileage: 25000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Honda Accord",
+      price: 32000,
+      year: 2019,
+      mileage: 30000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Toyota Camry",
+      price: 35000,
+      year: 2021,
+      mileage: 18000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Ford Mustang",
+      price: 40000,
+      year: 2018,
+      mileage: 35000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Volkswagen Golf",
+      price: 25000,
+      year: 2019,
+      mileage: 22000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Tesla Model 3",
+      price: 60000,
+      year: 2023,
+      mileage: 5000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Porsche 911",
+      price: 120000,
+      year: 2022,
+      mileage: 10000,
+      icon: "/car.svg",
+    },
+    {
+      name: "Chevrolet Corvette",
+      price: 70000,
+      year: 2021,
+      mileage: 12000,
+      icon: "/car.svg",
+    },
+  ];
+
+  const [offers, setOffers] = useState(initialOffers);
 
   return (
     <div>
@@ -45,7 +124,9 @@ function App() {
             checked={sort === "0"}
             onChange={() => setSort("0")}
           />
-          <label htmlFor="radio0" className="customSortLabel">Most popular</label>
+          <label htmlFor="radio0" className="customSortLabel">
+            Most popular
+          </label>
           <br />
           <input
             type="radio"
@@ -56,7 +137,9 @@ function App() {
             checked={sort === "1"}
             onChange={() => setSort("1")}
           />
-          <label htmlFor="radio1" className="customSortLabel">Least popular</label>
+          <label htmlFor="radio1" className="customSortLabel">
+            Least popular
+          </label>
           <br />
           <input
             type="radio"
@@ -67,7 +150,9 @@ function App() {
             checked={sort === "2"}
             onChange={() => setSort("2")}
           />
-          <label htmlFor="radio2" className="customSortLabel">Most expensive</label>
+          <label htmlFor="radio2" className="customSortLabel">
+            Most expensive
+          </label>
           <br />
           <input
             type="radio"
@@ -78,7 +163,9 @@ function App() {
             checked={sort === "3"}
             onChange={() => setSort("3")}
           />
-          <label htmlFor="radio3" className="customSortLabel">Least expensive</label>
+          <label htmlFor="radio3" className="customSortLabel">
+            Least expensive
+          </label>
           <br />
         </div>
 
@@ -119,7 +206,8 @@ function App() {
           <h1>
             <button
               className="filterButton"
-              onClick={() => filterAndSortOffers(minPrice, maxPrice, sort)}>
+              onClick={() => filterAndSortOffers(minPrice, maxPrice, sort)}
+            >
               Filter
             </button>
             <br />
@@ -128,6 +216,22 @@ function App() {
       </div>
 
       <div className="mainDiv">
+        <div className="containersContainer" id="containersContainerID">
+          {offers.map((offer, index) => (
+            <div key={index} className="offerCard">
+              <img src={offer.icon} alt={offer.name} className="offerImage" />
+              <div className="offerDetails">
+                <h1>{offer.name}</h1>
+                <p>Price: ${offer.price}</p>
+                <p>Year: {offer.year}</p>
+                <p>Mileage: {offer.mileage} </p>
+                <div className="buttonContainer">
+                  <button className="offerButton" onClick={() => handleShow(offer.name)}>Show</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="footer">
           <h1>
             <button className="footerButton" onClick={() => nextPage(-1)}>
