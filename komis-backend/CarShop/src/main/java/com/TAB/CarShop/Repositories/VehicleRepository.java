@@ -1,6 +1,9 @@
 package com.TAB.CarShop.Repositories;
 
-import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
+import com.TAB.CarShop.Entities.Vehicle;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface VehicleRepository extends JpaAttributeConverter {
+@Repository
+public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 }

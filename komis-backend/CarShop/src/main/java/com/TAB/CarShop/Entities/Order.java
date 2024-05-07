@@ -1,5 +1,6 @@
 package com.TAB.CarShop.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,10 +28,12 @@ public class Order {
     private double price;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name="client_id", nullable = false)
     private Client client;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "showroom_id", nullable = false)
     private Showroom showroom;
 
@@ -39,6 +42,7 @@ public class Order {
     private Vehicle vehicle;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "dealer_id", nullable = false)
     private Dealer dealer;
 }

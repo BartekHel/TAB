@@ -1,13 +1,14 @@
 package com.TAB.CarShop.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
 @Setter
+@Getter
 @Entity
 @Table(name = "vehicles")
 public class Vehicle {
@@ -36,6 +37,7 @@ public class Vehicle {
     private Order order;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "showroom_id", nullable = false)
     private Showroom showroom;
 }
