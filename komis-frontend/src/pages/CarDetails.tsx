@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import Navbar from '../components/Navbar'
+// import Navbar from '../components/Navbar'
 import '../css/CarDetails.css'
 import Filters from '../components/carDetails/Filters'
 import { useParams } from 'react-router-dom'
 import ApiClient from '../service/ApiClient'
+import "../css/Navbar.css";
 
 const apiClient=new ApiClient();
 
@@ -20,7 +21,10 @@ const CarDetails = () => {
   }
 
   return (
+    <>
+   
     <div className='wrapper'>
+    {/* <Navbar/> */}
     <Filters color={color} engine={engine} upholstery={upholstery} 
     colorChange={(c)=>setColor(c)}
     engineChange={(e)=>setEngine(e)}
@@ -44,6 +48,7 @@ const CarDetails = () => {
     </div>
       
     </div>
+    </>
   )
 }
 
