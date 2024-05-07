@@ -1,5 +1,7 @@
 package com.TAB.CarShop.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +22,11 @@ public class Repairer {
     private User user;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
 
     @OneToMany(mappedBy = "repairer")
+    @JsonManagedReference
     private Set<Service> services;
 }

@@ -1,5 +1,6 @@
 package com.TAB.CarShop.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +27,10 @@ public class Manager {
     private Showroom showroom;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
+    @JsonManagedReference
     private Set<Dealer> dealers;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
+    @JsonManagedReference
     private Set<Repairer> repairers;
 }

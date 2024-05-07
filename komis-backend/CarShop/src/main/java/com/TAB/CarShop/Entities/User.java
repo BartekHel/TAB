@@ -9,27 +9,41 @@ import lombok.*;
 @Table(name = "users")
 public class User {
 
+    @Setter
+    @Getter
     @Id
     @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id; //Or Integer instead of int
 
+    @Setter
+    @Getter
     @Column(name = "login", nullable = false)
     private String login;
 
+    @Setter
+    @Getter
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Setter
+    @Getter
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Setter
+    @Getter
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Setter
+    @Getter
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Setter
+    @Getter
     @Column(name = "surname", nullable = false)
     private String surname;
 
@@ -56,55 +70,4 @@ public class User {
         this.surname = surname;
     }
 
-    public long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Role getRole() { return role; }
-
-    public void setRole(Role role) { this.role = role; }
 }
