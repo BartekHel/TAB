@@ -3,8 +3,6 @@ package com.TAB.CarShop.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "users")
 public class User {
