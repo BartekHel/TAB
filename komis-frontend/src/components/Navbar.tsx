@@ -10,22 +10,53 @@ const apiClient = new ApiClient();
 const Navbar = () => {
  
   
-  const {logged, userId} = useContext(userContext);
+  //const {logged, userId} = useContext(userContext);
   const [userName,setUserName]=useState("");
   const [userSurname,setUserSurname]=useState("");
+  const [userFromLocalStorage, setUserFromLocalStorage] = useState(
+    JSON.parse(localStorage.getItem("user")) || {}
+  );
   
 useEffect(() => {
   setUserName("");
   setUserSurname("");
-      (async () =>{
-        if(logged)
+
+  const userJSON = localStorage.getItem("user");
+  if(userJSON)
+  {
+    const user = JSON.parse(userJSON);
+    (async () =>{
+        if(user.logged)
         {
-          const resp = await apiClient.GetLoggedInfo( userId);
-          setUserName(resp[3]);
-          setUserSurname(resp[4]);
+          const resp = await apiClient.GetLoggedInfo(user.id);
+          if(resp[3])setUserName(resp[3]);
+          if(resp[4])setUserSurname(resp[4]);
         }
   })();
-},[userId])
+  }
+
+  
+      
+},[userFromLocalStorage])
+
+const updateUserFromLocalStorage = () => {
+  const userJSON = localStorage.getItem("user");
+  const user = JSON.parse(userJSON) || {};
+  setUserFromLocalStorage(user);
+};
+
+// Rejestrowanie nasłuchiwania na zdarzenia storage zmian w localStorage
+useEffect(() => {
+  const handleStorageChange = () => {
+    updateUserFromLocalStorage();
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, []);
 
   return (
     <nav className="navbar">

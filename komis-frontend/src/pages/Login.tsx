@@ -7,10 +7,11 @@ const apiClient = new ApiClient();
 
 const Login = () => {
 
+    const [ success, setSuccess] = useState(false);
     const [ login, setLogin ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ errorInfo, setErrorInfo ] = useState('');
-    const{setLogged, setUserId} = useContext(userContext);
+    //const{setLogged, setUserId} = useContext(userContext);
 
     const handleLogin = async() => {
         if(!(password =="" || login==""))
@@ -19,12 +20,19 @@ const Login = () => {
             console.log(resp)
             if(resp[0])
             {
-                setLogged(true);
-                setUserId(resp[2]);
+                const user ={
+                    logged:true,
+                    id:resp[2]
+                }
+                const userJSON = JSON.stringify(user);
+                localStorage.setItem('user',userJSON);
+                setErrorInfo("Success login");
+                setSuccess(true);
             }
             else
             {
                 setErrorInfo("Incorrect login or password");
+                setSuccess(false);
             }
             
         }
@@ -47,8 +55,11 @@ const Login = () => {
                 type='password'
                 onChange={(e) => setPassword(e.target.value)}/>
             
-            <h3 id="errorInfo">{errorInfo}</h3>
+            <h3 id="errorInfo" style={{
+                color: success ? 'green' : 'blue'
+            }}>{errorInfo}</h3>
 
+            
             <button 
                 name = "login"
                 onClick={handleLogin}
