@@ -10,7 +10,7 @@ import java.util.Objects;
 
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("/vehicles") //wojtek mi kazal zmienic z "/cars"
 public class VehicleController {
     private final VehicleRepository vehicleRepository;
 
