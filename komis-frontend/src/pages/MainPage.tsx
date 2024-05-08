@@ -1,22 +1,24 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./vite.svg"; // Popraw ścieżkę do pliku vite.svg
-import Navbar from "../components/Navbar";
-import "../css/Navbar.css";
+// import "../css/Navbar.css";
 import "../css/MainPage.css";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [phrase, setPhrase] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [sort, setSort] = useState("0");
+  const navigate=useNavigate();
 
   const searchForOffers = (phrase) => {};
 
   const filterAndSortOffers = (minPrice, maxPrice, sort) => {};
 
   const handleShow = (offerName) => {
-    // Tutaj dodaj swoje
+    const carId=1;
+    navigate(`/carDetails/${carId}`);
   };
 
   const nextPage = (direction) => {};
