@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import '../css/Auth.css'
-import axios from 'axios'
 import ApiClient from '../service/ApiClient';
-import userContext from '../PageInfo';
 //import { setUserInfo, useUserInfo } from '../PageInfo';
 
 const apiClient=new ApiClient();
 
 const Register = () => {
 
-    const{setLogged, setUserId} = useContext(userContext);
+    //const{setLogged, setUserId} = useContext(userContext);
+    const [ success, setSuccess] = useState(false);
     const [ login, setLogin ] = useState('')
     const [ name, setName ] = useState('')
     const [ surname, setSurname ] = useState('')
@@ -54,12 +53,19 @@ const Register = () => {
 
             if(resp[0])
             {
-                setLogged(true);
-                setUserId(resp[2]);
+                const user ={
+                    logged:true,
+                    id:resp[2]
+                }
+                const userJSON = JSON.stringify(user);
+                localStorage.setItem('user',userJSON);
+                setSuccess(true);
+                setErrorInfo("Success registration");
             }
             else
             {
-                setErrorInfo(resp[1])
+                setErrorInfo(resp[1]);
+                setSuccess(false);
             }
         }
     }
@@ -101,7 +107,9 @@ const Register = () => {
                 name="Surname" 
                 placeholder="Surname"
                 onChange={(e) => setSurname(e.target.value)}/>
-            <h3 id="errorInfo">{errorInfo}</h3>
+            <h3 id="errorInfo" style={{
+                color: success ? 'green' : 'blue'
+            }}>{errorInfo}</h3>
             <button 
                 name = "register"
                 onClick={handleRegister}

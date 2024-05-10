@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -16,13 +17,13 @@ public class Order {
     @Id
     @Column(name = "order_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int order_id;
+    private long order_id;
 
     @Column(name = "submission_date", nullable = false)
-    private Date submission_date;
+    private LocalDate submission_date;
 
     @Column(name = "delivery_date")
-    private Date delivery_date;
+    private LocalDate delivery_date;
 
     @Column(name = "price", nullable = false)
     private double price;
@@ -34,7 +35,7 @@ public class Order {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "showroom_id", nullable = false)
+    @JoinColumn(name = "showroom_id"/*, nullable = false*/)
     private Showroom showroom;
 
     @OneToOne
@@ -43,6 +44,18 @@ public class Order {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "dealer_id", nullable = false)
+    @JoinColumn(name = "dealer_id"/*, nullable = false*/)
     private Dealer dealer;
+
+    public Order() {};
+
+    public Order(LocalDate submission_date, LocalDate delivery_date, double price, Client client, Showroom showroom, Vehicle vehicle, Dealer dealer) {
+        this.submission_date = submission_date;
+        this.delivery_date = delivery_date;
+        this.price = price;
+        this.client = client;
+        this.showroom = showroom;
+        this.vehicle = vehicle;
+        this.dealer = dealer;
+    }
 }
