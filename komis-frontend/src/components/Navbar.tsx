@@ -10,12 +10,26 @@ const apiClient = new ApiClient();
 const Navbar = () => {
  
   
-  //const {logged, userId} = useContext(userContext);
-  const [userName,setUserName]=useState("");
-  const [userSurname,setUserSurname]=useState("");
-  const [userFromLocalStorage, setUserFromLocalStorage] = useState(
-    JSON.parse(localStorage.getItem("user")) || {}
+  const { logged, userId, role, setLogged, setUserId, setRole } = useContext(userContext);
+  const [ userName, setUserName ]=useState("");
+  const [ userSurname,setUserSurname ]=useState("");
+  const [ userFromLocalStorage, setUserFromLocalStorage ] = useState(
+    (JSON.parse(localStorage.getItem("user")).logged) || {}
   );
+
+  const userLS = localStorage.getItem("user");
+  if(!userLS)
+  {
+    logout();
+  }
+  else
+  {
+    const user = JSON.parse(userLS);
+    setLogged(user.logged);
+    setRole(user.role);
+    setUserId(user.id);
+  }
+  
   
 useEffect(() => {
   setUserName("");
@@ -37,13 +51,26 @@ useEffect(() => {
 
   
       
-},[userFromLocalStorage])
+},[logged])
 
 const updateUserFromLocalStorage = () => {
   const userJSON = localStorage.getItem("user");
   const user = JSON.parse(userJSON) || {};
   setUserFromLocalStorage(user);
 };
+
+const logout = () => {
+  const userUndefinied ={
+    logged:false,
+    id:0,
+    role:''
+  }
+  const userJSON = JSON.stringify(userUndefinied);
+  localStorage.setItem('user',userJSON);
+  setLogged(false);
+  setRole('');
+  setUserId(0);
+}
 
 // Rejestrowanie nasłuchiwania na zdarzenia storage zmian w localStorage
 useEffect(() => {
@@ -66,8 +93,17 @@ useEffect(() => {
 
       <div className="nav-buttons">
         <h3>{userName + " " + userSurname}</h3>
-        <Link to="/login" className="nav-button">Login</Link>
-        <Link to="/register" className="nav-button">Register</Link>
+        
+        {!logged ? (
+          <>
+            <Link to="/login" className="nav-button">Login</Link>
+            <Link to="/register" className="nav-button">Register</Link>
+          </>
+        ) : (
+          <Link to="/" className="nav-button" onClick={logout}>Logout</Link>
+        )}
+        
+        
       </div>
     </nav>
   );
