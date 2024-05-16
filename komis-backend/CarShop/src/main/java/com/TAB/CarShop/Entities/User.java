@@ -1,59 +1,52 @@
 package com.TAB.CarShop.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "users")
 public class User {
 
-    @Setter
-    @Getter
     @Id
     @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id; //Or Integer instead of int
 
-    @Setter
-    @Getter
     @Column(name = "login", nullable = false)
     private String login;
 
-    @Setter
-    @Getter
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Setter
-    @Getter
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Setter
-    @Getter
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Setter
-    @Getter
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Setter
-    @Getter
     @Column(name = "surname", nullable = false)
     private String surname;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Client client;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Dealer dealer;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Manager manager;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Repairer repairer;
 
