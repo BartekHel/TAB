@@ -16,7 +16,7 @@ public class Manager {
 
     @Id
     @Column(name = "manager_id", nullable = false)
-    private int manager_id;
+    private long manager_id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

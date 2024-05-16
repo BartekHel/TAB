@@ -24,7 +24,7 @@ public class VehicleController {
     }
 
     @GetMapping("/{id}")
-    Vehicle getVehicleById(@PathVariable Integer id) {
+    Vehicle getVehicleById(@PathVariable Long id) {
         return vehicleRepository.findById(id).orElse(null);
     }
 
@@ -50,7 +50,7 @@ public class VehicleController {
     }
 
     @PutMapping("/{id}")
-    Vehicle replaceVehicle(@PathVariable Integer id, @RequestBody Vehicle newVehicle) {
+    Vehicle replaceVehicle(@PathVariable Long id, @RequestBody Vehicle newVehicle) {
         return vehicleRepository.findById(id)
                 .map(vehicle -> {
                     vehicle.setBrand(newVehicle.getBrand());
@@ -69,7 +69,7 @@ public class VehicleController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteVehicle(@PathVariable Integer id) {
+    void deleteVehicle(@PathVariable Long id) {
         vehicleRepository.deleteById(id);
     }
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 public class Repairer {
     @Id
     @Column(name = "repairer_id", nullable = false)
-    private int repairer_id;
+    private long repairer_id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

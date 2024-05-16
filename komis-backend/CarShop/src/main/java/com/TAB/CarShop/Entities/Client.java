@@ -16,7 +16,7 @@ public class Client {
     @Id
     @Column(name = "client_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int client_id;
+    private long client_id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
