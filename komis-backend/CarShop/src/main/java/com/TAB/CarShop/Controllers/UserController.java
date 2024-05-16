@@ -51,22 +51,22 @@ public class UserController {
             newUser = userRepository.saveAndFlush(newUser);
 
             switch (role) {
-                case KLIENT:
+                case CLIENT:
                     Client newClient = new Client();
                     newClient.setUser(newUser);
                     clientRepository.saveAndFlush(newClient);
                     break;
-                case KIEROWNIK:
+                case MANAGER:
                     Manager newManager = new Manager();
                     newManager.setUser(newUser);
                     managerRepository.saveAndFlush(newManager);
                     break;
-                case SERWISANT:
+                case REPAIRER:
                     Repairer newRepairer = new Repairer();
                     newRepairer.setUser(newUser);
                     repairerRepository.saveAndFlush(newRepairer);
                     break;
-                case SPRZEDAJACY:
+                case DEALER:
                     Dealer newDealer = new Dealer();
                     newDealer.setUser(newUser);
                     dealerRepository.saveAndFlush(newDealer);
@@ -98,27 +98,27 @@ public class UserController {
     @PutMapping("/chngrole/{id}")
     User changeRole(@PathVariable Long id, @RequestBody Role role) {
         User user = userRepository.findById(id).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return null;
         }
         user.setRole(role);
         switch (role) {
-            case KLIENT:
+            case CLIENT:
                 Client newClient = new Client();
                 newClient.setUser(user);
                 clientRepository.saveAndFlush(newClient);
                 break;
-            case KIEROWNIK:
+            case MANAGER:
                 Manager newManager = new Manager();
                 newManager.setUser(user);
                 managerRepository.saveAndFlush(newManager);
                 break;
-            case SERWISANT:
+            case REPAIRER:
                 Repairer newRepairer = new Repairer();
                 newRepairer.setUser(user);
                 repairerRepository.saveAndFlush(newRepairer);
                 break;
-            case SPRZEDAJACY:
+            case DEALER:
                 Dealer newDealer = new Dealer();
                 newDealer.setUser(user);
                 dealerRepository.saveAndFlush(newDealer);
