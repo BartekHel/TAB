@@ -95,6 +95,41 @@ public class UserController {
         }
     }
 
+    @PutMapping("/chngrole/{id}")
+    User changeRole(@PathVariable Long id, @RequestBody Role role) {
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null) {
+            return null;
+        }
+        user.setRole(role);
+        switch (role) {
+            case KLIENT:
+                Client newClient = new Client();
+                newClient.setUser(user);
+                clientRepository.saveAndFlush(newClient);
+                break;
+            case KIEROWNIK:
+                Manager newManager = new Manager();
+                newManager.setUser(user);
+                managerRepository.saveAndFlush(newManager);
+                break;
+            case SERWISANT:
+                Repairer newRepairer = new Repairer();
+                newRepairer.setUser(user);
+                repairerRepository.saveAndFlush(newRepairer);
+                break;
+            case SPRZEDAJACY:
+                Dealer newDealer = new Dealer();
+                newDealer.setUser(user);
+                dealerRepository.saveAndFlush(newDealer);
+                break;
+            default:
+                System.out.println("Invalid role");
+                return null;
+        }
+        return user;
+    }
+
     @PutMapping("/{id}")
     User replaceUser(@PathVariable Long id, @RequestBody User newUser) {
         return userRepository.findById(id)

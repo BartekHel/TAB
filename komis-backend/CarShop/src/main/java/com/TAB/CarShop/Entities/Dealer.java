@@ -18,12 +18,12 @@ public class Dealer {
     private int dealer_id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "manager_id", nullable = false)
+    @JoinColumn(name = "manager_id")
     private Manager manager;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dealer")

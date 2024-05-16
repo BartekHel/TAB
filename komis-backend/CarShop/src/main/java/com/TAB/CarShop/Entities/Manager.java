@@ -19,11 +19,11 @@ public class Manager {
     private int manager_id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "showroom_id", referencedColumnName = "showroom_id", nullable = false)
+    @JoinColumn(name = "showroom_id", referencedColumnName = "showroom_id")
     private Showroom showroom;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
