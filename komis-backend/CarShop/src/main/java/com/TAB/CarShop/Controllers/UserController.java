@@ -1,8 +1,7 @@
 package com.TAB.CarShop.Controllers;
 
-import com.TAB.CarShop.Entities.Role;
-import com.TAB.CarShop.Entities.User;
-import com.TAB.CarShop.Repositories.UserRepository;
+import com.TAB.CarShop.Entities.*;
+import com.TAB.CarShop.Repositories.*;
 import com.TAB.CarShop.Requests.AuthRequest;
 import com.TAB.CarShop.Requests.RegRequest;
 import com.TAB.CarShop.Responses.AuthResponse;
@@ -15,9 +14,17 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
+    private final DealerRepository dealerRepository;
+    private final ManagerRepository managerRepository;
+    private final RepairerRepository repairerRepository;
 
-    UserController(UserRepository userRepository) {
+    UserController(UserRepository userRepository, ClientRepository clientRepository, DealerRepository dealerRepository, ManagerRepository managerRepository, RepairerRepository repairerRepository) {
         this.userRepository = userRepository;
+        this.clientRepository = clientRepository;
+        this.dealerRepository = dealerRepository;
+        this.managerRepository = managerRepository;
+        this.repairerRepository = repairerRepository;
     }
 
     @GetMapping
@@ -33,17 +40,45 @@ public class UserController {
     @PostMapping("/reg")
     RegResponse registerUser(@RequestBody RegRequest regRequest) {
         if(!userRepository.findByLogin(regRequest.getLogin()).isEmpty()) {
-            return new RegResponse(false, 0, null, "Username already exists");
+            return new RegResponse(false, 0, null, null, "Username already exists");
         }
         if(!userRepository.findByEmail(regRequest.getEmail()).isEmpty()) {
-            return new RegResponse(false, 0, null,"Email already exists");
+            return new RegResponse(false, 0, null, null, "Email already exists");
         }
         try {
-            User newUser = new User(regRequest.getLogin(), regRequest.getPassword(), regRequest.getEmail(), regRequest.getName(), regRequest.getSurname());
+            Role role = Role.valueOf(regRequest.getRole().toUpperCase());
+            User newUser = new User(regRequest.getLogin(), regRequest.getPassword(), regRequest.getEmail(), role, regRequest.getName(), regRequest.getSurname());
             newUser = userRepository.saveAndFlush(newUser);
-            return new RegResponse(true, newUser.getUser_id(), newUser.getLogin(), "Registration successful");
+
+            switch (role) {
+                case KLIENT:
+                    Client newClient = new Client();
+                    newClient.setUser(newUser);
+                    clientRepository.saveAndFlush(newClient);
+                    break;
+                case KIEROWNIK:
+                    Manager newManager = new Manager();
+                    newManager.setUser(newUser);
+                    managerRepository.saveAndFlush(newManager);
+                    break;
+                case SERWISANT:
+                    Repairer newRepairer = new Repairer();
+                    newRepairer.setUser(newUser);
+                    repairerRepository.saveAndFlush(newRepairer);
+                    break;
+                case SPRZEDAJACY:
+                    Dealer newDealer = new Dealer();
+                    newDealer.setUser(newUser);
+                    dealerRepository.saveAndFlush(newDealer);
+                    break;
+                default:
+                    return new RegResponse(false, 0, null, null, "Invalid role");
+            }
+
+
+            return new RegResponse(true, newUser.getUser_id(), newUser.getLogin(), newUser.getRole(), "Registration successful");
         } catch (Exception e) {
-            return new RegResponse(false, 0, null, e.getMessage());
+            return new RegResponse(false, 0, null, null, e.getMessage());
         }
     }
 

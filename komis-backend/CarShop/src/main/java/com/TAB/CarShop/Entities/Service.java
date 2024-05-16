@@ -14,7 +14,7 @@ import java.util.Date;
 public class Service {
     @Id
     @Column(name = "service_id", nullable = false)
-    private int service_id;
+    private Long service_id;
 
     @ManyToOne
     @JsonBackReference
@@ -34,4 +34,12 @@ public class Service {
 
     @Column(name = "price", nullable = false)
     private double price;
+
+    public Service(Vehicle vehicle_id, Repairer repairer, String description, Date execution_date, double price) {
+        this.vehicle_id = vehicle_id;
+        this.repairer = repairer;
+        this.description = description;
+        this.execution_date = execution_date;
+        this.price = price;
+    }
 }

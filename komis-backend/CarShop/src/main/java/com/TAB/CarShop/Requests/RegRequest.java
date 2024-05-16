@@ -4,6 +4,7 @@ public class RegRequest {
     private String login;
     private String password;
     private String email;
+    private String role;
     private String name;
     private String surname;
 
@@ -13,6 +14,7 @@ public class RegRequest {
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
         this.name = name;
         this.surname = surname;
     }
@@ -39,6 +41,14 @@ public class RegRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
