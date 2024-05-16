@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient';
-//import { setUserInfo, useUserInfo } from '../PageInfo';
+import { setUserInfo, useUserInfo, setRole } from '../PageInfo';
 
 const apiClient=new ApiClient();
 
 const Register = () => {
 
-    //const{setLogged, setUserId} = useContext(userContext);
+    const{setLogged, setUserId, setRole} = useContext(userContext);
     const [ success, setSuccess] = useState(false);
     const [ login, setLogin ] = useState('')
     const [ name, setName ] = useState('')
@@ -55,12 +55,16 @@ const Register = () => {
             {
                 const user ={
                     logged:true,
-                    id:resp[2]
+                    id:resp[2],
+                    role:"KLIENT"
                 }
                 const userJSON = JSON.stringify(user);
                 localStorage.setItem('user',userJSON);
                 setSuccess(true);
                 setErrorInfo("Success registration");
+                setLogged(true);
+                setUserId(resp[2]);
+                setRole(resp[1]);
             }
             else
             {
