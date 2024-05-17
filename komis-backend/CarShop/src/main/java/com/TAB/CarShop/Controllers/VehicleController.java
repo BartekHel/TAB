@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -71,5 +74,22 @@ public class VehicleController {
     @DeleteMapping("/{id}")
     void deleteVehicle(@PathVariable Long id) {
         vehicleRepository.deleteById(id);
+    }
+
+    @GetMapping("/search")
+    List<Vehicle> getSearchedList(@RequestParam(value = "input", defaultValue = "") String input) {
+        if (input.isBlank()) {
+            return vehicleRepository.findAll();
+        }
+
+        Pattern pattern = Pattern.compile(input, Pattern.CASE_INSENSITIVE);
+
+        return vehicleRepository.findAll().stream().filter(vehicle -> {
+            Matcher markaMatcher = pattern.matcher(vehicle.getBrand());
+            Matcher modelMatcher = pattern.matcher(vehicle.getModel());
+            Matcher modelMarkaMatcher = pattern.matcher(vehicle.getModel() + " " + vehicle.getBrand());
+            Matcher markaModelMatcher = pattern.matcher(vehicle.getBrand() + " " + vehicle.getModel());
+            return markaMatcher.find() || modelMatcher.find() || modelMarkaMatcher.find() || markaModelMatcher.find();
+        }).collect(Collectors.toList());
     }
 }
