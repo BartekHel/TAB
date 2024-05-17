@@ -30,12 +30,12 @@ public class Order {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name="client_id", nullable = false)
+    @JoinColumn(name="client_id")
     private Client client;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "showroom_id"/*, nullable = false*/)
+    @JoinColumn(name = "showroom_id")
     private Showroom showroom;
 
     @OneToOne
@@ -44,7 +44,7 @@ public class Order {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "dealer_id"/*, nullable = false*/)
+    @JoinColumn(name = "dealer_id")
     private Dealer dealer;
 
     public Order() {};

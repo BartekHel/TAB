@@ -15,6 +15,7 @@ import java.util.Set;
 public class Dealer {
     @Id
     @Column(name = "dealer_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long dealer_id;
 
     @OneToOne

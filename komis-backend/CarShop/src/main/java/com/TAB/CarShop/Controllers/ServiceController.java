@@ -43,7 +43,8 @@ public class ServiceController {
             if (vehicle == null || repairer == null) {
                 return false;
             }
-            Service newService = new Service(vehicle, repairer, serviceRequest.getDescription(), serviceRequest.getExecutionDate(), serviceRequest.getPrice());
+            Service newService = new Service(vehicle, repairer, serviceRequest.getDescription(), serviceRequest.getYear(), serviceRequest.getMonth(),
+                    serviceRequest.getDay(), serviceRequest.getHour(), serviceRequest.getMinute(), serviceRequest.getPrice());
             serviceRepository.saveAndFlush(newService);
             return true;
         } catch (Exception e) {

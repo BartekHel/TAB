@@ -1,7 +1,12 @@
 package com.TAB.CarShop.Controllers;
 
+import com.TAB.CarShop.Entities.Order;
+import com.TAB.CarShop.Entities.Showroom;
 import com.TAB.CarShop.Entities.Vehicle;
+import com.TAB.CarShop.Repositories.OrderRepository;
+import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Repositories.VehicleRepository;
+import com.TAB.CarShop.Requests.VehicleRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -16,9 +21,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/vehicles") //wojtek mi kazal zmienic z "/cars"
 public class VehicleController {
     private final VehicleRepository vehicleRepository;
+    private final ShowroomRepository showroomRepository;
 
-    VehicleController(VehicleRepository vehicleRepository) {
+    VehicleController(VehicleRepository vehicleRepository, ShowroomRepository showroomRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.showroomRepository = showroomRepository;
     }
 
     @GetMapping
@@ -50,6 +57,17 @@ public class VehicleController {
                 .filter(vehicle -> vehicle.getPrice() <= cenamax)
 
                 .sorted(comp).toList();
+    }
+
+    @PostMapping()
+    Vehicle addVehicle(@RequestBody VehicleRequest vehicleRequest) {
+        Showroom showroom = showroomRepository.findById(vehicleRequest.getShowroomId()).orElse(null);
+        if (showroom == null) {
+            return null;
+        }
+        Vehicle newVehicle = new Vehicle(vehicleRequest.getBrand(), vehicleRequest.getModel(), vehicleRequest.getModifications(),
+                vehicleRequest.getYear(), vehicleRequest.getMonth(), vehicleRequest.getDay(), vehicleRequest.getPrice(), showroom);
+        return vehicleRepository.saveAndFlush(newVehicle);
     }
 
     @PutMapping("/{id}")

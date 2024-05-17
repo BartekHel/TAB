@@ -15,6 +15,7 @@ import java.util.Set;
 public class Repairer {
     @Id
     @Column(name = "repairer_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long repairer_id;
 
     @OneToOne
@@ -23,7 +24,7 @@ public class Repairer {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "manager_id", nullable = true)
+    @JoinColumn(name = "manager_id")
     private Manager manager;
 
     @OneToMany(mappedBy = "repairer")

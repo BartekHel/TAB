@@ -16,6 +16,7 @@ public class Manager {
 
     @Id
     @Column(name = "manager_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long manager_id;
 
     @OneToOne

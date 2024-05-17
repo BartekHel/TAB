@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -28,7 +29,7 @@ public class Vehicle {
     private String modifications;
 
     @Column(name = "next_inspection_date", nullable = false)
-    private Date next_inspection_date;
+    private LocalDate next_inspection_date;
 
     @Column(name = "price", nullable = false)
     private double price;
@@ -38,6 +39,17 @@ public class Vehicle {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "showroom_id", nullable = false)
+    @JoinColumn(name = "showroom_id")
     private Showroom showroom;
+
+    public Vehicle() {}
+
+    public Vehicle(String brand, String model, String modifications, int year, int month, int day, double price, Showroom showroom) {
+        this.brand = brand;
+        this.model = model;
+        this.modifications = modifications;
+        this.next_inspection_date = LocalDate.of(year, month, day);
+        this.price = price;
+        this.showroom = showroom;
+    }
 }
