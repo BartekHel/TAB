@@ -2,7 +2,6 @@ package com.TAB.CarShop.Controllers;
 
 import com.TAB.CarShop.Entities.Repairer;
 import com.TAB.CarShop.Entities.Service;
-import com.TAB.CarShop.Entities.User;
 import com.TAB.CarShop.Entities.Vehicle;
 import com.TAB.CarShop.Repositories.RepairerRepository;
 import com.TAB.CarShop.Repositories.ServiceRepository;
@@ -10,6 +9,7 @@ import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.ServiceRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -43,13 +43,22 @@ public class ServiceController {
             if (vehicle == null || repairer == null) {
                 return false;
             }
-            Service newService = new Service(vehicle, repairer, serviceRequest.getDescription(), serviceRequest.getYear(), serviceRequest.getMonth(),
-                    serviceRequest.getDay(), serviceRequest.getHour(), serviceRequest.getMinute(), serviceRequest.getPrice());
+            Service newService = new Service(vehicle, repairer, serviceRequest.getDescription(), serviceRequest.getAdmission_date(), serviceRequest.getPrice());
             serviceRepository.saveAndFlush(newService);
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @PostMapping("/{id}/setdate")
+    void setExecutionDate(@PathVariable Long id, @RequestBody LocalDate executionDate) {
+        Service service = serviceRepository.findById(id).orElse(null);
+        if (service == null) {
+            return;
+        }
+        service.setExecution_date(executionDate);
+        serviceRepository.saveAndFlush(service);
     }
 
     @PutMapping("/{id}")

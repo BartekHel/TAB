@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -31,17 +32,20 @@ public class Service {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "execution_date", nullable = false)
-    private LocalDateTime execution_date;
+    @Column(name = "admission_date", nullable = false)
+    private LocalDate admission_date;
+
+    @Column(name = "execution_date")
+    private LocalDate execution_date;
 
     @Column(name = "price", nullable = false)
     private double price;
 
-    public Service(Vehicle vehicle_id, Repairer repairer, String description, int year, int month, int day, int hour, int minute, double price) {
+    public Service(Vehicle vehicle_id, Repairer repairer, String description, LocalDate admission_date, double price) {
         this.vehicle_id = vehicle_id;
         this.repairer = repairer;
         this.description = description;
-        this.execution_date = LocalDateTime.of(year, month, day, hour, minute);
+        this.admission_date = admission_date;
         this.price = price;
     }
 

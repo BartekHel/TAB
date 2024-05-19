@@ -1,6 +1,7 @@
 package com.TAB.CarShop.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class Vehicle {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "vehicle")
     private Order order;
 
