@@ -16,6 +16,9 @@ const Navbar = () => {
   const [ userFromLocalStorage, setUserFromLocalStorage ] = useState(
     (JSON.parse(localStorage.getItem("user")).logged) || {}
   );
+  const [ userRoleFromLocalStorage, setUserRoleFromLocalStorage ] = useState(
+    (JSON.parse(localStorage.getItem("user")).role) || {}
+  );
 
   const userLS = localStorage.getItem("user");
   if(!userLS)
@@ -85,6 +88,7 @@ useEffect(() => {
   };
 }, []);
 
+
   return (
     <nav className="navbar">
       <Link to="/" className="nav-link">
@@ -98,9 +102,16 @@ useEffect(() => {
           <>
             <Link to="/login" className="nav-button">Login</Link>
             <Link to="/register" className="nav-button">Register</Link>
+            
           </>
         ) : (
+          <>
+          {
+            role=="CLIENT" && <Link to="/orderService" className="nav-button">Order Service</Link>
+          }
           <Link to="/" className="nav-button" onClick={logout}>Logout</Link>
+        
+          </>
         )}
         
         
