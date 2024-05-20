@@ -38,7 +38,7 @@ public class OrderController {
         try{
             Order newOrder = new Order(
                     LocalDate.now(),
-                    createOrderRequest.getSubmission_date(),
+                    null,
                     createOrderRequest.getPrice(),
                     clientRepository.getReferenceById(createOrderRequest.getClient_id()),
                     showroomRepository.findById(createOrderRequest.getShowroom_id()).orElse(null),

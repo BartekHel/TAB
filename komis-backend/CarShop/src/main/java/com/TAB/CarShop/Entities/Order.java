@@ -2,6 +2,7 @@ package com.TAB.CarShop.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +12,12 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @Table(name = "orders")
 public class Order {
 
     @Id
-    @Column(name = "order_id", nullable = false)
+    @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long order_id;
 
