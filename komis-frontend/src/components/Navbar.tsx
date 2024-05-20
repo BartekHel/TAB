@@ -10,15 +10,24 @@ const apiClient = new ApiClient();
 const Navbar = () => {
  
   
-  const { logged, userId, role, setLogged, setUserId, setRole } = useContext(userContext);
+  const { logged, userId, role, setLogged, setUserId, setRole, userLogin, setUserLogin } = useContext(userContext);
   const [ userName, setUserName ]=useState("");
   const [ userSurname,setUserSurname ]=useState("");
-  const [ userFromLocalStorage, setUserFromLocalStorage ] = useState(
-    (JSON.parse(localStorage.getItem("user")).logged) || {}
-  );
-  const [ userRoleFromLocalStorage, setUserRoleFromLocalStorage ] = useState(
-    (JSON.parse(localStorage.getItem("user")).role) || {}
-  );
+
+  const logout = () => {
+    const userUndefinied ={
+      logged:false,
+      id:0,
+      role:'',
+      userLogin:''
+    }
+    const userJSON = JSON.stringify(userUndefinied);
+    localStorage.setItem('user',userJSON);
+    setLogged(false);
+    setRole('');
+    setUserId(0);
+    setUserLogin('');
+  }
 
   const userLS = localStorage.getItem("user");
   if(!userLS)
@@ -31,7 +40,17 @@ const Navbar = () => {
     setLogged(user.logged);
     setRole(user.role);
     setUserId(user.id);
+    setUserLogin(user.login);
   }
+
+  const [ userFromLocalStorage, setUserFromLocalStorage ] = useState(
+    (JSON.parse(localStorage.getItem("user")).logged) || {}
+  );
+  const [ userRoleFromLocalStorage, setUserRoleFromLocalStorage ] = useState(
+    (JSON.parse(localStorage.getItem("user")).role) || {}
+  );
+
+  
   
   
 useEffect(() => {
@@ -44,8 +63,8 @@ useEffect(() => {
     const user = JSON.parse(userJSON);
     (async () =>{
         if(user.logged)
-        {
-          const resp = await apiClient.GetLoggedInfo(user.id);
+        { 
+          const resp = await apiClient.GetLoggedInfo(user.userLogin);
           if(resp[3])setUserName(resp[3]);
           if(resp[4])setUserSurname(resp[4]);
         }
@@ -62,18 +81,7 @@ const updateUserFromLocalStorage = () => {
   setUserFromLocalStorage(user);
 };
 
-const logout = () => {
-  const userUndefinied ={
-    logged:false,
-    id:0,
-    role:''
-  }
-  const userJSON = JSON.stringify(userUndefinied);
-  localStorage.setItem('user',userJSON);
-  setLogged(false);
-  setRole('');
-  setUserId(0);
-}
+
 
 // Rejestrowanie nasłuchiwania na zdarzenia storage zmian w localStorage
 useEffect(() => {

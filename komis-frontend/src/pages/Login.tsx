@@ -11,7 +11,7 @@ const Login = () => {
     const [ login, setLogin ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ errorInfo, setErrorInfo ] = useState('');
-    const{setLogged, setUserId, setRole} = useContext(userContext);
+    const{setLogged, setUserId, setRole, setUserLogin} = useContext(userContext);
 
     const handleLogin = async() => {
         if(!(password =="" || login==""))
@@ -23,13 +23,15 @@ const Login = () => {
                 const user ={
                     logged:true,
                     id:resp[2],
-                    role:resp[1]
+                    role:resp[1], 
+                    userLogin:resp[3]
                 }
                 const userJSON = JSON.stringify(user);
                 localStorage.setItem('user',userJSON);
                 setErrorInfo("Success login");
                 setSuccess(true);
                 setLogged(true);
+                setUserLogin(resp[3]);
                 setUserId(resp[2]);
                 setRole(resp[1]);
             }

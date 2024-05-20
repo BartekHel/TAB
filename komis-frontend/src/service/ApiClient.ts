@@ -30,9 +30,12 @@ export const axiosInstance= axios.create({
       return [resp.data.success, resp.data.role, resp.data.id, resp.data.login]
     }
 
-    GetLoggedInfo = async (id:number): Promise<[number, string, string, string, string]> =>
+    GetLoggedInfo = async (login:string): Promise<[number, string, string, string, string]> =>
     {
-      const resp = await axiosInstance.get(`http://localhost:8080/car-shop/users/`+id)
+      
+      const resp = await axiosInstance.get('http://localhost:8080/car-shop/users/'+login);
+      console.log(resp);
+      
       return [resp.data.id, resp.data.email, resp.data.role, resp.data.name, resp.data.surname]
     }
 
