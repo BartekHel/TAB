@@ -32,9 +32,13 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    User getUserById(@PathVariable Long id) {
-        return userRepository.findById(id).orElse(null); //to moze byc do poprawy xd
+    @GetMapping("/{login}")
+    User getUserById(@PathVariable String login) {
+        List<User> user = userRepository.findByLogin(login);
+        if (user.isEmpty()) {
+            return null;
+        }
+        return user.get(0);
     }
 
     @PostMapping("/reg")
