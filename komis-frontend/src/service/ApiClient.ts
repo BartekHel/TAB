@@ -1,5 +1,9 @@
 import axios from "axios";
 import CarDetails from "../entitiy/CarDetail";
+import Vehicle from "../entitiy/Vehicle";
+
+
+
 export const axiosInstance= axios.create({
      baseURL: "http://localhost:8080/car-shop",
   });
@@ -39,11 +43,26 @@ export const axiosInstance= axios.create({
       return [resp.data.id, resp.data.email, resp.data.role, resp.data.name, resp.data.surname]
     }
 
-    GetUsersVehicles = async (id:number): Promise<[number,string,string,string,Date,number]> =>
-    {
-      const resp = await axiosInstance.post('http://localhost:8080/car-shop/client/'+id+'/listvehicles',{id:id})
-      return [resp.data.success, resp.data.role, resp.data.id, resp.data.login]
-    }
+    GetClientVehicles = async (id: number): Promise<Vehicle[]> => {
+      try {
+        const resp = await axios.get(`http://localhost:8080/car-shop/client/${id}/listvehicles`);
+
+        console.log(id);
+        console.log(resp.data);
+    
+        return resp.data.map((vehicle: any) => ({
+          vehicle_id: vehicle.vehicle_id,
+          brand: vehicle.brand,
+          model: vehicle.model,
+          modifications: vehicle.modifications,
+          next_inspection_date: vehicle.next_inspection_date,
+          price: vehicle.price
+        }));
+      } catch (error) {
+        console.error("Error fetching client vehicles:", error);
+        throw error;
+      }
+    };
   }
 
   export default ApiClient;

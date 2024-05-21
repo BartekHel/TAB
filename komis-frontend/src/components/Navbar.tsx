@@ -14,6 +14,8 @@ const Navbar = () => {
   const [ userName, setUserName ]=useState("");
   const [ userSurname,setUserSurname ]=useState("");
 
+  console.log(logged, userId, role)
+
   const logout = () => {
     const userUndefinied ={
       logged:false,
