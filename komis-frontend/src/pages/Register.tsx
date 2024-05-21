@@ -1,8 +1,8 @@
+import React, { useState, useContext } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient';
-import { setUserInfo, useUserInfo, setRole } from '../PageInfo';
 import userContext from '../PageInfo';
-import React, { useContext, useState } from 'react'
+
 
 const apiClient=new ApiClient();
 
@@ -57,7 +57,7 @@ const Register = () => {
                 const user ={
                     logged:true,
                     id:resp[2],
-                    role:"KLIENT",
+                    role:"CLIENT",
                     userLogin:resp[3]
                 }
                 const userJSON = JSON.stringify(user);
