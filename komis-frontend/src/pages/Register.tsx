@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient';
-import { setUserInfo, useUserInfo, setRole } from '../PageInfo';
+import userContext from '../PageInfo';
 
 const apiClient=new ApiClient();
 
