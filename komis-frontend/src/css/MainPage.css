@@ -211,11 +211,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 9px;
+  gap: 1px;
 }
 
 .offerDetails h1 {
   text-align: left;
+  font-size: 70%;
 }
 
 .buttonContainer {
