@@ -1,15 +1,21 @@
 import axios from "axios";
+import CarDetails from "../entitiy/CarDetail";
 export const axiosInstance= axios.create({
      baseURL: "http://localhost:8080/car-shop",
   });
 
   class ApiClient{
-
+    baseURL:string= "http://localhost:8080/car-shop";
     constructor(){        
       }
 
-    buyCar=(carId:number,color:string,engine:string,upholstery:string)=>{
-        axiosInstance.post('/purchase',{carId:carId,color:color,engine:engine,upholstery:upholstery});
+    buyCar=(vehicle_id:number,price:number,modifications:string,client_id:number,showroomId:number,dealer_id:number)=>{
+       return axiosInstance.post(this.baseURL+'/orders/createorder',
+      {vehicle_id:vehicle_id,price:price,modifications:modifications,client_id:client_id,showroom_id:showroomId,dealer_id:dealer_id});
+    }
+
+    getCarDetails=async(carId:number)=>{
+      return await axiosInstance.get<CarDetails>(this.baseURL+'/vehicles/'+carId).then((response)=>response.data);
     }
 
     Register=async (login:string, password:string, email:string, name:string, surname:string): Promise<[boolean, string, number, string]>=>{
@@ -24,9 +30,12 @@ export const axiosInstance= axios.create({
       return [resp.data.success, resp.data.role, resp.data.id, resp.data.login]
     }
 
-    GetLoggedInfo = async (id:number): Promise<[number, string, string, string, string]> =>
+    GetLoggedInfo = async (login:string): Promise<[number, string, string, string, string]> =>
     {
-      const resp = await axiosInstance.get(`http://localhost:8080/car-shop/users/`+id)
+      
+      const resp = await axiosInstance.get('http://localhost:8080/car-shop/users/'+login);
+      console.log(resp);
+      
       return [resp.data.id, resp.data.email, resp.data.role, resp.data.name, resp.data.surname]
     }
 

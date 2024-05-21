@@ -10,14 +10,14 @@ function App() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [sort, setSort] = useState("0");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const searchForOffers = (phrase) => {};
 
   const filterAndSortOffers = (minPrice, maxPrice, sort) => {};
 
   const handleShow = (offerName) => {
-    const carId=1;
+    const carId = 1;
     navigate(`/carDetails/${carId}`);
   };
 
@@ -26,72 +26,72 @@ function App() {
   const initialOffers = [
     {
       name: "Audi A4",
-      price: 45000,
+      price: "45k",
       year: 2022,
-      mileage: 20000,
+      mileage: "20k",
       icon: "/car.svg",
     },
     {
       name: "BMW X5",
-      price: 65000,
+      price: "65k",
       year: 2021,
-      mileage: 15000,
+      mileage: "15k",
       icon: "/car.svg",
     },
     {
       name: "Mercedes-Benz",
-      price: 50000,
+      price: "50k",
       year: 2020,
-      mileage: 25000,
+      mileage: "25k",
       icon: "/car.svg",
     },
     {
       name: "Honda Accord",
-      price: 32000,
+      price: "32k",
       year: 2019,
-      mileage: 30000,
+      mileage: "30k",
       icon: "/car.svg",
     },
     {
       name: "Toyota Camry",
-      price: 35000,
+      price: "35k",
       year: 2021,
-      mileage: 18000,
+      mileage: "18k",
       icon: "/car.svg",
     },
     {
       name: "Ford Mustang",
-      price: 40000,
+      price: "40k",
       year: 2018,
-      mileage: 35000,
+      mileage: "35k",
       icon: "/car.svg",
     },
     {
       name: "Volkswagen Golf",
-      price: 25000,
+      price: "25k",
       year: 2019,
-      mileage: 22000,
+      mileage: "22k",
       icon: "/car.svg",
     },
     {
       name: "Tesla Model 3",
-      price: 60000,
+      price: "60k",
       year: 2023,
-      mileage: 5000,
+      mileage: "5k",
       icon: "/car.svg",
     },
     {
       name: "Porsche 911",
-      price: 120000,
+      price: "120k",
       year: 2022,
-      mileage: 10000,
+      mileage: "10k",
       icon: "/car.svg",
     },
     {
       name: "Chevrolet Corvette",
-      price: 70000,
+      price: "70k",
       year: 2021,
-      mileage: 12000,
+      mileage: "12k",
       icon: "/car.svg",
     },
   ];
@@ -228,7 +228,12 @@ function App() {
                 <p>Year: {offer.year}</p>
                 <p>Mileage: {offer.mileage} </p>
                 <div className="buttonContainer">
-                  <button className="offerButton" onClick={() => handleShow(offer.name)}>Show</button>
+                  <button
+                    className="offerButton"
+                    onClick={() => handleShow(offer.name)}
+                  >
+                    Show
+                  </button>
                 </div>
               </div>
             </div>

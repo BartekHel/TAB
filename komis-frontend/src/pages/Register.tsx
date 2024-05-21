@@ -1,45 +1,46 @@
-import React, { useState } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient';
 import { setUserInfo, useUserInfo, setRole } from '../PageInfo';
+import userContext from '../PageInfo';
+import React, { useContext, useState } from 'react'
 
 const apiClient=new ApiClient();
 
 const Register = () => {
 
-    const{setLogged, setUserId, setRole} = useContext(userContext);
+    const{setLogged, setUserId, setRole, setUserLogin} = useContext(userContext);
     const [ success, setSuccess] = useState(false);
-    const [ login, setLogin ] = useState('')
-    const [ name, setName ] = useState('')
-    const [ surname, setSurname ] = useState('')
-    const [ errorInfo, setErrorInfo ] = useState('')
+    const [ login, setLogin ] = useState('');
+    const [ name, setName ] = useState('');
+    const [ surname, setSurname ] = useState('');
+    const [ errorInfo, setErrorInfo ] = useState('');
 
-    const [email, setEmail] = useState('')
-    const [ emailIncorrect, setEmailIncorrect ] = useState(false)
+    const [email, setEmail] = useState('');
+    const [ emailIncorrect, setEmailIncorrect ] = useState(false);
 
-    const [ password, setPassword ] = useState('')
-    const [ passwordIncorrect, setPasswordIncorrect ] = useState(false)
+    const [ password, setPassword ] = useState('');
+    const [ passwordIncorrect, setPasswordIncorrect ] = useState(false);
     
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z]).{8,}$/;
 
     const handleEmailChange = (event) =>{
-        setEmail(event.target.value)
-        setEmailIncorrect(false)
+        setEmail(event.target.value);
+        setEmailIncorrect(false);
 
         if(!emailRegex.test(event.target.value) && event.target.value != "")
         {
-            setEmailIncorrect(true)
+            setEmailIncorrect(true);
         }
     }
 
     const handlePasswordChange = (event) =>{
-        setPassword(event.target.value)
+        setPassword(event.target.value);
         setPasswordIncorrect(false);
         if(!passwordRegex.test(event.target.value) && event.target.value != "")
         {
-            setPasswordIncorrect(true)
+            setPasswordIncorrect(true);
         }
     }
 
@@ -47,16 +48,17 @@ const Register = () => {
         if(!(emailIncorrect || email == "" || passwordIncorrect || password =="" || login=="" || name=="" || surname=="" ))
         {
             
-            const resp = await apiClient.Register( login, password, email, name, surname )
+            const resp = await apiClient.Register( login, password, email, name, surname );
 
-            console.log(resp)
+            console.log(resp);
 
             if(resp[0])
             {
                 const user ={
                     logged:true,
                     id:resp[2],
-                    role:"KLIENT"
+                    role:"KLIENT",
+                    userLogin:resp[3]
                 }
                 const userJSON = JSON.stringify(user);
                 localStorage.setItem('user',userJSON);
@@ -65,6 +67,7 @@ const Register = () => {
                 setLogged(true);
                 setUserId(resp[2]);
                 setRole(resp[1]);
+                setUserLogin(resp[3]);
             }
             else
             {
