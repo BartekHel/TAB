@@ -29,7 +29,7 @@ public class Vehicle {
     @Column(name = "modifications")
     private String modifications;
 
-    @Column(name = "next_inspection_date", nullable = false)
+    @Column(name = "next_inspection_date")
     private LocalDate next_inspection_date;
 
     @Column(name = "price", nullable = false)
@@ -49,11 +49,10 @@ public class Vehicle {
 
     public Vehicle() {}
 
-    public Vehicle(String brand, String model, String modifications, int year, int month, int day, double price, Showroom showroom) {
+    public Vehicle(String brand, String model, String modifications,  double price, Showroom showroom) {
         this.brand = brand;
         this.model = model;
         this.modifications = modifications;
-        this.next_inspection_date = LocalDate.of(year, month, day);
         this.price = price;
         this.showroom = showroom;
     }

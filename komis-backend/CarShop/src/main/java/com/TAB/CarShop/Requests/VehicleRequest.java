@@ -11,9 +11,6 @@ public class VehicleRequest {
     private String brand;
     private String model;
     private String modifications;
-    private int year;
-    private int month;
-    private int day;
     private double price;
     private long showroomId;
 
