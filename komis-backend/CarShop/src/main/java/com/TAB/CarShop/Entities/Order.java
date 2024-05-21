@@ -49,13 +49,19 @@ public class Order {
 
     public Order() {};
 
-    public Order(LocalDate submission_date, LocalDate delivery_date, double price, Client client, Showroom showroom, Vehicle vehicle, Dealer dealer) {
+    public Order(LocalDate submission_date, LocalDate delivery_date, double price) {
         this.submission_date = submission_date;
         this.delivery_date = delivery_date;
         this.price = price;
-        this.client = client;
-        this.showroom = showroom;
-        this.vehicle = vehicle;
-        this.dealer = dealer;
     }
+
+//    public Order(LocalDate submission_date, LocalDate delivery_date, double price, Client client, Showroom showroom, Vehicle vehicle, Dealer dealer) {
+//        this.submission_date = submission_date;
+//        this.delivery_date = delivery_date;
+//        this.price = price;
+//        this.client = client;
+//        this.showroom = showroom;
+//        this.vehicle = vehicle;
+//        this.dealer = dealer;
+//    }
 }
