@@ -44,4 +44,17 @@ public class ClientController {
 		}
 		return vehicles;
 	}
+
+	@GetMapping("/{id}/listorders")
+	List<Order> getClientOrders(@PathVariable Long id) {
+		Client client = clientRepository.findById(id).orElse(null);
+		if (client == null) {
+			return null;
+		}
+		List<Order> orders = new ArrayList<>();
+		for(Order order : client.getOrders()) {
+			orders.add(order);
+		}
+		return orders;
+	}
 }

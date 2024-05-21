@@ -35,6 +35,9 @@ public class Vehicle {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "was_sold")
+    private boolean was_sold = false;
+
     @JsonIgnore
     @OneToOne(mappedBy = "vehicle")
     private Order order;

@@ -1,6 +1,7 @@
 package com.TAB.CarShop.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,22 +31,23 @@ public class Order {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @JsonIgnore
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="client_id")
     private Client client;
 
+    @JsonIgnore
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "showroom_id")
     private Showroom showroom;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
     private Vehicle vehicle;
 
+    @JsonIgnore
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "dealer_id")
     private Dealer dealer;
 
@@ -57,13 +59,13 @@ public class Order {
         this.price = price;
     }
 
-//    public Order(LocalDate submission_date, LocalDate delivery_date, double price, Client client, Showroom showroom, Vehicle vehicle, Dealer dealer) {
-//        this.submission_date = submission_date;
-//        this.delivery_date = delivery_date;
-//        this.price = price;
-//        this.client = client;
-//        this.showroom = showroom;
-//        this.vehicle = vehicle;
-//        this.dealer = dealer;
-//    }
+    public Order(LocalDate submission_date, LocalDate delivery_date, double price, Client client, Showroom showroom, Vehicle vehicle, Dealer dealer) {
+        this.submission_date = submission_date;
+        this.delivery_date = delivery_date;
+        this.price = price;
+        this.client = client;
+        this.showroom = showroom;
+        this.vehicle = vehicle;
+        this.dealer = dealer;
+    }
 }
