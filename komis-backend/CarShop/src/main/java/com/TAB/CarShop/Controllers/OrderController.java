@@ -60,9 +60,10 @@ public class OrderController {
             if(vehicle.isWas_sold()) {
                 return new CreateOrderResponse(false, 0, "This vehicle is already sold");
             }
+            LocalDate deliveryDate = calculateDeliveryDate(LocalDate.now(), showroom, vehicle);
             Order newOrder = new Order(
                     LocalDate.now(),
-                    calculateDeliveryDate(LocalDate.now(), showroom, vehicle),
+                    deliveryDate,
                     createOrderRequest.getPrice(),
                     client,
                     showroom,
@@ -70,7 +71,9 @@ public class OrderController {
                     dealer
             );
             newOrder = orderRepository.saveAndFlush(newOrder);
+            vehicle.setNext_inspection_date(deliveryDate.plusYears(1));
             vehicle.setWas_sold(true);
+            vehicleRepository.saveAndFlush(vehicle);
             return new CreateOrderResponse(true, newOrder.getOrder_id(), "order created successfully");
         }
         catch(Exception e){

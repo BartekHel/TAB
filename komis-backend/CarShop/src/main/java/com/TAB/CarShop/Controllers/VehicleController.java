@@ -9,6 +9,7 @@ import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.VehicleRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -66,7 +67,7 @@ public class VehicleController {
             return null;
         }
         Vehicle newVehicle = new Vehicle(vehicleRequest.getBrand(), vehicleRequest.getModel(), vehicleRequest.getModifications(),
-                vehicleRequest.getYear(), vehicleRequest.getMonth(), vehicleRequest.getDay(), vehicleRequest.getPrice(), showroom);
+                vehicleRequest.getPrice(), showroom);
         return vehicleRepository.saveAndFlush(newVehicle);
     }
 
