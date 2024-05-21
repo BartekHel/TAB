@@ -3,6 +3,7 @@ import '../css/Auth.css'
 import ApiClient from '../service/ApiClient';
 import userContext from '../PageInfo';
 
+
 const apiClient=new ApiClient();
 
 const Register = () => {
@@ -56,7 +57,7 @@ const Register = () => {
                 const user ={
                     logged:true,
                     id:resp[2],
-                    role:"KLIENT",
+                    role:"CLIENT",
                     userLogin:resp[3]
                 }
                 const userJSON = JSON.stringify(user);
