@@ -37,7 +37,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,2);
+INSERT INTO `clients` VALUES (1,1);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `dealers` (
 
 LOCK TABLES `dealers` WRITE;
 /*!40000 ALTER TABLE `dealers` DISABLE KEYS */;
-INSERT INTO `dealers` VALUES (1,NULL,3);
+INSERT INTO `dealers` VALUES (1,NULL,4);
 /*!40000 ALTER TABLE `dealers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `managers` (
 
 LOCK TABLES `managers` WRITE;
 /*!40000 ALTER TABLE `managers` DISABLE KEYS */;
-INSERT INTO `managers` VALUES (1,NULL,1);
+INSERT INTO `managers` VALUES (1,NULL,2);
 /*!40000 ALTER TABLE `managers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,13 +131,13 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-# LOCK TABLES `orders` WRITE;
-# /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-# INSERT INTO `orders` VALUES (1,'2024-05-19',2009,'2024-05-19',1,1,1,1),(2,'2024-05-19',3009,'2024-05-19',1,1,1,2);
-# /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
-# UNLOCK TABLES;
-#
-# --
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (2,'2024-05-21',7000,'2024-05-21',1,1,1,1);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `repairers`
 --
 
@@ -153,7 +153,7 @@ CREATE TABLE `repairers` (
   KEY `FK26cm5ppabkxw37cb0ryhgjckg` (`manager_id`),
   CONSTRAINT `FK26cm5ppabkxw37cb0ryhgjckg` FOREIGN KEY (`manager_id`) REFERENCES `managers` (`manager_id`),
   CONSTRAINT `FK6hhbhf0kh2tys42uvkjhlfnx3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `repairers` (
 
 LOCK TABLES `repairers` WRITE;
 /*!40000 ALTER TABLE `repairers` DISABLE KEYS */;
-INSERT INTO `repairers` VALUES (1,NULL,4),(2,NULL,5),(3,NULL,6);
+INSERT INTO `repairers` VALUES (1,NULL,3);
 /*!40000 ALTER TABLE `repairers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,18 +175,18 @@ DROP TABLE IF EXISTS `services`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `services` (
   `service_id` bigint NOT NULL AUTO_INCREMENT,
+  `admission_date` date NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `execution_date` date DEFAULT NULL,
   `price` double NOT NULL,
   `repairer_id` bigint DEFAULT NULL,
   `vehicle_id` bigint DEFAULT NULL,
-  `admission_date` date NOT NULL,
   PRIMARY KEY (`service_id`),
   KEY `FKbk7kf7ncfovb4yrnofvjdb6bh` (`repairer_id`),
   KEY `FKlph60ok9q3oibqawro4eawrj` (`vehicle_id`),
   CONSTRAINT `FKbk7kf7ncfovb4yrnofvjdb6bh` FOREIGN KEY (`repairer_id`) REFERENCES `repairers` (`repairer_id`),
   CONSTRAINT `FKlph60ok9q3oibqawro4eawrj` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`vehicle_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +195,6 @@ CREATE TABLE `services` (
 
 LOCK TABLES `services` WRITE;
 /*!40000 ALTER TABLE `services` DISABLE KEYS */;
-INSERT INTO `services` VALUES (2,'test','2024-05-25',2000,1,1,'2024-05-15'),(3,'costam',NULL,1212,1,1,'2024-05-19');
 /*!40000 ALTER TABLE `services` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +238,7 @@ CREATE TABLE `users` (
   `role` enum('ADMIN','CLIENT','MANAGER','REPAIRER','DEALER') DEFAULT NULL,
   `surname` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +247,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'manager@gmail.com','manager','manager','manager','MANAGER','manager'),(2,'client@gmail.com','client','client','client','CLIENT','client'),(3,'dealer@gmail.com','dealer','dealer','dealer','DEALER','dealer'),(4,'repairer@gmail.com','repairer','repairer','repairer','REPAIRER','repairer'),(5,'mechanik2@gmail.com','mechanik2','mechanik','mechanik2','REPAIRER','2'),(6,'mechanik3@gmail.com','mechanik3','mechanik','mechanik3','REPAIRER','3');
+INSERT INTO `users` VALUES (1,'client@gmail.com','client','client','client','CLIENT','client'),(2,'manager@gmail.com','manager','manager','manager','MANAGER','manager'),(3,'repairer@gmail.com','repairer','repairer','repairer','REPAIRER','repairer'),(4,'dealer@gmail.com','dealer','dealer','dealer','DEALER','dealer');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,13 +263,14 @@ CREATE TABLE `vehicles` (
   `brand` varchar(255) NOT NULL,
   `model` varchar(255) NOT NULL,
   `modifications` varchar(255) DEFAULT NULL,
-  `next_inspection_date` date NOT NULL,
+  `next_inspection_date` date DEFAULT NULL,
   `price` double NOT NULL,
+  `was_sold` bit(1) DEFAULT NULL,
   `showroom_id` bigint DEFAULT NULL,
   PRIMARY KEY (`vehicle_id`),
   KEY `FKlegrvmc28emrbwdsg0ow8b4m8` (`showroom_id`),
   CONSTRAINT `FKlegrvmc28emrbwdsg0ow8b4m8` FOREIGN KEY (`showroom_id`) REFERENCES `showrooms` (`showroom_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `vehicles` (
 
 LOCK TABLES `vehicles` WRITE;
 /*!40000 ALTER TABLE `vehicles` DISABLE KEYS */;
-INSERT INTO `vehicles` VALUES (1,'Toyota','Yaris',NULL,'2025-10-13',20000,1),(2,'Ford','Focus','none','1999-10-21',2200,1);
+INSERT INTO `vehicles` VALUES (1,'Skoda','Fabia','','2025-05-21',7000,_binary '',1);
 /*!40000 ALTER TABLE `vehicles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -292,4 +292,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-19 19:47:13
+-- Dump completed on 2024-05-21 20:15:24
