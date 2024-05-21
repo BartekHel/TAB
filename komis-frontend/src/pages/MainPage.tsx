@@ -208,8 +208,7 @@ function App() {
           <h1>
             <button
               className="filterButton"
-              onClick={() => filterAndSortOffers(minPrice, maxPrice, sort)}
-            >
+              onClick={() => filterAndSortOffers(minPrice, maxPrice, sort)} >
               Filter
             </button>
             <br />
