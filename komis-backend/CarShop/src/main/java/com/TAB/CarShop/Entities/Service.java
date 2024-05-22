@@ -38,15 +38,14 @@ public class Service {
     @Column(name = "execution_date")
     private LocalDate execution_date;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private double price;
 
-    public Service(Vehicle vehicle_id, Repairer repairer, String description, LocalDate admission_date, double price) {
+    public Service(Vehicle vehicle_id, Repairer repairer, String description, LocalDate admission_date) {
         this.vehicle_id = vehicle_id;
         this.repairer = repairer;
         this.description = description;
         this.admission_date = admission_date;
-        this.price = price;
     }
 
     public Service() {

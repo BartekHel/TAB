@@ -1,6 +1,7 @@
 package com.TAB.CarShop.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,16 +20,16 @@ public class Dealer {
     private long dealer_id;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "manager_id")
     private Manager manager;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dealer")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Order> orders;
 
 }

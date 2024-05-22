@@ -13,15 +13,11 @@ public class ServiceRequest {
     private Long vehicleId;
     private Long repairerId;
     private String description;
-    private LocalDate admission_date;
-    private double price;
 
-    ServiceRequest(Long vehicleId, Long repairerId, String description, LocalDate admission_date, double price) {
+    ServiceRequest(Long vehicleId, Long repairerId, String description) {
         this.vehicleId = vehicleId;
         this.repairerId = repairerId;
         this.description = description;
-        this.admission_date = admission_date;
-        this.price = price;
     }
 
 }
