@@ -9,6 +9,7 @@ import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.ServiceRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,7 +44,13 @@ public class ServiceController {
             if (vehicle == null || repairer == null) {
                 return false;
             }
-            Service newService = new Service(vehicle, repairer, serviceRequest.getDescription(), serviceRequest.getAdmission_date(), serviceRequest.getPrice());
+            LocalDate admissionDate = LocalDate.now();
+            if(admissionDate.getDayOfWeek() == DayOfWeek.SATURDAY) {
+                admissionDate = admissionDate.plusDays(2);
+            } else if(admissionDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                admissionDate = admissionDate.plusDays(1);
+            }
+            Service newService = new Service(vehicle, repairer, serviceRequest.getDescription(), admissionDate);
             serviceRepository.saveAndFlush(newService);
             return true;
         } catch (Exception e) {

@@ -6,6 +6,8 @@ import com.TAB.CarShop.Entities.Service;
 import com.TAB.CarShop.Entities.User;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.RepairerRepository;
+import com.TAB.CarShop.Repositories.ServiceRepository;
+import com.TAB.CarShop.Requests.SetServicePriceRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,10 +20,12 @@ public class RepairerController {
 
 	private final RepairerRepository repairerRepository;
 	private final ManagerRepository managerRepository;
+	private final ServiceRepository serviceRepository;
 
-	public RepairerController(RepairerRepository repairerRepository, ManagerRepository managerRepository) {
+	public RepairerController(RepairerRepository repairerRepository, ManagerRepository managerRepository, ServiceRepository serviceRepository) {
 		this.repairerRepository = repairerRepository;
 		this.managerRepository = managerRepository;
+		this.serviceRepository = serviceRepository;
 	}
 
 	@GetMapping
@@ -77,12 +81,25 @@ public class RepairerController {
 		return repairers.get(index);
 	}
 
-	@PostMapping("/{id}/setmanager")
+	@PutMapping("/{id}/setmanager")
 	void setManager(@PathVariable long id, @RequestBody long managerId) {
 		Repairer repairer = repairerRepository.findById(id).orElse(null);
 		if (repairer == null)
 			return;
 		repairer.setManager(managerRepository.findById(managerId).orElse(null));
 		repairerRepository.save(repairer);
+	}
+
+	@PutMapping("/{id}/setserviceprice")
+	Service setServicePrice(@PathVariable long id, @RequestBody SetServicePriceRequest request) {
+		Repairer repairer = repairerRepository.findById(id).orElse(null);
+		if (repairer == null) return null;
+		for(Service service : repairer.getServices()) {
+			if(service.getService_id() == request.getServiceId()) {
+				service.setPrice(request.getPrice());
+				return serviceRepository.saveAndFlush(service);
+			}
+		}
+		return null;
 	}
 }
