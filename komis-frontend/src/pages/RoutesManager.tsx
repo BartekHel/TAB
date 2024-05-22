@@ -8,6 +8,7 @@ import CarDetailsComponent from './CarDetailsComponent'
 import { UserProvider } from '../PageInfo'
 import ServiceOrder from './ServiceOrder'
 import ManagerPage from './ManagerPage'
+import ServiceOrderSelected from './ServiceOrderSelected'
 const RoutesManager = () => {
   return (
     <div>
@@ -20,6 +21,7 @@ const RoutesManager = () => {
         <Route path="/managerPanel" element={<ManagerPage/>}/>
         <Route path="/carDetails/:carId" element={<CarDetailsComponent/>}/>
         <Route path="/orderService" element={<ServiceOrder/>}/>
+        <Route path="/orderServiceSelected/:carId" element={<ServiceOrderSelected/>}/>
       </Routes>
       </UserProvider>
     </div>

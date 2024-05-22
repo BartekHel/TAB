@@ -25,11 +25,12 @@ body {
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     opacity: 85%;
-    max-height: 75%;
+    max-height: 85%;
     overflow-y: scroll;
 }
 
-input, button {
+
+link{
     font-size: 14px;
     margin-bottom: 5px;
     padding: 10px;
@@ -39,24 +40,22 @@ input, button {
     box-sizing: border-box;
 }
 
-button {
-    cursor: pointer;
-    background-color: grey;
-    color: white;
-    border: none;
+.nav-button{
+    font-size: 20px;
 }
 
-button:hover {
+
+.navbutton:hover {
     background-color: darkgrey;
 }
 
-button:disabled {
+.navbutton:disabled {
     background-color: lightgrey;
     cursor: not-allowed;
 }
 
 td, th {
-    padding: 30px;
+    padding: 15px;
     color: black;
     font-size: 18px;
     margin-top: 10px;

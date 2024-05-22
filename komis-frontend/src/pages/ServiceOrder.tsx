@@ -3,6 +3,7 @@ import '../css/ServiceOrder.css';
 import ApiClient from '../service/ApiClient';
 import userContext from '../PageInfo';
 import Vehicle from "../entity/Vehicle";
+import { Link } from 'react-router-dom';
 
 const ServiceOrder = () => {
   const apiClient = new ApiClient();
@@ -56,8 +57,8 @@ const ServiceOrder = () => {
               <td>{car.modifications}</td>
               <td>{car.next_inspection_date}</td>
               <td>${car.price.toLocaleString()}</td>
-              <td><button>Details</button></td>
-              <td><button>Order Service</button></td>
+              <td><Link className="nav-button" to={"/carDetails/:" + car.vehicle_id} >Details</Link></td>
+              <td><Link className="nav-button" to={"/orderServiceSelected/:" + car.vehicle_id} >OrderService</Link></td>
             </tr>
           ))}
         </tbody>
