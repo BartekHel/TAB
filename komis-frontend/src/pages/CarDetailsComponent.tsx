@@ -47,10 +47,11 @@ const CarDetailsComponent = () => {
    
     <div className='wrapper'>
     <div className='inside-wrapper'>
-    <Filters color={color} engine={engine} upholstery={upholstery} 
+      <div className='spacer'></div>
+    {/* <Filters color={color} engine={engine} upholstery={upholstery} 
     colorChange={(c)=>setColor(c)}
     engineChange={(e)=>setEngine(e)}
-    upholsteryChange={(u)=>setUpholstery(u)}/>
+    upholsteryChange={(u)=>setUpholstery(u)}/> */}
 
 
     <div id='car-image-wrapper'>

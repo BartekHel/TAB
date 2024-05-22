@@ -69,7 +69,7 @@ public class ManagerController {
 						Collectors.summingDouble(Order::getPrice)));
 	}
 
-	@PostMapping("/{id}/setshow")
+	@PutMapping("/{id}/setshow")
 	void setShowroom(@PathVariable long id, @RequestBody long showroomId) {
 		Manager manager = managerRepository.findById(id).orElse(null);
 		if (manager == null)
