@@ -37,7 +37,13 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,1);
+INSERT INTO `clients` VALUES (1,10),
+                             (2,11),
+                             (3,12),
+                             (4,13),
+                             (5,14),
+                             (6,15),
+                             (7,16);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +72,10 @@ CREATE TABLE `dealers` (
 
 LOCK TABLES `dealers` WRITE;
 /*!40000 ALTER TABLE `dealers` DISABLE KEYS */;
-INSERT INTO `dealers` VALUES (1,NULL,4);
+INSERT INTO `dealers` VALUES (1,1,6),
+                             (2,1,7),
+                             (3,2,8),
+                             (4,2,9);
 /*!40000 ALTER TABLE `dealers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +104,8 @@ CREATE TABLE `managers` (
 
 LOCK TABLES `managers` WRITE;
 /*!40000 ALTER TABLE `managers` DISABLE KEYS */;
-INSERT INTO `managers` VALUES (1,NULL,2);
+INSERT INTO `managers` VALUES (1,1,1),
+                              (2,2,2);
 /*!40000 ALTER TABLE `managers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +143,16 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (2,'2024-05-21',7000,'2024-05-21',1,1,1,1);
+INSERT INTO `orders` VALUES (1,'2023-07-21',7500,'2023-01-19',1,1,1,1),
+                            (2,'2023-08-21',7200,'2023-01-21',2,2,1,14),
+                            (3,'2023-09-21',6800,'2023-01-19',4,3,2,9),
+                            (4,'2023-10-21',7300,'2023-01-31',3,4,2,4),
+                            (5,'2023-11-21',7900,'2023-01-01',7,2,1,5),
+                            (6,'2023-12-21',6400,'2023-01-13',5,3,2,13),
+                            (7,'2023-01-21',6600,'2023-01-15',8,1,1,17),
+                            (8,'2023-02-21',7100,'2023-01-07',6,4,2,18),
+                            (9,'2023-03-21',6900,'2023-01-21',2,2,1,7),
+                            (10,'2023-04-21',6700,'2023-01-19',9,1,1,12);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +181,9 @@ CREATE TABLE `repairers` (
 
 LOCK TABLES `repairers` WRITE;
 /*!40000 ALTER TABLE `repairers` DISABLE KEYS */;
-INSERT INTO `repairers` VALUES (1,NULL,3);
+INSERT INTO `repairers` VALUES (1,1,3),
+                               (2,1,4),
+                               (3,2,5);
 /*!40000 ALTER TABLE `repairers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,6 +216,15 @@ CREATE TABLE `services` (
 
 LOCK TABLES `services` WRITE;
 /*!40000 ALTER TABLE `services` DISABLE KEYS */;
+INSERT INTO `services` VALUES (1, '2023-01-09', 'Wymiana opon', '2023-01-11', 500, 1, 5),
+                              (2, '2023-02-08', 'Wymiana opon', '2023-02-11', 600, 2, 11),
+                              (3, '2023-03-07', 'Wymiana drzwi', '2023-03-11', 200, 3, 7),
+                              (4, '2023-04-06', 'Wymiana oleju', '2023-04-11', 100, 2, 13),
+                              (5, '2023-05-05', 'Wymiana opon', '2023-05-11', 700, 1, 2),
+                              (6, '2023-06-04', 'Wymiana silnika', '2023-06-11', 800, 3, 4),
+                              (7, '2023-07-03', 'Wymiana szyby', '2023-07-11', 300, 3, 18),
+                              (8, '2023-08-02', 'Wymiana śrób w kołach', '2023-08-11', 900, 1, 16),
+                              (9, '2023-09-01', 'Wymiana opon', '2023-09-11', 400, 2, 14);
 /*!40000 ALTER TABLE `services` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +248,8 @@ CREATE TABLE `showrooms` (
 
 LOCK TABLES `showrooms` WRITE;
 /*!40000 ALTER TABLE `showrooms` DISABLE KEYS */;
-INSERT INTO `showrooms` VALUES (1,'Akademicka 16 Gliwice');
+INSERT INTO `showrooms` VALUES (1,'Akademicka 16 Gliwice'),
+                               (2,'Zadupie 300 kilometrów stąd');
 /*!40000 ALTER TABLE `showrooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +278,22 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'client@gmail.com','client','client','client','CLIENT','client'),(2,'manager@gmail.com','manager','manager','manager','MANAGER','manager'),(3,'repairer@gmail.com','repairer','repairer','repairer','REPAIRER','repairer'),(4,'dealer@gmail.com','dealer','dealer','dealer','DEALER','dealer');
+INSERT INTO `users` VALUES (1,'manager1@gmail.com','manager1','Janusz','1234','MANAGER','Managier'),
+                           (2,'manager2@gmail.com','manager2','Grzegorz','1234','MANAGER','Managier'),
+                           (3,'repairer1@gmail.com','repairer1','Złota','1234','REPAIRER','Ronczka'),
+                           (4,'repairer2@gmail.com','repairer2','Srebrna','1234','REPAIRER','Ronczka'),
+                           (5,'repairer3@gmail.com','repairer3','Plastikowa','1234','REPAIRER','Ronczka'),
+                           (6,'dealer1@gmail.com','dealer1','Handlarz','1234','DEALER','Autami'),
+                           (7,'dealer2@gmail.com','dealer2','Handlarz','1234','DEALER','Samochodami'),
+                           (8,'dealer3@gmail.com','dealer3','Handlarz','1234','DEALER','Pojazdami'),
+                           (9,'dealer4@gmail.com','dealer4','Handlarz','1234','DEALER','Wehiklami'),
+                           (10,'client1@gmail.com','client1','Kupie','1234','CLIENT','Honde'),
+                           (11,'client2@gmail.com','client2','NieKupie','1234','CLIENT','Hondy'),
+                           (12,'client3@gmail.com','client3','Wojciech','1234','CLIENT','Wójcik'),
+                           (13,'client4@gmail.com','client4','Pan','1234','CLIENT','Prezydent'),
+                           (14,'client5@gmail.com','client5','James','1234','CLIENT','LeBron'),
+                           (15,'client6@gmail.com','client6','imie','1234','CLIENT','ZMałej'),
+                           (16,'client7@gmail.com','client7','Vehiclepilled','1234','CLIENT','Carbuyer');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +325,24 @@ CREATE TABLE `vehicles` (
 
 LOCK TABLES `vehicles` WRITE;
 /*!40000 ALTER TABLE `vehicles` DISABLE KEYS */;
-INSERT INTO `vehicles` VALUES (1,'Skoda','Fabia','','2025-05-21',7000,_binary '',1);
+INSERT INTO `vehicles` VALUES (1,'Skoda','Fabia','','2025-05-21',7000,b'0',1),
+                              (2,'Skoda','Fabia','Silnik odrzutowy','2025-04-11',13000,b'0',1),
+                              (3,'Skoda','Fabia','Opony zimowe','2025-08-23',7200,b'1',2),
+                              (4,'Skoda','Fabia','Szyby pancerne','2025-01-17',9500,b'0',2),
+                              (5,'Skoda','Fabia','Napęd na trzy koła','2025-04-23',6500,b'1',1),
+                              (6,'Skoda','Fabia','','2025-07-26',6200,b'1',2),
+                              (7,'Skoda','Fabia','','2025-11-23',7200,b'0',1),
+                              (8,'Skoda','Fabia','','2025-12-10',7700,b'1',1),
+                              (9,'Skoda','Fabia','Światła takie tysiąc razy mocniejsze','2028-02-29',11000,b'1',2),
+                              (10,'Skoda','Fabia','','2025-03-04',6100,b'0',2),
+                              (11,'Skoda','Fabia','Głośny klakson','2025-01-17',7001,b'1',2),
+                              (12,'Skoda','Fabia','Opony letnie','2025-10-07',7200,b'1',1),
+                              (13,'Skoda','Fabia','','2025-02-12',6700,b'0',2),
+                              (14,'Skoda','Fabia','brak opon','2025-09-24',3000,b'0',1),
+                              (15,'Skoda','Fabia','','2025-01-31',7400,b'0',2),
+                              (16,'Skoda','Fabia','','2025-07-29',7200,b'1',2),
+                              (17,'Skoda','Fabia','Skórzane fotele','2025-04-14',7500,b'0',1),
+                              (18,'Skoda','Fabia','','2025-11-13',6500,b'1',2);
 /*!40000 ALTER TABLE `vehicles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
