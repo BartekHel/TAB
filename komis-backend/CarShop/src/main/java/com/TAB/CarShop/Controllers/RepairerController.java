@@ -64,7 +64,7 @@ public class RepairerController {
 	@GetMapping("/leastoccupied")
 	Repairer getLeastOccupiedRepairer() {
 		List<Repairer> repairers = repairerRepository.findAll();
-		if (repairers.size() == 0) {
+		if (repairers.isEmpty()) {
 			return null;
 		}
 		int leastOccupied = this.getRepairerActiveServices(repairers.get(0).getRepairer_id());
