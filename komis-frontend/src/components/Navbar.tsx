@@ -119,6 +119,9 @@ useEffect(() => {
           {
             role=="CLIENT" && <Link to="/orderService" className="nav-button">Order Service</Link>
           }
+          {
+            role=="REPAIRER" && <Link to="/mechanicsServices/" className="nav-button">Services</Link>
+          }
           <Link to="/" className="nav-button" onClick={logout}>Logout</Link>
         
           </>

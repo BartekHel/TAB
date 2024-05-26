@@ -9,6 +9,7 @@ import { UserProvider } from '../PageInfo'
 import ServiceOrder from './ServiceOrder'
 import ManagerPage from './ManagerPage'
 import ServiceOrderSelected from './ServiceOrderSelected'
+import MechanicsServices from './MechanicsServices'
 const RoutesManager = () => {
   return (
     <div>
@@ -22,6 +23,7 @@ const RoutesManager = () => {
         <Route path="/carDetails/:carId" element={<CarDetailsComponent/>}/>
         <Route path="/orderService" element={<ServiceOrder/>}/>
         <Route path="/orderServiceSelected/:carId" element={<ServiceOrderSelected/>}/>
+        <Route path="/mechanicsServices" element={<MechanicsServices/>}/>
       </Routes>
       </UserProvider>
     </div>

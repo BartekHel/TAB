@@ -1,6 +1,7 @@
 import axios from "axios";
 import CarDetails from "../entitiy/CarDetail";
 import Vehicle from "../entitiy/Vehicle";
+import Service from "../entitiy/Service"
 
 
 
@@ -105,6 +106,25 @@ export const axiosInstance= axios.create({
       const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})
       return [resp.data];
     }
+
+    GetMechanicServices = async (id: number): Promise<Service[]> => {
+      try {
+        const resp = await axios.get(`http://localhost:8080/car-shop/repairer/${id}/listservices`);
+
+        console.log(id);
+        console.log(resp.data);
+    
+        return resp.data.map((service: any) => ({
+          service_id: service.service_id,
+          description: service.description,
+          admission_date: service.execution_date,
+          price: service.price
+        }));
+      } catch (error) {
+        console.error("Error fetching services:", error);
+        throw error;
+      }
+    };
   }
 
   export default ApiClient;
