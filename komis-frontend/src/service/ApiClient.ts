@@ -63,6 +63,48 @@ export const axiosInstance= axios.create({
         throw error;
       }
     };
+
+    GetVehicleById = async (id: number): Promise<Vehicle> => {
+      try {
+        const resp = await axios.get(`http://localhost:8080/car-shop/vehicles/${id}`);
+
+        const vehicle = resp.data;
+        console.log("vehicle");
+        console.log(vehicle);
+        const transformedVehicle = {
+          vehicle_id: vehicle.vehicle_id,
+          brand: vehicle.brand,
+          model: vehicle.model,
+          modifications: vehicle.modifications,
+          next_inspection_date: vehicle.next_inspection_date,
+          price: vehicle.price
+        };
+
+        return transformedVehicle;
+
+      } catch (error) {
+        console.error("Error fetching client vehicles:", error);
+        throw error;
+      }
+    };
+    GetLeastOccupiedReapirer = async (): Promise<[number, string]> =>
+    {
+      try{
+        const resp = await axiosInstance.get('http://localhost:8080/car-shop/repairer/leastoccupied');
+        console.log([resp.data.repairer_id, resp.data.user.name + " " + resp.data.user.surname])
+        return [resp.data.repairer_id, resp.data.user.name + " " + resp.data.user.surname]
+      } catch (error) {
+        console.error("Error fetching repairer:", error);
+        throw error;
+      }
+      
+    };
+
+    PostService = async (vehicle_id: number, repairer_id: number, description: string): Promise<boolean> =>
+    {
+      const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})
+      return [resp.data];
+    }
   }
 
   export default ApiClient;
