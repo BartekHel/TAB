@@ -4,7 +4,6 @@ import com.TAB.CarShop.Entities.Client;
 import com.TAB.CarShop.Entities.Order;
 import com.TAB.CarShop.Entities.Vehicle;
 import com.TAB.CarShop.Repositories.ClientRepository;
-import com.TAB.CarShop.Repositories.VehicleRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,7 @@ public class ClientController {
 			return null;
 		}
 		List<Vehicle> vehicles = new ArrayList<>();
-		for(Order order : client.getOrders()) {
+		for (Order order : client.getOrders()) {
 			vehicles.add(order.getVehicle());
 		}
 		return vehicles;
@@ -52,7 +51,7 @@ public class ClientController {
 			return null;
 		}
 		List<Order> orders = new ArrayList<>();
-		for(Order order : client.getOrders()) {
+		for (Order order : client.getOrders()) {
 			orders.add(order);
 		}
 		return orders;

@@ -13,21 +13,21 @@ import java.util.Set;
 @Entity
 @Table(name = "repairers")
 public class Repairer {
-    @Id
-    @Column(name = "repairer_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long repairer_id;
+	@Id
+	@Column(name = "repairer_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long repairer_id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "manager_id")
+	private Manager manager;
 
-    @OneToMany(mappedBy = "repairer")
-    @JsonManagedReference
-    private Set<Service> services;
+	@OneToMany(mappedBy = "repairer")
+	@JsonManagedReference
+	private Set<Service> services;
 }

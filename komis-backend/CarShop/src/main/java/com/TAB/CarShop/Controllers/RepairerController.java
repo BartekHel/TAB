@@ -1,9 +1,7 @@
 package com.TAB.CarShop.Controllers;
 
-import com.TAB.CarShop.Entities.Manager;
 import com.TAB.CarShop.Entities.Repairer;
 import com.TAB.CarShop.Entities.Service;
-import com.TAB.CarShop.Entities.User;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.RepairerRepository;
 import com.TAB.CarShop.Repositories.ServiceRepository;
@@ -55,8 +53,8 @@ public class RepairerController {
 		}
 		int activeServices = 0;
 		LocalDate currentDate = LocalDate.now();
-		for(Service service : repairer.getServices()) {
-			if(currentDate.isAfter(service.getAdmission_date()) && (service.getExecution_date() == null || currentDate.isBefore(service.getExecution_date()))) {
+		for (Service service : repairer.getServices()) {
+			if (currentDate.isAfter(service.getAdmission_date()) && (service.getExecution_date() == null || currentDate.isBefore(service.getExecution_date()))) {
 				activeServices++;
 			}
 		}
@@ -71,9 +69,9 @@ public class RepairerController {
 		}
 		int leastOccupied = this.getRepairerActiveServices(repairers.get(0).getRepairer_id());
 		int index = 0;
-		for(int i = 1; i < repairers.size(); i++) {
+		for (int i = 1; i < repairers.size(); i++) {
 			int numberOfActiveServices = this.getRepairerActiveServices(repairers.get(i).getRepairer_id());
-			if(numberOfActiveServices < leastOccupied) {
+			if (numberOfActiveServices < leastOccupied) {
 				leastOccupied = numberOfActiveServices;
 				index = i;
 			}
@@ -94,8 +92,8 @@ public class RepairerController {
 	Service setServicePrice(@PathVariable long id, @RequestBody SetServicePriceRequest request) {
 		Repairer repairer = repairerRepository.findById(id).orElse(null);
 		if (repairer == null) return null;
-		for(Service service : repairer.getServices()) {
-			if(service.getService_id() == request.getServiceId()) {
+		for (Service service : repairer.getServices()) {
+			if (service.getService_id() == request.getServiceId()) {
 				service.setPrice(request.getPrice());
 				return serviceRepository.saveAndFlush(service);
 			}

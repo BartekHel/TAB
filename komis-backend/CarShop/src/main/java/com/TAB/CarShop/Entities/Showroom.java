@@ -13,22 +13,22 @@ import java.util.Set;
 @Table(name = "showrooms")
 public class Showroom {
 
-    @Id
-    @Column(name = "showroom_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long showroom_id;
+	@Id
+	@Column(name = "showroom_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long showroom_id;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+	@Column(name = "address", nullable = false)
+	private String address;
 
-    @OneToMany(mappedBy = "showroom")
-    @JsonManagedReference
-    private Set<Order> orders;
+	@OneToMany(mappedBy = "showroom")
+	@JsonManagedReference
+	private Set<Order> orders;
 
-    @OneToMany(mappedBy = "showroom")
-    @JsonManagedReference
-    private Set<Vehicle> vehicles;
+	@OneToMany(mappedBy = "showroom")
+	@JsonManagedReference
+	private Set<Vehicle> vehicles;
 
-    @OneToOne(mappedBy = "showroom")
-    private Manager manager;
+	@OneToOne(mappedBy = "showroom")
+	private Manager manager;
 }

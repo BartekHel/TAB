@@ -13,16 +13,16 @@ import java.util.Set;
 @Table(name = "clients")
 public class Client {
 
-    @Id
-    @Column(name = "client_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long client_id;
+	@Id
+	@Column(name = "client_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long client_id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    @JsonManagedReference
-    private Set<Order> orders;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+	@JsonManagedReference
+	private Set<Order> orders;
 }

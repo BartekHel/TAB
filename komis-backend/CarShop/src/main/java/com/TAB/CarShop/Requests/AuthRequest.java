@@ -6,14 +6,15 @@ import lombok.Setter;
 @Setter
 @Getter
 public class AuthRequest {
-    private String login;
-    private String password;
+	private String login;
+	private String password;
 
-    public AuthRequest() {}
+	public AuthRequest() {
+	}
 
-    public AuthRequest(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
+	public AuthRequest(String login, String password) {
+		this.login = login;
+		this.password = password;
+	}
 
 }

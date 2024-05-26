@@ -6,6 +6,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ShowroomRequest {
-    private String address;
-    private long managerId;
+	private String address;
+	private long managerId;
 }

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SetServicePriceRequest {
-    private long serviceId;
-    private double price;
+	private long serviceId;
+	private double price;
 }

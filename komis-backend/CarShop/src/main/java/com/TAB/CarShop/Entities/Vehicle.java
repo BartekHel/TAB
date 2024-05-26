@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Setter
 @Getter
@@ -15,45 +14,46 @@ import java.util.Date;
 @Table(name = "vehicles")
 public class Vehicle {
 
-    @Id
-    @Column(name = "vehicle_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long vehicle_id;
+	@Id
+	@Column(name = "vehicle_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long vehicle_id;
 
-    @Column(name = "brand", nullable = false)
-    private String brand;
+	@Column(name = "brand", nullable = false)
+	private String brand;
 
-    @Column(name = "model", nullable = false)
-    private String model;
+	@Column(name = "model", nullable = false)
+	private String model;
 
-    @Column(name = "modifications")
-    private String modifications;
+	@Column(name = "modifications")
+	private String modifications;
 
-    @Column(name = "next_inspection_date")
-    private LocalDate next_inspection_date;
+	@Column(name = "next_inspection_date")
+	private LocalDate next_inspection_date;
 
-    @Column(name = "price", nullable = false)
-    private double price;
+	@Column(name = "price", nullable = false)
+	private double price;
 
-    @Column(name = "was_sold")
-    private boolean was_sold = false;
+	@Column(name = "was_sold")
+	private boolean was_sold = false;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "vehicle")
-    private Order order;
+	@JsonIgnore
+	@OneToOne(mappedBy = "vehicle")
+	private Order order;
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "showroom_id")
-    private Showroom showroom;
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "showroom_id")
+	private Showroom showroom;
 
-    public Vehicle() {}
+	public Vehicle() {
+	}
 
-    public Vehicle(String brand, String model, String modifications,  double price, Showroom showroom) {
-        this.brand = brand;
-        this.model = model;
-        this.modifications = modifications;
-        this.price = price;
-        this.showroom = showroom;
-    }
+	public Vehicle(String brand, String model, String modifications, double price, Showroom showroom) {
+		this.brand = brand;
+		this.model = model;
+		this.modifications = modifications;
+		this.price = price;
+		this.showroom = showroom;
+	}
 }

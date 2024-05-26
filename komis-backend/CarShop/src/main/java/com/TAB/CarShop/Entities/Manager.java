@@ -14,24 +14,24 @@ import java.util.Set;
 
 public class Manager {
 
-    @Id
-    @Column(name = "manager_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long manager_id;
+	@Id
+	@Column(name = "manager_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long manager_id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
 
-    @OneToOne
-    @JoinColumn(name = "showroom_id", referencedColumnName = "showroom_id")
-    private Showroom showroom;
+	@OneToOne
+	@JoinColumn(name = "showroom_id", referencedColumnName = "showroom_id")
+	private Showroom showroom;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
-    @JsonManagedReference
-    private Set<Dealer> dealers;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
+	@JsonManagedReference
+	private Set<Dealer> dealers;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
-    @JsonManagedReference
-    private Set<Repairer> repairers;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
+	@JsonManagedReference
+	private Set<Repairer> repairers;
 }

@@ -7,7 +7,6 @@ import com.TAB.CarShop.Repositories.DealerRepository;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

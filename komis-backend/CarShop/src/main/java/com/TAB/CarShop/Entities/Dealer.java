@@ -1,10 +1,9 @@
 package com.TAB.CarShop.Entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -14,22 +13,22 @@ import java.util.Set;
 @Table(name = "dealers")
 
 public class Dealer {
-    @Id
-    @Column(name = "dealer_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long dealer_id;
+	@Id
+	@Column(name = "dealer_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long dealer_id;
 
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+	@OneToOne
+	@JsonIgnore
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
+	@ManyToOne
+	@JoinColumn(name = "manager_id")
+	private Manager manager;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dealer")
-    @JsonIgnore
-    private Set<Order> orders;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dealer")
+	@JsonIgnore
+	private Set<Order> orders;
 
 }
