@@ -117,12 +117,48 @@ export const axiosInstance= axios.create({
         return resp.data.map((service: any) => ({
           service_id: service.service_id,
           description: service.description,
-          admission_date: service.execution_date,
+          admission_date: service.admission_date,
+          execution_date: service.execution_date,
           price: service.price
         }));
       } catch (error) {
         console.error("Error fetching services:", error);
         throw error;
+      }
+    };
+
+    SetServiceDate = async (service_id: number, date: string) => {
+      try {
+          const response = await axios.post(
+              `http://localhost:8080/car-shop/services/${service_id}/setdate`,
+              date,  // Directly sending the date string
+              {
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              }
+          );
+          console.log('Data ustawiona pomyślnie:', response.data);
+      } catch (error) {
+          console.error('Błąd podczas ustawiania daty:', error);
+      }
+  };
+
+    SetServicePrice = async (service_id: number, price: number) =>
+    {
+      try {
+        const response = await axios.post(
+            `http://localhost:8080/car-shop/services/${service_id}/setprice`,
+            price, 
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        console.log('Data ustawiona pomyślnie:', response.data);
+      } catch (error) {
+          console.error('Błąd podczas ustawiania daty:', error);
       }
     };
   }

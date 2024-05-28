@@ -2,6 +2,7 @@ package com.TAB.CarShop.Controllers;
 
 import com.TAB.CarShop.Entities.Repairer;
 import com.TAB.CarShop.Entities.Service;
+import com.TAB.CarShop.Entities.Vehicle;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.RepairerRepository;
 import com.TAB.CarShop.Repositories.ServiceRepository;
@@ -9,8 +10,10 @@ import com.TAB.CarShop.Requests.SetServicePriceRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/repairer")
@@ -37,12 +40,15 @@ public class RepairerController {
 	}
 
 	@GetMapping("/{id}/listservices")
-	Set<Service> getRepairerServices(@PathVariable Long id) {
+	List<Service> getRepairerServices(@PathVariable Long id) {
 		Repairer repairer = repairerRepository.findById(id).orElse(null);
 		if (repairer == null) {
 			return null;
 		}
-		return repairer.getServices();
+
+		Comparator<Service> comp = Comparator.comparing(Service::getService_id);
+
+		return repairer.getServices().stream().sorted(comp).toList();
 	}
 
 	@GetMapping("/{id}/activeservices")

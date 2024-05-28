@@ -12,38 +12,65 @@ const MechanicsServices = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchServices = async () => {
+    try {
+      const services = await apiClient.GetMechanicServices(userId);
+      setOwnedCars(services);
+    } catch (err) {
+      setError("Error fetching client services");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const vehicles = await apiClient.GetMechanicServices(userId);
-        setOwnedCars(vehicles);
-      } catch (err) {
-        setError("Error fetching client vehicles");
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchServices();
+
   }, [userId]);
 
-  const handleDateChange = async (id: number) => {
+  const handleDateChange = async (event, id: number) => {
     try {
-      // Handle date change logic
+      await apiClient.SetServiceDate(id, event.target.value);
+      setOwnedCars(prevCars => 
+        prevCars.map(car => 
+          car.service_id === id ? { ...car, execution_date: event.target.value } : car
+        )
+      );
+      fetchServices();
     } catch (err) {
-      setError("Error fetching client vehicles");
+      setError("Error setting new date");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handlePriceChange = async (event, id: number) => {
+    try {
+      await apiClient.SetServicePrice(id, event.target.value);
+      setOwnedCars(prevCars => 
+        prevCars.map(car => 
+          car.service_id === id ? { ...car, execution_date: event.target.value } : car
+        )
+      );
+      fetchServices();
+    } catch (err) {
+      setError("Error setting new date");
     } finally {
       setLoading(false);
     }
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div id="serviceOrderContainer">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div id="serviceOrderContainer">{error}</div>;
   }
+
+  
+  
 
   return (
     <div id="serviceOrderContainer">
@@ -60,16 +87,27 @@ const MechanicsServices = () => {
           {ownedCars.map((service, index) => (
             <tr key={index}>
               <td>{service.admission_date}</td>
-              <td>{service.execution_date == null ? 
-                <input
+              <td>
+                {
+                  <input
                   type="date"
                   id="date-picker"
-                  onChange={() => handleDateChange(service.service_id)}
-                /> 
-                : service.execution_date}
+                  value={service.execution_date || ''} // Ensure execution_date is handled correctly
+                  onChange={(event) => handleDateChange(event, service.service_id)}
+                  />
+                }
+                
               </td>
               <td>{service.description}</td>
-              <td>{service.price}</td>
+              <td>
+              {
+                  <input
+                  type="number"
+                  value={service.price || ''}
+                  onChange={(event) => handlePriceChange(event, service.service_id)}
+                  />
+                }
+              </td>
             </tr>
           ))}
         </tbody>
