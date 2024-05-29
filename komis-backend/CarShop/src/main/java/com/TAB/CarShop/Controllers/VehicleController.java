@@ -7,12 +7,21 @@ import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.VehicleRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 
 
 @RestController
@@ -55,6 +64,25 @@ public class VehicleController {
 				.filter(vehicle -> vehicle.getPrice() <= cenamax)
 
 				.sorted(comp).toList();
+	}
+
+	@PostMapping("/picture")
+	public String getVehicleImage(@RequestParam(value = "pictureFileName", defaultValue = "") String pictureFileName) {
+		try {
+			Path currentRelativePath = Paths.get("");
+			String path = currentRelativePath.toAbsolutePath().toString() + "\\CarShop\\Images\\Vehicles\\" + pictureFileName;
+
+			File file = new File(path);
+			BufferedImage image = ImageIO.read(file);
+
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			ImageIO.write(image, "png", outputStream);
+
+			byte[] imageBytes = outputStream.toByteArray();
+			return Base64.getEncoder().encodeToString(imageBytes);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	@PostMapping()

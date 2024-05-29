@@ -37,6 +37,9 @@ public class Vehicle {
 	@Column(name = "was_sold")
 	private boolean was_sold = false;
 
+    @Column(name = "picture_file_name")
+	private String picture_file_name;
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "vehicle")
 	private Order order;
@@ -54,6 +57,15 @@ public class Vehicle {
 		this.model = model;
 		this.modifications = modifications;
 		this.price = price;
+		this.showroom = showroom;
+	}
+
+	public Vehicle(String brand, String model, String modifications, double price, String picture_file_name, Showroom showroom) {
+		this.brand = brand;
+		this.model = model;
+		this.modifications = modifications;
+		this.price = price;
+		this.picture_file_name = picture_file_name;
 		this.showroom = showroom;
 	}
 }
