@@ -4,6 +4,7 @@ import '../css/Navbar.css';
 import ReactLogo from '../assets/car.svg';
 import  userContext  from '../PageInfo';
 import ApiClient from '../service/ApiClient';
+import { toast } from 'react-toastify';
 
 const apiClient = new ApiClient();
 
@@ -52,7 +53,10 @@ const Navbar = () => {
     (JSON.parse(localStorage.getItem("user")).role) || {}
   );
 
-  
+  const handleGenerateToken = async() =>{
+    const token = await apiClient.GenerateToken(userId);
+    alert("Your generated token:" + token);
+  }
   
   
 useEffect(() => {
@@ -117,7 +121,10 @@ useEffect(() => {
         ) : (
           <>
           {
-            role=="CLIENT" && <Link to="/orderService" className="nav-button">Order Service</Link>
+            role=="CLIENT" && <button className="nav-button" onClick={handleGenerateToken}>Generate token</button> 
+          }
+          {
+            role=="CLIENT" && <Link to="/orderService" className="nav-button">Order Service</Link> 
           }
           {
             role=="REPAIRER" && <Link to="/mechanicsServices/" className="nav-button">Services</Link>

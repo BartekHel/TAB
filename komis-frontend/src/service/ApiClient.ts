@@ -161,6 +161,19 @@ export const axiosInstance= axios.create({
           console.error('Błąd podczas ustawiania daty:', error);
       }
     };
+
+    GenerateToken = async(clientId: number):Promise<string> =>
+    {
+      try {
+        const response = await axios.get(
+            `http://localhost:8080/car-shop/client/${clientId}/generatetoken`
+            
+        );
+        return response.data;
+      } catch (error) {
+          console.error('Błąd podczas generowania tokenu:', error);
+      }
+    }
   }
 
   export default ApiClient;
