@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -25,4 +26,7 @@ public class Client {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
 	@JsonManagedReference
 	private Set<Order> orders;
+
+	@Column(name = "token")
+	private String token;
 }

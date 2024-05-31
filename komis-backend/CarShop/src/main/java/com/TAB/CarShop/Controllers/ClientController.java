@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/client")
@@ -55,5 +56,24 @@ public class ClientController {
 			orders.add(order);
 		}
 		return orders;
+	}
+
+	@GetMapping("/{id}/generatetoken")
+	String generateToken(@PathVariable Long id) {
+		Client client = clientRepository.findById(id).orElse(null);
+		if (client == null) {
+			return null;
+		}
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		Random random = new Random();
+		int length = 8;
+		StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+			sb.append(characters.charAt(random.nextInt(characters.length())));
+		}
+		String token = sb.toString();
+		client.setToken(token);
+		clientRepository.save(client);
+		return token;
 	}
 }
