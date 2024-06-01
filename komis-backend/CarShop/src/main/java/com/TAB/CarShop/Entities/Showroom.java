@@ -1,5 +1,6 @@
 package com.TAB.CarShop.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,13 +23,14 @@ public class Showroom {
 	private String address;
 
 	@OneToMany(mappedBy = "showroom")
-	@JsonManagedReference
+	@JsonIgnore
 	private Set<Order> orders;
 
 	@OneToMany(mappedBy = "showroom")
-	@JsonManagedReference
+	@JsonIgnore
 	private Set<Vehicle> vehicles;
 
 	@OneToOne(mappedBy = "showroom")
+	@JsonIgnore
 	private Manager manager;
 }

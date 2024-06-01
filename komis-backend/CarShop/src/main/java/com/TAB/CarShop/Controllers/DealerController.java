@@ -46,6 +46,13 @@ public class DealerController {
 		return dealer.getManager().getShowroom();
 	}
 
+	@GetMapping("/{id}/getmanager")
+	Manager getDealerManager(@PathVariable Long id) {
+		Dealer dealer = dealerRepository.findById(id).orElse(null);
+		if (dealer == null) return null;
+		return dealer.getManager();
+	}
+
 	@PutMapping("/{id}/setmanager/{managerid}")
 	Dealer setManager(@PathVariable Long id, @PathVariable Long managerid) {
 		Dealer dealer = dealerRepository.findById(id).orElse(null);

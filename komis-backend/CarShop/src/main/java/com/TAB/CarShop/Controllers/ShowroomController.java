@@ -51,4 +51,18 @@ public class ShowroomController {
 		}
 		return showroom.getOrders();
 	}
+
+	@GetMapping("/{id}/listvehicles")
+	Set<Vehicle> getShowroomVehicles(@PathVariable Long id) {
+		Showroom showroom = showroomRepository.findById(id).orElse(null);
+		if(showroom == null) return null;
+		return showroom.getVehicles();
+	}
+
+	@GetMapping("/{id}/getmanager")
+	Manager getShowroomManager(@PathVariable Long id) {
+		Showroom showroom = showroomRepository.findById(id).orElse(null);
+		if(showroom == null) return null;
+		return showroom.getManager();
+	}
 }

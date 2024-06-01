@@ -24,6 +24,7 @@ public class Dealer {
 	private User user;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "manager_id")
 	private Manager manager;
 
