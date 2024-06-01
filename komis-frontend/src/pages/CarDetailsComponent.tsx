@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import Navbar from '../components/Navbar'
 import '../css/CarDetails.css'
 import Filters from '../components/carDetails/Filters'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -16,6 +15,7 @@ const CarDetailsComponent = () => {
   const [engine, setEngine] = useState({name:'petrol 1.6',price:0}); 
   const [upholstery, setUpholstery] = useState({name:'Fabric upholstery',price:0});
   const [car, setCar] = useState<CarDetails>({} as CarDetails);
+  const [image, setImage] = useState<string>("");
   const {userId, role} = useContext(userContext) as {userId: number, role:string};
   const [ clientToken, setClientToken ] = useState("");
   const navigate=useNavigate();
@@ -25,6 +25,7 @@ const CarDetailsComponent = () => {
     apiClient.getCarDetails(parseInt(carId!)).then((car)=>{
       setCar(car);
     });
+    apiClient.getImage(1).then(image=>setImage(image));
   },[]);
 
   const handleBuy=()=>{
@@ -63,25 +64,29 @@ const CarDetailsComponent = () => {
   
    
     <div className='wrapper'>
-    <div className='inside-wrapper'>
-      <div className='spacer'></div>
+    <div  className='inside-wrapper'>
+      {/* <div className='spacer'></div> */}
     {/* <Filters color={color} engine={engine} upholstery={upholstery} 
     colorChange={(c)=>setColor(c)}
     engineChange={(e)=>setEngine(e)}
     upholsteryChange={(u)=>setUpholstery(u)}/> */}
 
 
-    <div id='car-image-wrapper'>
+    <div id='car-image-wrapper'> 
     <div id="image"></div>
+     <img  width='100%'  height='100%'  background-size= 'cover'
+     src={`data:image/png;base64,${image}`}/>
     </div>
     <div className='summary'>
       <p style={{marginBottom:'10px'}}>{`${car.brand} ${car.model}`}</p>
       
-      <p>Base Cost <span>{car.price} €</span></p>
       <div className='details'>
-        <p><span>color:</span>{color.price==0?` ${color.name} included`:` ${color.name} +${color.price}€`}</p>
-        <p><span>engine:</span>{engine.price==0?`${engine.name} included`:` ${engine.name} +${engine.price}€`}</p>
-        <p><span>upholstery:</span>{upholstery.price==0?` ${upholstery.name} included`:`${upholstery.name} +${upholstery.price}€`}</p>
+        {car.modifications&&
+        <>
+        <p><span>modifications:</span></p>
+        {car.modifications.split(",")?.map((mod)=><p>{mod}</p>)}
+        </>
+        } 
       </div>
 
       <p style={{marginTop:'20px'}}>Total Cost <span>{totalCost} €</span></p>
