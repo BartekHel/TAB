@@ -66,11 +66,15 @@ public class VehicleController {
 				.sorted(comp).toList();
 	}
 
-	@PostMapping("/picture")
-	public String getVehicleImage(@RequestParam(value = "pictureFileName", defaultValue = "") String pictureFileName) {
+	@GetMapping("/{id}/picture")
+	public String getVehicleImage(@PathVariable Long id) {
 		try {
+			Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+			if(vehicle == null) {
+				return "Given car does not exist";
+			}
 			Path currentRelativePath = Paths.get("");
-			String path = currentRelativePath.toAbsolutePath().toString() + "\\CarShop\\Images\\Vehicles\\" + pictureFileName;
+			String path = currentRelativePath.toAbsolutePath().toString() + "\\CarShop\\Images\\Vehicles\\" + vehicle.getPicture_file_name();
 
 			File file = new File(path);
 			BufferedImage image = ImageIO.read(file);
@@ -81,7 +85,7 @@ public class VehicleController {
 			byte[] imageBytes = outputStream.toByteArray();
 			return Base64.getEncoder().encodeToString(imageBytes);
 		} catch (IOException e) {
-			return null;
+			return e.getMessage();
 		}
 	}
 
