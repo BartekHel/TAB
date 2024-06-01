@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import '../css/CarDetails.css'
-import Filters from '../components/carDetails/Filters'
 import { useNavigate, useParams } from 'react-router-dom'
 import ApiClient from '../service/ApiClient'
 import "../css/Navbar.css";
@@ -65,12 +64,6 @@ const CarDetailsComponent = () => {
    
     <div className='wrapper'>
     <div  className='inside-wrapper'>
-      {/* <div className='spacer'></div> */}
-    {/* <Filters color={color} engine={engine} upholstery={upholstery} 
-    colorChange={(c)=>setColor(c)}
-    engineChange={(e)=>setEngine(e)}
-    upholsteryChange={(u)=>setUpholstery(u)}/> */}
-
 
     <div id='car-image-wrapper'> 
     <div id="image"></div>
