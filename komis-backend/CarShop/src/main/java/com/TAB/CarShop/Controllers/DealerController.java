@@ -3,6 +3,7 @@ package com.TAB.CarShop.Controllers;
 import com.TAB.CarShop.Entities.Dealer;
 import com.TAB.CarShop.Entities.Manager;
 import com.TAB.CarShop.Entities.Order;
+import com.TAB.CarShop.Entities.Showroom;
 import com.TAB.CarShop.Repositories.DealerRepository;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,13 @@ public class DealerController {
 		Dealer dealer = dealerRepository.findById(id).orElse(null);
 		if (dealer == null) return null;
 		return dealer.getOrders();
+	}
+
+	@GetMapping("/{id}/getshowroom")
+	Showroom getDealerShowroom(@PathVariable Long id) {
+		Dealer dealer = dealerRepository.findById(id).orElse(null);
+		if (dealer == null) return null;
+		return dealer.getManager().getShowroom();
 	}
 
 	@PutMapping("/{id}/setmanager/{managerid}")

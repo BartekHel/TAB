@@ -140,4 +140,20 @@ public class VehicleController {
 			return markaMatcher.find() || modelMatcher.find() || modelMarkaMatcher.find() || markaModelMatcher.find();
 		}).collect(Collectors.toList());
 	}
+
+	@PutMapping("/{id}/changeshowroom")
+	Vehicle changeShowroom(@PathVariable Long id, @RequestParam(value = "showroom_id", defaultValue = "0") long showroom_id) {
+		Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+		Showroom showroom = showroomRepository.findById(showroom_id).orElse(null);
+		if (vehicle == null || showroom == null) return null;
+		vehicle.setShowroom(showroom);
+		return vehicleRepository.save(vehicle);
+	}
+
+	@GetMapping("/{id}/getshowroom")
+	Showroom getShowroom(@PathVariable Long id) {
+		Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+		if (vehicle == null) return null;
+		return vehicle.getShowroom();
+	}
 }
