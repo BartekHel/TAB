@@ -313,6 +313,7 @@ CREATE TABLE `vehicles` (
                             `price` double NOT NULL,
                             `was_sold` bit(1) DEFAULT NULL,
                             `showroom_id` bigint DEFAULT NULL,
+                            `picture_file_name` varchar(255)  DEFAULT NULL,
                             PRIMARY KEY (`vehicle_id`),
                             KEY `FKlegrvmc28emrbwdsg0ow8b4m8` (`showroom_id`),
                             CONSTRAINT `FKlegrvmc28emrbwdsg0ow8b4m8` FOREIGN KEY (`showroom_id`) REFERENCES `showrooms` (`showroom_id`)
@@ -325,24 +326,24 @@ CREATE TABLE `vehicles` (
 
 LOCK TABLES `vehicles` WRITE;
 /*!40000 ALTER TABLE `vehicles` DISABLE KEYS */;
-INSERT INTO `vehicles` VALUES (1,'Skoda','Fabia','','2025-05-21',7000,b'0',1),
-                              (2,'Skoda','Fabia','Silnik odrzutowy','2025-04-11',13000,b'0',1),
-                              (3,'Skoda','Fabia','Opony zimowe','2025-08-23',7200,b'1',2),
-                              (4,'Skoda','Fabia','Szyby pancerne','2025-01-17',9500,b'0',2),
-                              (5,'Skoda','Fabia','Napęd na trzy koła','2025-04-23',6500,b'1',1),
-                              (6,'Skoda','Fabia','','2025-07-26',6200,b'1',2),
-                              (7,'Skoda','Fabia','','2025-11-23',7200,b'0',1),
-                              (8,'Skoda','Fabia','','2025-12-10',7700,b'1',1),
-                              (9,'Skoda','Fabia','Światła takie tysiąc razy mocniejsze','2028-02-29',11000,b'1',2),
-                              (10,'Skoda','Fabia','','2025-03-04',6100,b'0',2),
-                              (11,'Skoda','Fabia','Głośny klakson','2025-01-17',7001,b'1',2),
-                              (12,'Skoda','Fabia','Opony letnie','2025-10-07',7200,b'1',1),
-                              (13,'Skoda','Fabia','','2025-02-12',6700,b'0',2),
-                              (14,'Skoda','Fabia','brak opon','2025-09-24',3000,b'0',1),
-                              (15,'Skoda','Fabia','','2025-01-31',7400,b'0',2),
-                              (16,'Skoda','Fabia','','2025-07-29',7200,b'1',2),
-                              (17,'Skoda','Fabia','Skórzane fotele','2025-04-14',7500,b'0',1),
-                              (18,'Skoda','Fabia','','2025-11-13',6500,b'1',2);
+INSERT INTO `vehicles` VALUES (1,'Skoda','Fabia','','2025-05-21',7000,b'0',1,'ToyotaYaris.png'),
+                              (2,'Skoda','Fabia','Silnik odrzutowy','2025-04-11',13000,b'0',1,'ToyotaYaris.png'),
+                              (3,'Skoda','Fabia','Opony zimowe','2025-08-23',7200,b'1',2,'ToyotaYaris.png'),
+                              (4,'Skoda','Fabia','Szyby pancerne','2025-01-17',9500,b'0',2,'ToyotaYaris.png'),
+                              (5,'Skoda','Fabia','Napęd na trzy koła','2025-04-23',6500,b'1',1,'ToyotaYaris.png'),
+                              (6,'Skoda','Fabia','','2025-07-26',6200,b'1',2,'ToyotaYaris.png'),
+                              (7,'Skoda','Fabia','','2025-11-23',7200,b'0',1,'ToyotaYaris.png'),
+                              (8,'Skoda','Fabia','','2025-12-10',7700,b'1',1,'ToyotaYaris.png'),
+                              (9,'Skoda','Fabia','Światła takie tysiąc razy mocniejsze','2028-02-29',11000,b'1',2,'ToyotaYaris.png'),
+                              (10,'Skoda','Fabia','','2025-03-04',6100,b'0',2,'ToyotaYaris.png'),
+                              (11,'Skoda','Fabia','Głośny klakson','2025-01-17',7001,b'1',2,'ToyotaYaris.png'),
+                              (12,'Skoda','Fabia','Opony letnie','2025-10-07',7200,b'1',1,'ToyotaYaris.png'),
+                              (13,'Skoda','Fabia','','2025-02-12',6700,b'0',2,'ToyotaYaris.png'),
+                              (14,'Skoda','Fabia','brak opon','2025-09-24',3000,b'0',1,'ToyotaYaris.png'),
+                              (15,'Skoda','Fabia','','2025-01-31',7400,b'0',2,'ToyotaYaris.png'),
+                              (16,'Skoda','Fabia','','2025-07-29',7200,b'1',2,'ToyotaYaris.png'),
+                              (17,'Skoda','Fabia','Skórzane fotele','2025-04-14',7500,b'0',1,'ToyotaYaris.png'),
+                              (18,'Skoda','Fabia','','2025-11-13',6500,b'1',2,'ToyotaYaris.png');
 /*!40000 ALTER TABLE `vehicles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

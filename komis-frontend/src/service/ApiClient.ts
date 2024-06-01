@@ -14,6 +14,12 @@ export const axiosInstance= axios.create({
     constructor(){        
       }
 
+
+    getImage=(car_id:number)=>{
+      return axiosInstance.get(this.baseURL+`/vehicles/${car_id}/picture`)
+      .then((response)=>response.data);
+    }
+
     buyCar=(vehicle_id:number,price:number,modifications:string,client_id:number,showroomId:number,dealer_id:number)=>{
        return axiosInstance.post(this.baseURL+'/orders/createorder',
       {vehicle_id:vehicle_id,price:price,modifications:modifications,client_id:client_id,showroom_id:showroomId,dealer_id:dealer_id});
