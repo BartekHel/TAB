@@ -16,7 +16,8 @@ const CarDetailsComponent = () => {
   const [engine, setEngine] = useState({name:'petrol 1.6',price:0}); 
   const [upholstery, setUpholstery] = useState({name:'Fabric upholstery',price:0});
   const [car, setCar] = useState<CarDetails>({} as CarDetails);
-  const {userId} = useContext(userContext) as {userId: number};
+  const {userId, role} = useContext(userContext) as {userId: number, role:string};
+  const [ clientToken, setClientToken ] = useState("");
   const navigate=useNavigate();
   const totalCost=car.price+color.price+engine.price+upholstery.price;
   
@@ -27,6 +28,22 @@ const CarDetailsComponent = () => {
   },[]);
 
   const handleBuy=()=>{
+    //user_id showroom_id and delaer_id are hardcoded to 1
+    apiClient.buyCar(parseInt(carId!),totalCost,`${color.name},${engine.name},${upholstery.name}`,1,1,1)
+  .then((response)=>{
+    if(response.data.success){
+      alert('Car bought successfully');
+      setTimeout(()=>navigate('/'),300);
+    }
+    else{
+      alert('Error buying car');
+    }
+  }
+  );
+    console.log('Car ID:', carId); console.log('Total Cost:', totalCost); console.log('Color:', color); console.log('Engine:', engine); console.log('UserId:', userId); console.log('Upholstery:', upholstery);
+  }
+
+  const handleBuyForClient=()=>{
     //user_id showroom_id and delaer_id are hardcoded to 1
     apiClient.buyCar(parseInt(carId!),totalCost,`${color.name},${engine.name},${upholstery.name}`,1,1,1)
   .then((response)=>{
@@ -68,7 +85,23 @@ const CarDetailsComponent = () => {
       </div>
 
       <p style={{marginTop:'20px'}}>Total Cost <span>{totalCost} €</span></p>
-      <button onClick={handleBuy}>Buy</button>
+      {
+        role=="DEALER" &&(
+          <div>
+          
+            <input 
+                name="ClientToken" 
+                placeholder="Client Token"
+                onChange={(e) => setClientToken(e.target.value)}/>
+          </div>
+        )
+      }
+      {
+        role=="DEALER" ?
+        <button onClick={handleBuyForClient}>Buy for client</button>
+        :<button onClick={handleBuy}>Buy</button>
+      }
+      
     </div>
       
     </div>
