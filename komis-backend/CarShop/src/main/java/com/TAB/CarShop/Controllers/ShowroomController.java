@@ -1,13 +1,13 @@
 package com.TAB.CarShop.Controllers;
 
-import com.TAB.CarShop.Entities.Manager;
-import com.TAB.CarShop.Entities.Showroom;
+import com.TAB.CarShop.Entities.*;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Requests.ShowroomRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/showrooms")
@@ -41,5 +41,14 @@ public class ShowroomController {
 			}
 		}
 		return showroomRepository.saveAndFlush(showroom);
+	}
+
+	@GetMapping("/{id}/listorders")
+	Set<Order> getShowroomOrders(@PathVariable Long id) {
+		Showroom showroom = showroomRepository.findById(id).orElse(null);
+		if (showroom == null) {
+			return null;
+		}
+		return showroom.getOrders();
 	}
 }

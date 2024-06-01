@@ -2,6 +2,7 @@ package com.TAB.CarShop.Controllers;
 
 import com.TAB.CarShop.Entities.*;
 import com.TAB.CarShop.Repositories.*;
+import com.TAB.CarShop.Requests.CreateOrderByTokenRequest;
 import com.TAB.CarShop.Requests.CreateOrderRequest;
 import com.TAB.CarShop.Responses.CreateOrderResponse;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,39 @@ public class OrderController {
 					LocalDate.now(),
 					deliveryDate,
 					createOrderRequest.getPrice(),
+					client,
+					showroom,
+					vehicle,
+					dealer
+			);
+			newOrder = orderRepository.saveAndFlush(newOrder);
+			vehicle.setNext_inspection_date(deliveryDate.plusYears(1));
+			vehicle.setWas_sold(true);
+			vehicleRepository.saveAndFlush(vehicle);
+			return new CreateOrderResponse(true, newOrder.getOrder_id(), "order created successfully");
+		} catch (Exception e) {
+			return new CreateOrderResponse(false, 0, e.getMessage());
+		}
+	}
+
+	@PostMapping("/createorderbytoken")
+	CreateOrderResponse createOrderByToken(@RequestBody CreateOrderByTokenRequest createOrderByTokenRequest) {
+		try {
+			Client client = clientRepository.findByToken(createOrderByTokenRequest.getClient_token()).orElse(null);
+			Showroom showroom = showroomRepository.findById(createOrderByTokenRequest.getShowroom_id()).orElse(null);
+			Vehicle vehicle = vehicleRepository.findById(createOrderByTokenRequest.getVehicle_id()).orElse(null);
+			Dealer dealer = dealerRepository.findById(createOrderByTokenRequest.getDealer_id()).orElse(null);
+			if (client == null || showroom == null || vehicle == null || dealer == null) {
+				return new CreateOrderResponse(false, 0, "Foreign key entity not found");
+			}
+			if (vehicle.isWas_sold()) {
+				return new CreateOrderResponse(false, 0, "This vehicle is already sold");
+			}
+			LocalDate deliveryDate = calculateDeliveryDate(LocalDate.now(), showroom, vehicle);
+			Order newOrder = new Order(
+					LocalDate.now(),
+					deliveryDate,
+					createOrderByTokenRequest.getPrice(),
 					client,
 					showroom,
 					vehicle,
