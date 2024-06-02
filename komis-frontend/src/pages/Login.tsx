@@ -35,7 +35,10 @@ const Login = () => {
                 setUserLogin(resp[3]);
                 setUserId(resp[2]);
                 setRole(resp[1]);
-                navigate(`/`);
+                if (resp[1] == "REPAIRER")
+                    navigate(`/mechanicsServices/`);
+                else
+                    navigate(`/`);
             }
             else
             {

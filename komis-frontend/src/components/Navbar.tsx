@@ -58,7 +58,6 @@ const Navbar = () => {
     alert("Your generated token:" + token);
   }
   
-  
 useEffect(() => {
   setUserName("");
   setUserSurname("");
@@ -106,9 +105,8 @@ useEffect(() => {
   return (
     <nav className="navbar">
       <div className="left">
-        <Link to="/" className="nav-link">
-          <img src={ReactLogo} alt="React Logo" className="react-logo" /> {}
-        </Link>
+        { (role!="REPAIRER" || !logged) && <Link to="/" className="nav-link"> <img src={ReactLogo} alt="React Logo" className="react-logo" /> {} </Link>}
+        { (role=="REPAIRER") && <Link to="/mechanicsServices" className="nav-link"> <img src={ReactLogo} alt="React Logo" className="react-logo" /> {} </Link>}
         <div className={userName || userSurname ? "name" : "none"}>{userName + " " + userSurname}</div>
       </div>
 
@@ -126,10 +124,19 @@ useEffect(() => {
             role=="CLIENT" && <button className="nav-button" onClick={handleGenerateToken}>Generate token</button> 
           }
           {
-            role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Order Service</Link>
+            role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Services</Link>
           }
           {
-            role=="REPAIRER" && <Link to="/mechanicsServices/" className="nav-button" id="link">Services</Link>
+            role=="REPAIRER" && <Link to="/mechanicsServices" className="nav-button" id="link">Services</Link>
+          }
+          {
+            role=="MANAGER" && <Link to="/managerPage" className="nav-button" id="link">Manager panel</Link>
+          }
+          {
+            (role=="MANAGER" || role=="ADMIN") && <Link to="/addPage" className="nav-button" id="link">Add objects</Link>
+          }
+          {
+            role=="ADMIN" && <Link to="/adminPage" className="nav-button" id="link">Admin panel</Link>
           }
           <Link to="/login" className="nav-button" onClick={logout} id="logout">Logout</Link>
           </>

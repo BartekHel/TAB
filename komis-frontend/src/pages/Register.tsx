@@ -69,7 +69,10 @@ const Register = () => {
                 setUserId(resp[2]);
                 setRole(resp[1]);
                 setUserLogin(resp[3]);
-                navigate(`/`);
+                if (resp[1] == "REPAIRER")
+                    navigate(`/mechanicsServices/`);
+                else
+                    navigate(`/`);
             }
             else
             {
