@@ -2,6 +2,7 @@ import React from 'react'
 import '../css/ManagerPage.css'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+
 const ManagerPage = () => {
     const [showAddEmployee, setShowAddEmployee] = React.useState(false);
     const employees = [
@@ -120,17 +121,6 @@ const ManagerPage = () => {
                 </div>
                 </div>
                 </div>
-
-                 <div className='addPanel'>
-                    <p style={{border:`${showAddEmployee?'none':'1px solid black'}`}} onClick={()=>setShowAddEmployee(!showAddEmployee)}>Add Employee</p>
-                    {showAddEmployee && 
-                    <div className='addEmployee'>
-                        <input type='text' placeholder='Name' />
-                        <input type='text' placeholder='Email' />
-                        <button>Add</button>
-                    </div>
-                    }
-                </div> 
             </div>
         </div>
     );

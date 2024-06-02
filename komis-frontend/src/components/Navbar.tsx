@@ -58,7 +58,6 @@ const Navbar = () => {
     alert("Your generated token:" + token);
   }
   
-  
 useEffect(() => {
   setUserName("");
   setUserSurname("");
@@ -105,17 +104,18 @@ useEffect(() => {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="nav-link">
-        <img src={ReactLogo} alt="React Logo" className="react-logo" /> {}
-      </Link>
+      <div className="left">
+        { (role!="REPAIRER" || !logged) && <Link to="/" className="nav-link"> <img src={ReactLogo} alt="React Logo" className="react-logo" /> {} </Link>}
+        { (role=="REPAIRER") && <Link to="/mechanicsServices" className="nav-link"> <img src={ReactLogo} alt="React Logo" className="react-logo" /> {} </Link>}
+        <div className={userName || userSurname ? "name" : "none"}>{userName + " " + userSurname}</div>
+      </div>
 
       <div className="nav-buttons">
-        <h3>{userName + " " + userSurname}</h3>
         
         {!logged ? (
           <>
-            <Link to="/login" className="nav-button">Login</Link>
-            <Link to="/register" className="nav-button">Register</Link>
+            <Link to="/login" className="nav-button" id="link">Login</Link>
+            <Link to="/register" className="nav-button" id="link">Register</Link>
             
           </>
         ) : (
@@ -124,17 +124,23 @@ useEffect(() => {
             role=="CLIENT" && <button className="nav-button" onClick={handleGenerateToken}>Generate token</button> 
           }
           {
-            role=="CLIENT" && <Link to="/orderService" className="nav-button">Order Service</Link> 
+            role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Services</Link>
           }
           {
-            role=="REPAIRER" && <Link to="/mechanicsServices/" className="nav-button">Services</Link>
+            role=="REPAIRER" && <Link to="/mechanicsServices" className="nav-button" id="link">Services</Link>
           }
-          <Link to="/" className="nav-button" onClick={logout}>Logout</Link>
-        
+          {
+            role=="MANAGER" && <Link to="/managerPanel" className="nav-button" id="link">Manager panel</Link>
+          }
+          {
+            (role=="MANAGER" || role=="ADMIN") && <Link to="/addPage" className="nav-button" id="link">Add objects</Link>
+          }
+          {
+            role=="ADMIN" && <Link to="/adminPage" className="nav-button" id="link">Admin panel</Link>
+          }
+          <Link to="/login" className="nav-button" onClick={logout} id="logout">Logout</Link>
           </>
         )}
-        
-        
       </div>
     </nav>
   );

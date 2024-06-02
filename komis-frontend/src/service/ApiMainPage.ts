@@ -1,47 +1,104 @@
 import axios from "axios";
 import Vehicle from "../entitiy/Vehicle";
 
+export interface VehicleWithPicture {
+  vehicle: Vehicle;
+  picture: string | null;
+}
+
   class ApiMainPage{
     constructor(){}
 
-    GetVehicles = async (): Promise<Vehicle[]> => {
+    GetVehicles = async (): Promise<VehicleWithPicture[]> => {
       try {
-        const resp = await axios.get('http://localhost:8080/car-shop/vehicles');
-        const vehicles = resp.data;
+          const resp = await axios.get('http://localhost:8080/car-shop/vehicles');
+          const vehicles = resp.data;
 
-        const allVehicles = vehicles.map((vehicle: Vehicle) => ({
-          vehicle_id: vehicle.vehicle_id,
-          brand: vehicle.brand,
-          model: vehicle.model,
-          modifications: vehicle.modifications,
-          next_inspection_date: vehicle.next_inspection_date,
-          price: vehicle.price
-        }));
-    
-        return allVehicles;
-    
+          const allVehicles = await Promise.all(vehicles.map(async (vehicle: Vehicle) => {
+              try {
+                  const pictureResp = await axios.get(`http://localhost:8080/car-shop/vehicles/${vehicle.vehicle_id}/picture`);
+                  const picture = pictureResp.data;
+
+                  return {
+                      vehicle: vehicle,
+                      picture: picture
+                  } as VehicleWithPicture;
+              } catch (error) {
+                  console.error(`Error fetching picture for vehicle ${vehicle.vehicle_id}:`, error);
+                  return {
+                      vehicle: vehicle,
+                      picture: null
+                  } as VehicleWithPicture;
+              }
+          }));
+
+          return allVehicles;
+
       } catch (error) {
-        console.error("Error fetching all vehicles:", error);
-        throw error;
+          console.error("Error fetching all vehicles:", error);
+          throw error;
       }
     };
 
-    GetSearchedVehicles = async (phrase: string): Promise<Vehicle[]> => {
+    GetSearchedVehicles = async (phrase: string): Promise<VehicleWithPicture[]> => {
       try {
         const resp = await axios.get(`http://localhost:8080/car-shop/vehicles/search`, {
             params: { input: phrase }
         });
         const vehicles = resp.data;
 
-        const allVehicles = vehicles.map((vehicle: Vehicle) => ({
-          vehicle_id: vehicle.vehicle_id,
-          brand: vehicle.brand,
-          model: vehicle.model,
-          modifications: vehicle.modifications,
-          next_inspection_date: vehicle.next_inspection_date,
-          price: vehicle.price
+        const allVehicles = await Promise.all(vehicles.map(async (vehicle: Vehicle) => {
+          try {
+              const pictureResp = await axios.get(`http://localhost:8080/car-shop/vehicles/${vehicle.vehicle_id}/picture`);
+              const picture = pictureResp.data;
+
+              return {
+                  vehicle: vehicle,
+                  picture: picture
+              } as VehicleWithPicture;
+          } catch (error) {
+              console.error(`Error fetching picture for vehicle ${vehicle.vehicle_id}:`, error);
+              return {
+                  vehicle: vehicle,
+                  picture: null
+              } as VehicleWithPicture;
+          }
         }));
-   
+
+        return allVehicles;
+      } catch (error) {
+        console.error("Error fetching searched vehicles:", error);
+        throw error;
+      }
+    };
+
+    GetFilteredAndSortedVehicles = async (phrase: string, minPrice: number, maxPrice: number, sort: string): Promise<VehicleWithPicture[]> => {
+      try {
+        if (maxPrice == 0)
+          maxPrice = 999999999;
+        const resp = await axios.get(`http://localhost:8080/car-shop/vehicles/filtered`, {
+            params: { marka: phrase, cenamin: minPrice, cenamax: maxPrice, sortby: sort}
+        });
+        const vehicles = resp.data;
+
+        const allVehicles = await Promise.all(vehicles.map(async (vehicle: Vehicle) => {
+          try {
+              const pictureResp = await axios.get(`http://localhost:8080/car-shop/vehicles/${vehicle.vehicle_id}/picture`);
+              const picture = pictureResp.data;
+              console.log(picture);
+              return {
+                  vehicle: vehicle,
+                  picture: picture
+              } as VehicleWithPicture;
+          } catch (error) {
+              console.error(`Error fetching picture for vehicle ${vehicle.vehicle_id}:`, error);
+              return {
+                  vehicle: vehicle,
+                  picture: null
+              } as VehicleWithPicture;
+          }
+        }));
+
         return allVehicles;
       } catch (error) {
         console.error("Error fetching searched vehicles:", error);

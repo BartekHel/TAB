@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./vite.svg"; // Popraw ścieżkę do pliku vite.svg
-//import "../css/Navbar.css";
 import "../css/MainPage.css";
 import { useNavigate } from "react-router-dom";
 import ApiMainPage from '../service/ApiMainPage'
 import Vehicle from "../entitiy/Vehicle";
+
+export interface VehicleWithPicture {
+  vehicle: Vehicle;
+  picture: string | null;
+}
 
 function App() {
   const apiMainPage = new ApiMainPage();
@@ -15,32 +17,38 @@ function App() {
   const [sort, setSort] = useState("0");
   const navigate = useNavigate();
 
-  const searchForOffers = async (phrase) => {
+  const searchForOffers = async (phrase: string) => {
     try {
-      const vehicles = await apiMainPage.GetSearchedVehicles(phrase);
-      setOffers(vehicles);
+      const vehiclesWithPictures = await apiMainPage.GetSearchedVehicles(phrase);
+      setOffers(vehiclesWithPictures);
     } catch (error) {
       console.error("Error searching for offers:", error);
     }
   };
 
-  const filterAndSortOffers = (minPrice, maxPrice, sort) => {};
+  const filterAndSortOffers = async (phrase: string, minPrice: number, maxPrice: number, sort: string) => {
+    try {
+      const vehiclesWithPictures = await apiMainPage.GetFilteredAndSortedVehicles(phrase, minPrice, maxPrice, sort);
+      setOffers(vehiclesWithPictures);
+    } catch (error) {
+      console.error("Error searching for offers:", error);
+    }
+  };
 
-  const [offers, setOffers] = useState<Vehicle[]>([]);
+  const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
   useEffect(() => {
     const fetchOffers = async () => {
-      try {
-        const vehicles = await apiMainPage.GetVehicles();
-        setOffers(vehicles);
-      } catch (error) {
-        console.error("Error fetching offers:", error);
-      }
+        try {
+            const vehiclesWithPictures = await apiMainPage.GetVehicles();
+            setOffers(vehiclesWithPictures);
+        } catch (error) {
+            console.error("Error fetching offers:", error);
+        }
     };
-
     fetchOffers();
   }, []);
 
-  const handleShow = (offerName) => {
+  const handleShow = () => {
     const carId = 1;
     navigate(`/carDetails/${carId}`);
   };
@@ -63,7 +71,7 @@ function App() {
         />
 
         <div className="sortLabelFrame">
-          <h1 className="sideMainHeader">Sort</h1>
+          <h1 className="sideMainHeader1">Sort </h1>
           <input
             type="radio"
             id="radio0"
@@ -120,7 +128,7 @@ function App() {
 
         <div className="filterLabelFrame">
           <h1 className="sideMainHeader">Filter</h1>
-          <h2 className="sideh1">Price</h2>
+          <h2 className="sideh1">By price</h2>
           <br />
           <label htmlFor="minPrice" className="customNumberLabel">
             Min
@@ -155,7 +163,7 @@ function App() {
           <h1>
             <button
               className="filterButton"
-              onClick={() => filterAndSortOffers(minPrice, maxPrice, sort)}
+              onClick={() => filterAndSortOffers(phrase, minPrice, maxPrice, sort)}
             >
               Filter
             </button>
@@ -163,21 +171,26 @@ function App() {
           </h1>
         </div>
       </div>
-
       <div className="mainDiv">
         <div className="containersContainer" id="containersContainerID">
-          {offers.map((offer, vehicle_id) => (
-            <div key={vehicle_id} className="offerCard">
+          {offers.map((offer, index) => (
+            <div key={index} className="offerCard">
               <div className="offerDetails">
-                <h1>{offer.brand + " " + offer.model}</h1>
-                <p>Price: ${offer.price}</p>
-                <div className="buttonContainer">
-                  <button
-                    className="offerButton"
-                    onClick={() => handleShow(offer.brand + offer.model)}>
-                    Show
-                  </button>
-                </div>
+                <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
+                {offer.picture && 
+                  <div className="imageAndOthers">
+                    <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} />
+                    <div className="description"> Price: ${offer.vehicle.price} 
+                      <div className="buttonContainer">
+                        <button
+                          className="offerButton"
+                          onClick={() => handleShow()}>
+                          Show
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           ))}
