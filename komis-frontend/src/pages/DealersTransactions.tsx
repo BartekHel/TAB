@@ -33,22 +33,25 @@ const DealersTransactions = () => {
     return <div id="serviceOrderContainer">{error}</div>;
   }
 
+  const handleDetailsClick = (service) => {
+    
+  };
+
   return (
     <div id="serviceOrderContainer">
       <table>
         <thead>
           <tr>
-            <th>Admission date</th>
-            <th>Execution date</th>
-            <th>Description</th>
-            <th>Price</th>
+            <th>Transaction date</th>
           </tr>
         </thead>
         <tbody>
           {ownedCars.map((service, index) => (
             <tr key={index}>
               <td>{service.admission_date}</td>
-              <td>{service.description}</td>
+              <td>
+                <button className="button" onClick={() => handleDetailsClick(service)}>Details</button>
+              </td>
             </tr>
           ))}
         </tbody>
