@@ -2,11 +2,12 @@ import React, { useContext, useState } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient'
 import userContext from '../PageInfo';
+import { useNavigate } from "react-router-dom";
 
 const apiClient = new ApiClient();
 
 const Login = () => {
-
+    const navigate = useNavigate();
     const [ success, setSuccess] = useState(false);
     const [ login, setLogin ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -34,6 +35,7 @@ const Login = () => {
                 setUserLogin(resp[3]);
                 setUserId(resp[2]);
                 setRole(resp[1]);
+                navigate(`/`);
             }
             else
             {
