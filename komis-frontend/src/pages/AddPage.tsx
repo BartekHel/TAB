@@ -13,6 +13,7 @@ const AddPage = () => {
         price: 3000,
         showroomId: 1
     });
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const handleNewCar = () => {
         setShowCarForm(true);
@@ -61,7 +62,13 @@ const AddPage = () => {
                     <div className="dropdown-content">
                         <a href="#" onClick={handleNewCar}>New car</a>
                         <a href="#" onClick={handleNewEmployee}>New employee</a>
-                        <a href="#" onClick={handleNewSalon}>New salon</a>
+                        <a href="#" onClick={handleNewSalon}>New client</a>
+                        {user.role=="ADMIN" && (
+                            <div>
+                                <a href="#" onClick={handleNewSalon}>New salon</a>
+                                <a href="#" onClick={handleNewSalon}>New manager</a>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

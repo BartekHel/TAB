@@ -19,6 +19,7 @@ body {
     color: white;
     padding: 16px;
     font-size: 25px;
+    width: 250px;
     border: none;
     margin-top: 90px;
     display: flex;
@@ -68,7 +69,7 @@ body {
 
 .form-container {
     position: fixed;
-    top: 55%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: ghostwhite;
