@@ -6,14 +6,14 @@ import Vehicle from "../entitiy/Vehicle";
 
     AddVehicle = async (vehicle: Vehicle) => {
       try {
-        console.log(vehicle.brand);
-        console.log(vehicle.model);
         console.log(vehicle.price);
+        console.log(vehicle.showroomId);
         const response = await axios.post('http://localhost:8080/car-shop/vehicles', {
           brand: vehicle.brand,
           model: vehicle.model,
           modifications: null,
           price: vehicle.price,
+          showroomId: vehicle.showroomId
         });
         return response.data;
       } catch (error) {

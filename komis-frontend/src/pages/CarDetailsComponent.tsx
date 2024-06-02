@@ -37,9 +37,10 @@ const CarDetailsComponent = () => {
       setTimeout(()=>navigate('/'),300);
     }
     else{
-      alert('Error buying car');
       if (!user.logged)
         navigate(`/login`);
+      else
+        alert('Error buying car');
     }
   }
   );

@@ -4,16 +4,20 @@ import ApiAdd from '../service/ApiAdd'
 
 const AddPage = () => {
     const apiAdd = new ApiAdd();
+    const [showDropdown, setShowDropdown] = useState(false);
     const [showCarForm, setShowCarForm] = useState(false);
+    const [message, setMessage] = useState('');
     const [carDetails, setCarDetails] = useState({
         brand: '',
         model: '',
-        price: 0,
-        showRoomId: 0
+        price: 3000,
+        showroomId: 1
     });
 
     const handleNewCar = () => {
         setShowCarForm(true);
+        setShowDropdown(false);
+        setMessage('');
     };
 
     const handleInputChange = (data) => {
@@ -29,8 +33,8 @@ const AddPage = () => {
         try {
             const newVehicle = await apiAdd.AddVehicle(carDetails);
             console.log('New vehicle added:', newVehicle);
-            setCarDetails({ brand: '', model: '', price: '', showRoomId: '' });
-            setShowCarForm(false);
+            setCarDetails({ brand: '', model: '', price: 3000, showroomId: 1 });
+            setMessage('New vehicle added!');
         } catch (error) {
             console.error("Failed to add new vehicle:", error);
         }
@@ -44,15 +48,22 @@ const AddPage = () => {
         
     };
 
+    const handleButtonHover = () => {
+        setShowDropdown(true);
+        setShowCarForm(false);
+    };
+
     return (
         <div className="add-page">
             <div className="dropdown">
-                <button className="dropbtn">Options &#9660;</button>
-                <div className="dropdown-content">
-                    <a href="#" onClick={handleNewCar}>New car</a>
-                    <a href="#" onClick={handleNewEmployee}>New employee</a>
-                    <a href="#" onClick={handleNewSalon}>New salon</a>
-                </div>
+                <button onClick={handleButtonHover} className="dropbtn">Options &#9660;</button>
+                {showDropdown && (
+                    <div className="dropdown-content">
+                        <a href="#" onClick={handleNewCar}>New car</a>
+                        <a href="#" onClick={handleNewEmployee}>New employee</a>
+                        <a href="#" onClick={handleNewSalon}>New salon</a>
+                    </div>
+                )}
             </div>
 
             {showCarForm && (
@@ -86,7 +97,7 @@ const AddPage = () => {
                                 value={carDetails.price} 
                                 onChange={handleInputChange} 
                                 step="500"
-                                min="0"
+                                min="3000"
                                 required 
                             />
                         </label>
@@ -94,16 +105,17 @@ const AddPage = () => {
                             Showroom id:
                             <input 
                                 type="number" 
-                                name="showRoomId" 
-                                value={carDetails.showRoomId} 
+                                name="showroomId" 
+                                value={carDetails.showroomId} 
                                 onChange={handleInputChange} 
                                 step="1"
-                                min="0"
+                                min="1"
                                 required
                             />
                         </label>
                         <button type="submit">Add new car</button>
                     </form>
+                    {message && <p id="message">{message}</p>}
                 </div>
             )}
         </div>

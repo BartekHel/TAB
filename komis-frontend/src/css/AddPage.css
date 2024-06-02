@@ -11,7 +11,7 @@ body {
 .add-page {
     display: flex;
     align-items: flex-start;
-    padding: 20px;
+    justify-content: center;
 }
 
 .dropbtn {
@@ -20,14 +20,16 @@ body {
     padding: 16px;
     font-size: 25px;
     border: none;
-    margin-top: 80px;
+    margin-top: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #91aaee;
+    background-color: #6a82c5;
+    cursor: pointer;
 }
 
 .dropdown:hover .dropbtn {
@@ -66,7 +68,7 @@ body {
 
 .form-container {
     position: fixed;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: ghostwhite;
@@ -75,6 +77,7 @@ body {
     border-radius: 10px;
     z-index: 2;
     width: 400px;
+    text-align: center;
 }
 
 .car-form label {
@@ -105,4 +108,11 @@ body {
 
 .car-form button:hover {
     background-color: #91aaee;
+}
+
+#message {
+    margin-top: 20px;
+    color: green;
+    font-size: 18px;
+    text-align: center;
 }
