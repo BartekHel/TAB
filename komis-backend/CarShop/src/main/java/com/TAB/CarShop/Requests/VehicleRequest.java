@@ -11,5 +11,4 @@ public class VehicleRequest {
 	private String modifications;
 	private double price;
 	private long showroomId;
-
 }
