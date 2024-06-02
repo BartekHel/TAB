@@ -105,17 +105,19 @@ useEffect(() => {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="nav-link">
-        <img src={ReactLogo} alt="React Logo" className="react-logo" /> {}
-      </Link>
+      <div className="left">
+        <Link to="/" className="nav-link">
+          <img src={ReactLogo} alt="React Logo" className="react-logo" /> {}
+        </Link>
+        <div className={userName || userSurname ? "name" : "none"}>{userName + " " + userSurname}</div>
+      </div>
 
       <div className="nav-buttons">
-        <h3>{userName + " " + userSurname}</h3>
         
         {!logged ? (
           <>
-            <Link to="/login" className="nav-button">Login</Link>
-            <Link to="/register" className="nav-button">Register</Link>
+            <Link to="/login" className="nav-button" id="link">Login</Link>
+            <Link to="/register" className="nav-button" id="link">Register</Link>
             
           </>
         ) : (
@@ -124,17 +126,14 @@ useEffect(() => {
             role=="CLIENT" && <button className="nav-button" onClick={handleGenerateToken}>Generate token</button> 
           }
           {
-            role=="CLIENT" && <Link to="/orderService" className="nav-button">Order Service</Link> 
+            role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Order Service</Link>
           }
           {
-            role=="REPAIRER" && <Link to="/mechanicsServices/" className="nav-button">Services</Link>
+            role=="REPAIRER" && <Link to="/mechanicsServices/" className="nav-button" id="link">Services</Link>
           }
-          <Link to="/login" className="nav-button" onClick={logout}>Logout</Link>
-        
+          <Link to="/login" className="nav-button" onClick={logout} id="logout">Logout</Link>
           </>
         )}
-        
-        
       </div>
     </nav>
   );

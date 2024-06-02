@@ -19,6 +19,7 @@ const CarDetailsComponent = () => {
   const [ clientToken, setClientToken ] = useState("");
   const navigate=useNavigate();
   const totalCost=car.price+color.price+engine.price+upholstery.price;
+  const user = JSON.parse(localStorage.getItem("user"));
   
   useEffect(()=>{
     apiClient.getCarDetails(parseInt(carId!)).then((car)=>{
@@ -37,6 +38,8 @@ const CarDetailsComponent = () => {
     }
     else{
       alert('Error buying car');
+      if (!user.logged)
+        navigate(`/login`);
     }
   }
   );

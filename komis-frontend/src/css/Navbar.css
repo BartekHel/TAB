@@ -11,6 +11,7 @@
 
 .nav-link,
 .nav-button {
+  margin-top: 3px;
   color: #fff;
   text-decoration: none;
   margin-right: 10px;
@@ -31,13 +32,45 @@
   background-color: #555;
   border: none;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+#link {
+  padding: 1px 36px;
+  height: 50px;
+}
+
+#logout {
+  padding: 1px 36px;
+  height: 50px;
+  background-color: #222;
+}
+
+#logout:hover {
+  background-color: #292828;
 }
 
 .nav-button:hover {
   background-color: #777;
 }
 
-h3{
-  margin: 10px;
-  color: #fff;
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.none {
+  
+}
+
+.name {
+  margin-top: 5px;
+  font-size: 0.5em;
+  margin-left: 13px;
+  color: #dbdada;
+  border: 1px solid black;
+  padding: 5px;
 }
