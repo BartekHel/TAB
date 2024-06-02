@@ -17,6 +17,7 @@ const CarDetailsComponent = () => {
   const [image, setImage] = useState<string>("");
   const {userId, role} = useContext(userContext) as {userId: number, role:string};
   const [ clientToken, setClientToken ] = useState("");
+  const [ showroomId, setShowroomId ] = useState(1);
   const navigate=useNavigate();
   const totalCost=car.price+color.price+engine.price+upholstery.price;
   const user = JSON.parse(localStorage.getItem("user"));
@@ -26,6 +27,13 @@ const CarDetailsComponent = () => {
       setCar(car);
     });
     apiClient.getImage(1).then(image=>setImage(image));
+
+    if(role=="DEALER")
+    {
+      apiClient.getDealerShowroom(userId).then((resp)=>{
+        setShowroomId(resp);
+      })
+    }
   },[]);
 
   const handleBuy=()=>{
@@ -48,7 +56,7 @@ const CarDetailsComponent = () => {
 
   const handleBuyForClient=()=>{
     //user_id showroom_id and delaer_id are hardcoded to 1
-    apiClient.buyCar(parseInt(carId!),totalCost,`${color.name},${engine.name},${upholstery.name}`,1,1,1)
+    apiClient.buyCar(parseInt(carId!),totalCost,`${color.name},${engine.name},${upholstery.name}`, clientToken, showroomId, userId)
   .then((response)=>{
     if(response.data.success){
       alert('Car bought successfully');
