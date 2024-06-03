@@ -124,7 +124,7 @@ useEffect(() => {
             role=="CLIENT" && <button className="nav-button" onClick={handleGenerateToken}>Generate token</button> 
           }
           {
-            role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Services</Link>
+            role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Orders</Link>
           }
           {
             role=="REPAIRER" && <Link to="/mechanicsServices" className="nav-button" id="link">Services</Link>
