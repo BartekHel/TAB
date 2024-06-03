@@ -25,12 +25,17 @@ export const axiosInstance= axios.create({
       {vehicle_id:vehicle_id,price:price,modifications:modifications,client_id:client_id,showroom_id:showroomId,dealer_id:dealer_id});
     }
 
+    buyCarForClient=(vehicle_id:number,price:number,modifications:string,client_token:string,showroomId:number,dealer_id:number)=>{
+      return axiosInstance.post(this.baseURL+'/orders/createorderbytoken',
+     {vehicle_id:vehicle_id,price:price,modifications:modifications,client_token:client_token,showroom_id:showroomId,dealer_id:dealer_id});
+   }
+
     getCarDetails=async(carId:number)=>{
       return await axiosInstance.get<CarDetails>(this.baseURL+'/vehicles/'+carId).then((response)=>response.data);
     }
 
     Register=async (login:string, password:string, email:string, name:string, surname:string): Promise<[boolean, string, number, string]>=>{
-      const resp = await axiosInstance.post('http://localhost:8080/car-shop/users/reg',{login:login, password:password, email:email, name:name, surname:surname})
+      const resp = await axiosInstance.post('http://localhost:8080/car-shop/users/reg',{login:login, password:password, email:email, role: "CLIENT", name:name, surname:surname})
       
       return [resp.data.success, resp.data.message, resp.data.id, resp.data.login]
     }
@@ -111,6 +116,12 @@ export const axiosInstance= axios.create({
     {
       const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})
       return [resp.data];
+    }
+
+    getDealerShowroom = async (dealer_id:number): Promise<number> =>
+    {
+      const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})
+      return [resp.data.showroom_id];
     }
 
     GetMechanicServices = async (id: number): Promise<Service[]> => {
