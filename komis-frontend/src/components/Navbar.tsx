@@ -138,9 +138,6 @@ useEffect(() => {
           {
             role=="MANAGER" && <Link to="/managerPanel" className="nav-button" id="link">Manager panel</Link>
           }
-          {
-            role=="ADMIN" && <Link to="/adminPage" className="nav-button" id="link">Admin panel</Link>
-          }
           <Link to="/login" className="nav-button" onClick={logout} id="logout">Logout</Link>
           </>
         )}
