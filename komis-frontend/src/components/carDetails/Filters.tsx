@@ -18,8 +18,8 @@ function Filters({modificationChange}: Props) {
 
 
   const upholsteryOptions = [
-    { name: "Premium Leather upholstery", price: 800 },
-    { name: "Fabric upholstery", price: 0 }
+    { name: "Fabric upholstery", price: 0 },
+    { name: "Premium Leather upholstery", price: 800 }
   ];
 
   const handleModificationChange = () => {
@@ -71,7 +71,7 @@ function Filters({modificationChange}: Props) {
         <label>Upholstery</label>
         <select name="upholstery" onChange={handleModificationChange}>
           {upholsteryOptions.map((option) => (
-            <option key={option.name} value={option.name}>{option.name}</option>
+            <option key={option.name} value={option.name}>{option.name} {option.price}&euro;</option>
           ))}
         </select>
       </div>
