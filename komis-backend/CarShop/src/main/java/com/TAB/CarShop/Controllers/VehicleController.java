@@ -7,21 +7,19 @@ import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.VehicleRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Base64;
 
 
 @RestController
@@ -49,7 +47,8 @@ public class VehicleController {
 	List<Vehicle> getFilteredAndSortedList(@RequestParam(value = "marka", defaultValue = "") String marka,
 	                                       @RequestParam(value = "cenamin", defaultValue = "0") double cenamin,
 	                                       @RequestParam(value = "cenamax", defaultValue = "1.7e+308") double cenamax,
-	                                       @RequestParam(value = "sortby", defaultValue = "") String sortby) {
+	                                       @RequestParam(value = "sortby", defaultValue = "") String sortby,
+	                                       @RequestParam(value = "input", defaultValue = "") String search) {
 		Comparator<Vehicle> comp = switch (sortby) {
 			case "marka" -> Comparator.comparing(Vehicle::getBrand);
 			case "cenaasc" -> Comparator.comparing(Vehicle::getPrice);
@@ -58,10 +57,19 @@ public class VehicleController {
 			default -> Comparator.comparing(Vehicle::getPrice).reversed();
 		};
 
+		Pattern pattern = Pattern.compile(search, Pattern.CASE_INSENSITIVE);
+
 		return vehicleRepository.findAll().stream()
 				.filter(vehicle -> marka.isBlank() || Objects.equals(vehicle.getBrand(), marka))
 				.filter(vehicle -> vehicle.getPrice() >= cenamin)
 				.filter(vehicle -> vehicle.getPrice() <= cenamax)
+				.filter(vehicle -> {
+					Matcher markaMatcher = pattern.matcher(vehicle.getBrand());
+					Matcher modelMatcher = pattern.matcher(vehicle.getModel());
+					Matcher modelMarkaMatcher = pattern.matcher(vehicle.getModel() + " " + vehicle.getBrand());
+					Matcher markaModelMatcher = pattern.matcher(vehicle.getBrand() + " " + vehicle.getModel());
+					return markaMatcher.find() || modelMatcher.find() || modelMarkaMatcher.find() || markaModelMatcher.find();
+				})
 
 				.sorted(comp).toList();
 	}
@@ -70,11 +78,11 @@ public class VehicleController {
 	public String getVehicleImage(@PathVariable Long id) {
 		try {
 			Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
-			if(vehicle == null) {
+			if (vehicle == null) {
 				return "Given car does not exist";
 			}
 			Path currentRelativePath = Paths.get("");
-			String path = currentRelativePath.toAbsolutePath().toString() + "\\CarShop\\Images\\Vehicles\\" + vehicle.getPicture_file_name();
+			String path = currentRelativePath.toAbsolutePath() + "\\CarShop\\Images\\Vehicles\\" + vehicle.getPicture_file_name();
 
 			File file = new File(path);
 			BufferedImage image = ImageIO.read(file);
@@ -122,23 +130,6 @@ public class VehicleController {
 	@DeleteMapping("/{id}")
 	void deleteVehicle(@PathVariable Long id) {
 		vehicleRepository.deleteById(id);
-	}
-
-	@GetMapping("/search")
-	List<Vehicle> getSearchedList(@RequestParam(value = "input", defaultValue = "") String input) {
-		if (input.isBlank()) {
-			return vehicleRepository.findAll();
-		}
-
-		Pattern pattern = Pattern.compile(input, Pattern.CASE_INSENSITIVE);
-
-		return vehicleRepository.findAll().stream().filter(vehicle -> {
-			Matcher markaMatcher = pattern.matcher(vehicle.getBrand());
-			Matcher modelMatcher = pattern.matcher(vehicle.getModel());
-			Matcher modelMarkaMatcher = pattern.matcher(vehicle.getModel() + " " + vehicle.getBrand());
-			Matcher markaModelMatcher = pattern.matcher(vehicle.getBrand() + " " + vehicle.getModel());
-			return markaMatcher.find() || modelMatcher.find() || modelMarkaMatcher.find() || markaModelMatcher.find();
-		}).collect(Collectors.toList());
 	}
 
 	@PutMapping("/{id}/changeshowroom")

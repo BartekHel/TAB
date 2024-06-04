@@ -69,12 +69,12 @@ public class ServiceController {
 	}
 
 	@PostMapping("/{id}/setprice")
-	void setPrice(@PathVariable Long id, @RequestBody double executionDate) {
+	void setPrice(@PathVariable Long id, @RequestBody double price) {
 		Service service = serviceRepository.findById(id).orElse(null);
 		if (service == null) {
 			return;
 		}
-		service.setPrice(executionDate);
+		service.setPrice(price);
 		serviceRepository.saveAndFlush(service);
 	}
 
