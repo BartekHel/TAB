@@ -48,9 +48,8 @@ function App() {
     fetchOffers();
   }, []);
 
-  const handleShow = () => {
-    const carId = 1;
-    navigate(`/carDetails/${carId}`);
+  const handleShow = (id:number) => {
+    navigate(`/carDetails/${id}`);
   };
 
   return (
@@ -184,7 +183,7 @@ function App() {
                       <div className="buttonContainer">
                         <button
                           className="offerButton"
-                          onClick={() => handleShow()}>
+                          onClick={() => handleShow(offer.vehicle.vehicle_id)}>
                           Show
                         </button>
                       </div>
