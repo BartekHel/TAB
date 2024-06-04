@@ -22,7 +22,20 @@ body {
     min-height: 130%;
     flex-direction: column;
     flex-grow: 1;
-    background-color: ghostwhite;
+    background-color: white;
+  }
+
+  .button-wrapper{
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 300px;
+    height: 300px;
+  }
+  button .show{
+    width: 200px;
+    height: 80px;
+    background-color: azure;
   }
 
   #downloadButton{

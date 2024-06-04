@@ -4,7 +4,13 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 const ManagerPage = () => {
-    const [showAddEmployee, setShowAddEmployee] = React.useState(false);
+    const [option,setOption] = React.useState(1);
+
+    const showrooms = [
+        { name: 'Skup pod Aei',  earnings: 79300.50 },
+        { name: 'Ryneczek Gliwicki', earnings: 6401.75 },
+    ];
+
     const employees = [
         { name: 'John Doe', email: 'john.doe@example.com', earnings: 1000.50 },
         { name: 'Jane Smith', email: 'jane.smith@example.com', earnings: 1500.75 },
@@ -100,17 +106,24 @@ const ManagerPage = () => {
     return (
         <div className='wrapper'>
             <div className='inside-wrapper'>
-                <h5>Manager Page</h5>
+                <h5>{option==1?'Employee List':'Showroom List'}</h5>
+
+                <div className='button-wrapper'>
+                <button className='show' onClick={()=>setOption(1)}>Show Employee List</button>
+                <button className='show' onClick={()=>setOption(2)}>Showroom List</button>
+                </div>
 
                 <button id='downloadButton' onClick={handleDownloadRaport}>Download Report</button>
 
                 <div id='Report'>
                 <div className='employeePanel'>
                    <div className='employeeLabel'>
-                    <p>Employee</p>
+                    <p>{option==1?'Employee':'Showroom'}</p>
                     <p>Earnings</p>
                     </div>
                 <div className='employeeList'>
+                    {option==1?
+                    <>
                     {employees.map((employee, index) => (
                         <div  key={index}>
                             <p>{employee.name}</p>
@@ -118,6 +131,17 @@ const ManagerPage = () => {
                             <p>{employee.earnings}$</p>
                         </div>
                     ))}
+                    </>
+                    :
+                    <>
+                    {showrooms.map((showroom, index) => (
+                        <div  key={index}>
+                            <p>{showroom.name}</p>
+                            <p>{showroom.earnings}$</p>
+                        </div>
+                    ))}
+                    </>
+                    }
                 </div>
                 </div>
                 </div>
