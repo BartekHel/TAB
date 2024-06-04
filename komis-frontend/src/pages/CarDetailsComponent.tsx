@@ -35,8 +35,8 @@ const CarDetailsComponent = () => {
   },[]);
 
   const handleBuy=()=>{
-    console.log("car: "+carId);
-    console.log("user: "+userId);
+    if(!userId) navigate(`/login`);
+
     apiClient.buyCar(totalCost!,userId,1,showroomId,parseInt(carId!))
   .then((response)=>{
     if(response.data.success){
@@ -54,7 +54,7 @@ const CarDetailsComponent = () => {
   }
 
   const handleBuyForClient=()=>{
-    //user_id showroom_id is hardcoded to 1
+   if(!userId) navigate(`/login`);
    
   apiClient.buyCarByDealer(totalCost!,clientToken,userId,showroomId,parseInt(carId!)) 
   .then((response)=>{
