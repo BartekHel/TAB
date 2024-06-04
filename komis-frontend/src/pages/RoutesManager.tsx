@@ -11,6 +11,9 @@ import ManagerPage from './ManagerPage'
 import ServiceOrderSelected from './ServiceOrderSelected'
 import MechanicsServices from './MechanicsServices'
 import { ToastContainer } from 'react-toastify'
+import AddPage from './AddPage'
+import DealersTransactions from '././DealersTransactions'
+
 const RoutesManager = () => {
   return (
     <div>
@@ -25,6 +28,8 @@ const RoutesManager = () => {
         <Route path="/orderService" element={<ServiceOrder/>}/>
         <Route path="/orderServiceSelected/:carId" element={<ServiceOrderSelected/>}/>
         <Route path="/mechanicsServices" element={<MechanicsServices/>}/>
+        <Route path="/addPage" element={<AddPage/>}/>
+        <Route path="/dealersTransactions" element={<DealersTransactions/>}/>
       </Routes>
       </UserProvider>
     </div>

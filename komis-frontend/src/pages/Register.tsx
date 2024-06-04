@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react'
 import '../css/Auth.css'
 import ApiClient from '../service/ApiClient';
 import userContext from '../PageInfo';
+import { useNavigate } from "react-router-dom";
 
 
 const apiClient=new ApiClient();
 
 const Register = () => {
-
+    const navigate = useNavigate();
     const{setLogged, setUserId, setRole, setUserLogin} = useContext(userContext);
     const [ success, setSuccess] = useState(false);
     const [ login, setLogin ] = useState('');
@@ -68,6 +69,10 @@ const Register = () => {
                 setUserId(resp[2]);
                 setRole(resp[1]);
                 setUserLogin(resp[3]);
+                if (resp[1] == "REPAIRER")
+                    navigate(`/mechanicsServices/`);
+                else
+                    navigate(`/`);
             }
             else
             {

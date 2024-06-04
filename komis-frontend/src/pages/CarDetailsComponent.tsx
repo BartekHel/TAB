@@ -16,6 +16,7 @@ const CarDetailsComponent = () => {
   const [image, setImage] = useState<string>("");
   const {userId, role} = useContext(userContext) as {userId: number, role:string};
   const [ clientToken, setClientToken ] = useState("");
+  const [ showroomId, setShowroomId ] = useState(1);
   const navigate=useNavigate();
   
   useEffect(()=>{
@@ -24,6 +25,13 @@ const CarDetailsComponent = () => {
       setTotalCost(car.price);
     });
     apiClient.getImage(1).then(image=>setImage(image));
+
+    if(role=="DEALER")
+    {
+      apiClient.getDealerShowroom(userId).then((resp)=>{
+        setShowroomId(resp);
+      })
+    }
   },[]);
 
   const handleBuy=()=>{
@@ -36,7 +44,10 @@ const CarDetailsComponent = () => {
       setTimeout(()=>navigate('/'),300);
     }
     else{
-      alert('Error buying car');
+      if (!user.logged)
+        navigate(`/login`);
+      else
+        alert('Error buying car');
     }
   }
   );

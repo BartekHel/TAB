@@ -71,7 +71,7 @@ function App() {
         />
 
         <div className="sortLabelFrame">
-          <h1 className="sideMainHeader">Sort</h1>
+          <h1 className="sideMainHeader1">Sort </h1>
           <input
             type="radio"
             id="radio0"
@@ -128,7 +128,7 @@ function App() {
 
         <div className="filterLabelFrame">
           <h1 className="sideMainHeader">Filter</h1>
-          <h2 className="sideh1">Price</h2>
+          <h2 className="sideh1">By price</h2>
           <br />
           <label htmlFor="minPrice" className="customNumberLabel">
             Min
@@ -173,26 +173,29 @@ function App() {
       </div>
       <div className="mainDiv">
         <div className="containersContainer" id="containersContainerID">
-                {offers.map((offer, index) => (
-                    <div key={index} className="offerCard">
-                        <div className="offerDetails">
-                          <div className="titleAndPrice">
-                                <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
-                                <p>Price: ${offer.vehicle.price}</p>
-                            </div>
-                            {offer.picture && <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} />}
-                            <div className="buttonContainer">
-                                <button
-                                    className="offerButton"
-                                    onClick={() => handleShow()}>
-                                    Show
-                                </button>
-                            </div>
-                        </div>
+          {offers.map((offer, index) => (
+            <div key={index} className="offerCard">
+              <div className="offerDetails">
+                <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
+                {offer.picture && 
+                  <div className="imageAndOthers">
+                    <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} />
+                    <div className="description"> Price: ${offer.vehicle.price} 
+                      <div className="buttonContainer">
+                        <button
+                          className="offerButton"
+                          onClick={() => handleShow()}>
+                          Show
+                        </button>
+                      </div>
                     </div>
-                ))}
+                  </div>
+                }
+              </div>
             </div>
+          ))}
         </div>
+      </div>
     </div>
   );
 }

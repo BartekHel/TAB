@@ -5,4 +5,5 @@ export default interface Vehicle {
     modifications: string | null;
     next_inspection_date: string;
     price: number;
+    showroomId: number;
   }

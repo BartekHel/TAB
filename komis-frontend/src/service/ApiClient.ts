@@ -35,7 +35,7 @@ export const axiosInstance= axios.create({
     }
 
     Register=async (login:string, password:string, email:string, name:string, surname:string): Promise<[boolean, string, number, string]>=>{
-      const resp = await axiosInstance.post('http://localhost:8080/car-shop/users/reg',{login:login, password:password, email:email, name:name, surname:surname})
+      const resp = await axiosInstance.post('http://localhost:8080/car-shop/users/reg',{login:login, password:password, email:email, role: "CLIENT", name:name, surname:surname})
       
       return [resp.data.success, resp.data.message, resp.data.id, resp.data.login]
     }
@@ -116,6 +116,12 @@ export const axiosInstance= axios.create({
     {
       const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})
       return [resp.data];
+    }
+
+    getDealerShowroom = async (dealer_id:number): Promise<number> =>
+    {
+      const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})
+      return [resp.data.showroom_id];
     }
 
     GetMechanicServices = async (id: number): Promise<Service[]> => {
