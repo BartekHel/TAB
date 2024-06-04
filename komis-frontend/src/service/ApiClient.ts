@@ -20,10 +20,15 @@ export const axiosInstance= axios.create({
       .then((response)=>response.data);
     }
 
-    buyCar=(vehicle_id:number,price:number,modifications:string,client_id:number,showroomId:number,dealer_id:number)=>{
-       return axiosInstance.post(this.baseURL+'/orders/createorder',
-      {vehicle_id:vehicle_id,price:price,modifications:modifications,client_id:client_id,showroom_id:showroomId,dealer_id:dealer_id});
+    buyCarByDealer=(price:number,client_token:string,dealer_id:number,showroomId:number,vehicle_id:number)=>{
+       return axiosInstance.post(this.baseURL+'/orders/createorderbytoken',
+      {price:price,client_token:client_token,dealer_id:dealer_id,showroom_id:showroomId,vehicle_id:vehicle_id});
     }
+
+    buyCar=(price:number,client_id:number,dealer_id:number,showroomId:number,vehicle_id:number)=>{
+      return axiosInstance.post(this.baseURL+'/orders/createorder',
+     {price:price,client_id:client_id,dealer_id:dealer_id,showroom_id:showroomId,vehicle_id:vehicle_id});
+   }
 
     getCarDetails=async(carId:number)=>{
       return await axiosInstance.get<CarDetails>(this.baseURL+'/vehicles/'+carId).then((response)=>response.data);

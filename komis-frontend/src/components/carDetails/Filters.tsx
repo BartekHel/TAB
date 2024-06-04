@@ -1,57 +1,75 @@
 
 interface Props{
-  color: {name:string,price:number},
-   engine: {name:string,price:number};
-    upholstery: {name:string,price:number};
-    colorChange:(color:{name:string,price:number})=>void;
-    engineChange:(enigne:{name:string,price:number})=>void;
-    upholsteryChange:(upholstery:{name:string,price:number})=>void;
+    modificationChange:(newTotalPrice:number)=>void;
 }
 
-function Filters({color,engine,upholstery,colorChange,engineChange,upholsteryChange}: Props) {
-  const colorOptions = [
-    { name: "red", price: 100 },
-    { name: "blue", price: 150 },
-    { name: "green", price: 120 },
-    { name: "black", price: 0 }
+function Filters({modificationChange}: Props) {
+  const detailingOptions = [
+    { name: "Interior Shampooing", price: 100 },
+    { name: "Exterior Waxing", price: 150 },
+    { name: "Wheel Polishing", price: 120 },
   ];
 
-  const engineOptions = [
-    { name: "diesel 2.0L BlueHDi", price: 1300 },
-    { name: "diesel 1.6L TDI", price: 1000 },
-    { name: "petrol 1.6", price: 0 },
-    { name: "petrol 2.0L turbocharged", price: 1200 }
+  const mechanicalOptions = [
+    { name: "Lubrication System Upgrade", price: 300 },
+    { name: "Gas system instalation", price: 200 },
+    { name: "Transmission Service", price: 250 }
   ];
+
 
   const upholsteryOptions = [
     { name: "Premium Leather upholstery", price: 800 },
     { name: "Fabric upholstery", price: 0 }
   ];
+
+  const handleModificationChange = () => {
+    let totalPrice = 0;
+  
+    detailingOptions.forEach((option) => {
+      const checkbox = document.getElementById(option.name) as HTMLInputElement; 
+      if (checkbox.checked) {
+        totalPrice += option.price; 
+      }
+    });
+
+    mechanicalOptions.forEach((option) => {
+      const checkbox = document.getElementById(option.name) as HTMLInputElement; 
+      if (checkbox.checked) {
+        totalPrice += option.price; 
+      }
+    });
+  
+    const upholsterySelect = document.querySelector('select[name="upholstery"]') as HTMLSelectElement;
+    const selectedUpholstery = upholsterySelect.value;
+    const selectedUpholsteryPrice = upholsteryOptions.find(option => option.name === selectedUpholstery)?.price || 0;
+    totalPrice += selectedUpholsteryPrice;
+    
+    modificationChange(totalPrice);
+  }
+
+
   
   return (
     <div className='filters'>
       <div className='filter'>
-        <label>Color</label>
-        <select value={color.name} onChange={(e) => 
-          colorChange(colorOptions.find(option => option.name === e.target.value) || { name: "", price: 0 })}>
-          {colorOptions.map((option) => (
-            <option key={option.name} value={option.name}>{option.name}</option>
-          ))}
-        </select>
-      </div>
+        <label>Detailing</label>
+        {detailingOptions.map((option) => 
+        <span style={{width:'100%',display:'flex',justifyContent:'space-between'}}>
+          <p>{option.name} {option.price}&euro;</p>
+        <input style={{width:'30px'}} type="checkbox" id={option.name} onChange={handleModificationChange}  value={option.price}/>
+        </span>)}
+        </div>
       <div className='filter'>
-        <label>Engine</label>
-        <select value={engine.name} onChange={(e) => 
-          engineChange(engineOptions.find(option => option.name === e.target.value) || { name: "", price: 0 })}>
-          {engineOptions.map((option) => (
-            <option key={option.name} value={option.name}>{option.name}</option>
-          ))}
-        </select>
+        <label>Mechanic features</label>
+        {mechanicalOptions.map((option) => 
+        <span style={{width:'100%',display:'flex',justifyContent:'space-between'}}>
+          <p>{option.name} {option.price}&euro;</p>
+        <input style={{width:'30px'}} type="checkbox" onChange={handleModificationChange}  id={option.name}  value={option.price}/>
+        </span>)}
       </div>
       <div className='filter'>
         <label>Upholstery</label>
-        <select value={upholstery.name} onChange={(e) => 
-          upholsteryChange(upholsteryOptions.find(option => option.name === e.target.value) || { name: "", price: 0 })}>
+        <select name="upholstery" onChange={handleModificationChange}>
           {upholsteryOptions.map((option) => (
             <option key={option.name} value={option.name}>{option.name}</option>
           ))}
