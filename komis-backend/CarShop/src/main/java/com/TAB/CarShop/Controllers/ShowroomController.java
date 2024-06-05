@@ -4,8 +4,12 @@ import com.TAB.CarShop.Entities.*;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Requests.ShowroomRequest;
+import com.TAB.CarShop.Responses.ShowroomListResponse;
+import org.springframework.boot.autoconfigure.quartz.QuartzTransactionManager;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,9 +24,33 @@ public class ShowroomController {
 		this.managerRepository = managerRepository;
 	}
 
+	@GetMapping("/{id}/profits")
+	double getProfitsFromLastMonth(@PathVariable long id) {
+		Showroom showroom = showroomRepository.findById(id).orElse(null);
+		if (showroom == null) return -1;
+		LocalDate lastMonth = LocalDate.now().minusMonths(1);
+		double profitLastMonth = 0;
+		for(Order order : showroom.getOrders()) {
+			if(lastMonth.getMonth() == order.getSubmission_date().getMonth() && lastMonth.getYear() == order.getSubmission_date().getYear()) {
+				profitLastMonth += order.getPrice();
+			}
+		}
+		return profitLastMonth;
+	}
+
 	@GetMapping
-	List<Showroom> getAllShowrooms() {
-		return showroomRepository.findAll();
+	List<ShowroomListResponse> getAllShowrooms() {
+		List<Showroom> showroomList = showroomRepository.findAll();
+		List<ShowroomListResponse> showroomListResponse = new ArrayList<>();
+		for(Showroom showroom : showroomList) {
+			double profitLastMonth = this.getProfitsFromLastMonth(showroom.getShowroom_id());
+			showroomListResponse.add(new ShowroomListResponse(
+					showroom.getShowroom_id(),
+					showroom.getAddress(),
+					profitLastMonth
+			));
+		}
+		return showroomListResponse;
 	}
 
 	@GetMapping("/{id}")
