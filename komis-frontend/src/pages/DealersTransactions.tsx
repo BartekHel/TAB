@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../css/DealersTransactions.css';
 import ApiClient from '../service/ApiClient';
 import userContext from '../PageInfo';
+import Order from '../entitiy/Order';
 
 const DealersTransactions = () => {
   const apiClient = new ApiClient();
   const { userId } = useContext(userContext);
-  const [ownedCars, setOwnedCars] = useState<Vehicle[]>([]);
+  const [ orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchServices = async () => {
+  const fetchOrders = async () => {
     try {
-      const services = await apiClient.GetMechanicServices(3);
-      setOwnedCars(services);
+      const orders = await apiClient.getDealerOrders(userId);
+      setOrders(orders);
     } catch (err) {
       setError("Error fetching dealers transactions");
     } finally {
@@ -22,7 +23,7 @@ const DealersTransactions = () => {
   };
 
   useEffect(() => {
-    fetchServices();
+    fetchOrders();
   }, [userId]);
 
   if (loading) {
@@ -42,16 +43,17 @@ const DealersTransactions = () => {
       <table>
         <thead>
           <tr>
-            <th>Transaction date</th>
+            <th>Submission Date</th>
+            <th>Delivery Date</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
-          {ownedCars.map((service, index) => (
+          {orders.map((order, index) => (
             <tr key={index}>
-              <td>{service.admission_date}</td>
-              <td>
-                <button className="button" onClick={() => handleDetailsClick(service)}>Details</button>
-              </td>
+              <td>{order.submission_date}</td>
+              <td>{order.delivery_date}</td>
+              <td>{order.price}</td>
             </tr>
           ))}
         </tbody>

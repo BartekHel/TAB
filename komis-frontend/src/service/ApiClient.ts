@@ -2,6 +2,7 @@ import axios from "axios";
 import CarDetails from "../entitiy/CarDetail";
 import Vehicle from "../entitiy/Vehicle";
 import Service from "../entitiy/Service"
+import Order from "../entitiy/Order";
 
 
 
@@ -33,6 +34,11 @@ export const axiosInstance= axios.create({
     getCarDetails=async(carId:number)=>{
       return await axiosInstance.get<CarDetails>(this.baseURL+'/vehicles/'+carId).then((response)=>response.data);
     }
+
+    getDealerOrders=async(dealerId:number)=>{
+      return await axiosInstance.get<Order>(this.baseURL+'/dealer/'+dealerId + '/listorders').then((response)=>response.data);
+    }
+    
 
     Register=async (login:string, password:string, email:string, name:string, surname:string): Promise<[boolean, string, number, string]>=>{
       const resp = await axiosInstance.post('http://localhost:8080/car-shop/users/reg',{login:login, password:password, email:email, role: "CLIENT", name:name, surname:surname})
@@ -118,6 +124,12 @@ export const axiosInstance= axios.create({
       return [resp.data];
     }
 
+    PutVehicleShowroom = async (vehicle_id: number, showroom_id: number) =>
+    {
+      const resp = await axiosInstance.put('http://localhost:8080/car-shop/vehicles/'+vehicle_id+'/changeshowroom?showroom_id='+showroom_id)
+      return resp.data;
+    }
+    
     getDealerShowroom = async (dealer_id:number): Promise<number> =>
     {
       const resp = await axiosInstance.post('http://localhost:8080/car-shop/services',{vehicleId:vehicle_id, repairerId:repairer_id, description:description})

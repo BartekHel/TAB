@@ -69,6 +69,21 @@ const CarDetailsComponent = () => {
   );
   }
 
+  const handleOrderForShowroom=()=>{
+    if(!userId) navigate(`/login`);
+    apiClient.PutVehicleShowroom(parseInt(carId!),showroomId)
+   .then((response)=>{
+     if(true){
+       alert('Car order to showroom successfully');
+       setTimeout(()=>navigate('/'),300);
+     }
+     else{
+       alert('Error ordering car');
+     }
+   }
+   );
+   }
+
   return (
     <div className='wrapper'>
     <div  className='inside-wrapper'>
@@ -100,6 +115,11 @@ const CarDetailsComponent = () => {
         <button onClick={handleBuyForClient}>Buy for client</button>
         :<button onClick={handleBuy}>Buy</button>
       }
+      {
+        role=="DEALER" &&
+        <button onClick={handleOrderForShowroom}>Order car for showroom</button>
+      }
+      PutVehicleShowroom
       
     </div>
     </section>
