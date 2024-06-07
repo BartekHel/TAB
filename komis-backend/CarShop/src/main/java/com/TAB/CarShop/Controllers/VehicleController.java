@@ -36,7 +36,7 @@ public class VehicleController {
 	@GetMapping
 	List<Vehicle> getAllVehicles() {
 		List<Vehicle> all = vehicleRepository.findAll();
-		return all.stream().filter(car-> !car.isWas_sold()).toList();
+		return all.stream().filter(car -> !car.isWas_sold()).toList();
 	}
 
 	@GetMapping("/{id}")

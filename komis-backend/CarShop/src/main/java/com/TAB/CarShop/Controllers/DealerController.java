@@ -1,15 +1,12 @@
 package com.TAB.CarShop.Controllers;
 
-import com.TAB.CarShop.Entities.Dealer;
-import com.TAB.CarShop.Entities.Manager;
-import com.TAB.CarShop.Entities.Order;
-import com.TAB.CarShop.Entities.Showroom;
+import com.TAB.CarShop.Entities.*;
 import com.TAB.CarShop.Repositories.DealerRepository;
 import com.TAB.CarShop.Repositories.ManagerRepository;
+import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/dealer")
@@ -32,11 +29,19 @@ public class DealerController {
 		return dealerRepository.findById(id).orElse(null);
 	}
 
+	/*
 	@GetMapping("/{id}/listorders")
 	Set<Order> listDealerOrders(@PathVariable Long id) {
 		Dealer dealer = dealerRepository.findById(id).orElse(null);
 		if (dealer == null) return null;
 		return dealer.getOrders();
+	}*/
+
+	@GetMapping("/{id}/listorders")
+	List<Pair<Order, Vehicle>> listDealerOrdersTest(@PathVariable Long id) {
+		Dealer dealer = dealerRepository.findById(id).orElse(null);
+		if (dealer == null) return null;
+		return dealer.getOrders().stream().map(order -> Pair.of(order, order.getVehicle())).toList();
 	}
 
 	@GetMapping("/{id}/getshowroom")

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/client")
@@ -38,24 +38,16 @@ public class ClientController {
 		if (client == null) {
 			return null;
 		}
-		List<Vehicle> vehicles = new ArrayList<>();
-		for (Order order : client.getOrders()) {
-			vehicles.add(order.getVehicle());
-		}
-		return vehicles;
+		return client.getOrders().stream().map(Order::getVehicle).toList();
 	}
 
 	@GetMapping("/{id}/listorders")
-	List<Order> getClientOrders(@PathVariable Long id) {
+	Set<Order> getClientOrders(@PathVariable Long id) {
 		Client client = clientRepository.findById(id).orElse(null);
 		if (client == null) {
 			return null;
 		}
-		List<Order> orders = new ArrayList<>();
-		for (Order order : client.getOrders()) {
-			orders.add(order);
-		}
-		return orders;
+		return client.getOrders();
 	}
 
 	@GetMapping("/{id}/generatetoken")

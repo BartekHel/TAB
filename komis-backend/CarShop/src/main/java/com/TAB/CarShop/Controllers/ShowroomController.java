@@ -1,11 +1,13 @@
 package com.TAB.CarShop.Controllers;
 
-import com.TAB.CarShop.Entities.*;
+import com.TAB.CarShop.Entities.Manager;
+import com.TAB.CarShop.Entities.Order;
+import com.TAB.CarShop.Entities.Showroom;
+import com.TAB.CarShop.Entities.Vehicle;
 import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Requests.ShowroomRequest;
 import com.TAB.CarShop.Responses.ShowroomListResponse;
-import org.springframework.boot.autoconfigure.quartz.QuartzTransactionManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -30,8 +32,8 @@ public class ShowroomController {
 		if (showroom == null) return -1;
 		LocalDate lastMonth = LocalDate.now().minusMonths(1);
 		double profitLastMonth = 0;
-		for(Order order : showroom.getOrders()) {
-			if(lastMonth.getMonth() == order.getSubmission_date().getMonth() && lastMonth.getYear() == order.getSubmission_date().getYear()) {
+		for (Order order : showroom.getOrders()) {
+			if (lastMonth.getMonth() == order.getSubmission_date().getMonth() && lastMonth.getYear() == order.getSubmission_date().getYear()) {
 				profitLastMonth += order.getPrice();
 			}
 		}
@@ -42,7 +44,7 @@ public class ShowroomController {
 	List<ShowroomListResponse> getAllShowrooms() {
 		List<Showroom> showroomList = showroomRepository.findAll();
 		List<ShowroomListResponse> showroomListResponse = new ArrayList<>();
-		for(Showroom showroom : showroomList) {
+		for (Showroom showroom : showroomList) {
 			double profitLastMonth = this.getProfitsFromLastMonth(showroom.getShowroom_id());
 			showroomListResponse.add(new ShowroomListResponse(
 					showroom.getShowroom_id(),
@@ -83,14 +85,14 @@ public class ShowroomController {
 	@GetMapping("/{id}/listvehicles")
 	Set<Vehicle> getShowroomVehicles(@PathVariable Long id) {
 		Showroom showroom = showroomRepository.findById(id).orElse(null);
-		if(showroom == null) return null;
+		if (showroom == null) return null;
 		return showroom.getVehicles();
 	}
 
 	@GetMapping("/{id}/getmanager")
 	Manager getShowroomManager(@PathVariable Long id) {
 		Showroom showroom = showroomRepository.findById(id).orElse(null);
-		if(showroom == null) return null;
+		if (showroom == null) return null;
 		return showroom.getManager();
 	}
 }
