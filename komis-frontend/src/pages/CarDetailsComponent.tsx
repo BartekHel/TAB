@@ -119,7 +119,7 @@ const CarDetailsComponent = () => {
         role=="DEALER" &&
         <button onClick={handleOrderForShowroom}>Order car for showroom</button>
       }
-      PutVehicleShowroom
+      
       
     </div>
     </section>

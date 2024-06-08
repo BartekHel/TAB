@@ -28,6 +28,8 @@ section{
 
 .summary{
   margin-top: 50px;
+  background-color: ghostwhite;
+    opacity: 85%;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4); /* Biały cień */
@@ -63,6 +65,8 @@ section{
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
+    background-color: ghostwhite;
+    opacity: 85%;
     width: 450px;
     height: 350px;
     margin-top: 50px;

@@ -3,4 +3,7 @@ export default interface Order {
     submission_date: string;
     delivery_date: string;
     price: number;
+    vehicle_id: number;
+    brand: string;
+    model: string;
   }

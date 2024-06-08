@@ -36,7 +36,17 @@ export const axiosInstance= axios.create({
     }
 
     getDealerOrders=async(dealerId:number)=>{
-      return await axiosInstance.get<Order>(this.baseURL+'/dealer/'+dealerId + '/listorders').then((response)=>response.data);
+      const orders = await axiosInstance.get(this.baseURL+'/dealer/'+dealerId + '/listorders').then((response)=>response.data);
+      console.log( orders);
+      return orders.map((order: any) => ({
+        order_id: order.first.order_id,
+        submission_date: order.first.submission_date,
+        delivery_date: order.first.delivery_date,
+        vehicle_id: order.second.vehicle_id,
+        brand: order.second.brand,
+        model: order.second.model,
+        price: order.first.price
+      }));
     }
     
 

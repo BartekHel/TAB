@@ -3,6 +3,7 @@ import '../css/DealersTransactions.css';
 import ApiClient from '../service/ApiClient';
 import userContext from '../PageInfo';
 import Order from '../entitiy/Order';
+import { Link } from 'react-router-dom';
 
 const DealersTransactions = () => {
   const apiClient = new ApiClient();
@@ -43,17 +44,23 @@ const DealersTransactions = () => {
       <table>
         <thead>
           <tr>
+            <th>Brand</th>
+            <th>Model</th>
             <th>Submission Date</th>
             <th>Delivery Date</th>
             <th>Price</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
           {orders.map((order, index) => (
             <tr key={index}>
+              <td>{order.brand}</td>
+              <td>{order.model}</td>
               <td>{order.submission_date}</td>
               <td>{order.delivery_date}</td>
               <td>{order.price}</td>
+              <td><Link className="nav-button" to={"/carDetails/:" + order.vehicle_id} >Details</Link></td>
             </tr>
           ))}
         </tbody>
