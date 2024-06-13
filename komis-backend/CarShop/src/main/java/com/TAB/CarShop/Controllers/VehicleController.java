@@ -1,10 +1,12 @@
 package com.TAB.CarShop.Controllers;
 
+import com.TAB.CarShop.CarShopUtils;
 import com.TAB.CarShop.Entities.Showroom;
 import com.TAB.CarShop.Entities.Vehicle;
 import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.VehicleRequest;
+import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -14,10 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,6 +94,23 @@ public class VehicleController {
 			return Base64.getEncoder().encodeToString(imageBytes);
 		} catch (IOException e) {
 			return e.getMessage();
+		}
+	}
+
+	@PostMapping("/generate/{number}")
+	void generateVehicles(@PathVariable int number){
+		Faker faker=new Faker();
+
+		for (int i = 0; i < number; i++) {
+			int randIndex = faker.number().numberBetween(0, 3);
+			String randomBrand = CarShopUtils.brands.get(randIndex);
+			String model = CarShopUtils.carModels.get(randIndex).get(faker.number().numberBetween(0, 4));
+			addVehicle(VehicleRequest.builder()
+					.brand(randomBrand)
+					.model(model)
+					.price(faker.number().numberBetween(15000,80000))
+					.showroomId(faker.number().numberBetween(1,3))
+					.build());
 		}
 	}
 
