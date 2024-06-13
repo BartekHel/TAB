@@ -6,7 +6,7 @@ import java.util.Map;
 
 public record CarShopUtils() {
 
-    public static List<String> brands = List.of("Toyota", "BMW", "Ford", "Honda");
+    public static List<String> brands = List.of("Toyota", "BMW", "Honda", "Ford");
 
     public static Map<Integer, List<String>> carModels = Map.of(
             0, List.of("Corolla", "Camry", "RAV4", "Prius", "Highlander"),
