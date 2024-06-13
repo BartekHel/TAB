@@ -108,7 +108,7 @@ public class VehicleController {
 			addVehicle(VehicleRequest.builder()
 					.brand(randomBrand)
 					.model(model)
-					.price(faker.number().numberBetween(15000,80000))
+					.price(faker.number().numberBetween(10000,30000))
 					.showroomId(faker.number().numberBetween(1,3))
 					.build());
 		}
