@@ -76,38 +76,28 @@ public class VehicleController {
 				.sorted(comp).toList();
 	}
 
-	@GetMapping("/{id}/picture")
-	public ResponseEntity<String> getVehicleImage(@PathVariable Long id) {
-		try {
-			Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
-			if (vehicle == null) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given car does not exist");
-			}
+    @GetMapping("/{id}/picture")
+    public String getVehicleImage(@PathVariable Long id) {
+        try {
+            Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+            if (vehicle == null) {
+                return "Given car does not exist";
+            }
+            Path currentRelativePath = Paths.get("");
+            String path = currentRelativePath.toAbsolutePath() + "\\CarShop\\Images\\Vehicles\\" + vehicle.getPicture_file_name();
 
-			Path currentRelativePath = Paths.get("");
-			Path imagePath = currentRelativePath.toAbsolutePath().resolve("Images").resolve("Vehicles").resolve(vehicle.getPicture_file_name());
+            File file = new File(path);
+            BufferedImage image = ImageIO.read(file);
 
-			File file = imagePath.toFile();
-			if (!file.exists()) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image file does not exist");
-			}
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", outputStream);
 
-			BufferedImage image = ImageIO.read(file);
-			if (image == null) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cannot read image file");
-			}
-
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			ImageIO.write(image, "png", outputStream);
-
-			byte[] imageBytes = outputStream.toByteArray();
-			String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-			return ResponseEntity.ok().body(base64Image);
-		} catch (IOException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error reading image file: " + e.getMessage());
-		}
-	}
+            byte[] imageBytes = outputStream.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (IOException e) {
+            return e.getMessage();
+        }
+    }
 
 
 	@PostMapping("/generate/{number}")
