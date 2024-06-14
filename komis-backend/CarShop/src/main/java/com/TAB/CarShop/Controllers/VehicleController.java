@@ -102,7 +102,7 @@ public class VehicleController {
 		Faker faker=new Faker();
 
 		for (int i = 0; i < number; i++) {
-			int randIndex = faker.number().numberBetween(0, 3);
+			int randIndex = faker.number().numberBetween(0, 4);
 			String randomBrand = CarShopUtils.brands.get(randIndex);
 			String model = CarShopUtils.carModels.get(randIndex).get(faker.number().numberBetween(0, 4));
 			addVehicle(VehicleRequest.builder()
