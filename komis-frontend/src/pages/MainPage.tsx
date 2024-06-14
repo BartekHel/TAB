@@ -15,13 +15,17 @@ function App() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [sort, setSort] = useState("0");
+  const [showSpinner, setShowSpinner] = useState(false);
   const navigate = useNavigate();
 
   const searchForOffers = async (phrase: string) => {
     try {
+      setShowSpinner(true);
       const vehiclesWithPictures = await apiMainPage.GetSearchedVehicles(phrase);
       setOffers(vehiclesWithPictures);
+      setShowSpinner(false);
     } catch (error) {
+      setShowSpinner(false);
       console.error("Error searching for offers:", error);
     }
   };
@@ -37,6 +41,7 @@ function App() {
 
   const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
   useEffect(() => {
+    setShowSpinner(true);
     const fetchOffers = async () => {
         try {
             const vehiclesWithPictures = await apiMainPage.GetVehicles();
@@ -44,8 +49,10 @@ function App() {
         } catch (error) {
             console.error("Error fetching offers:", error);
         }
+        setShowSpinner(false);
     };
     fetchOffers();
+   
   }, []);
 
   const handleShow = (id:number) => {
@@ -172,7 +179,7 @@ function App() {
       </div>
       <div className="mainDiv">
         <div className="containersContainer" id="containersContainerID">
-          {offers.length == 0 && <div className="spinner-wrapper"><div className="spinner"></div></div>}
+          {showSpinner && <div className="spinner-wrapper"><div className="spinner"></div></div>}
           {offers.map((offer, index) => (
             <div key={index} className="offerCard">
               <div className="offerDetails">
