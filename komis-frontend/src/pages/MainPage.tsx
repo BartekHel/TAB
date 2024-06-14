@@ -18,23 +18,14 @@ function App() {
   const [showSpinner, setShowSpinner] = useState(false);
   const navigate = useNavigate();
 
-  const searchForOffers = async (phrase: string) => {
-    try {
-      setShowSpinner(true);
-      const vehiclesWithPictures = await apiMainPage.GetSearchedVehicles(phrase);
-      setOffers(vehiclesWithPictures);
-      setShowSpinner(false);
-    } catch (error) {
-      setShowSpinner(false);
-      console.error("Error searching for offers:", error);
-    }
-  };
-
   const filterAndSortOffers = async (phrase: string, minPrice: number, maxPrice: number, sort: string) => {
     try {
+      setShowSpinner(true);
       const vehiclesWithPictures = await apiMainPage.GetFilteredAndSortedVehicles(phrase, minPrice, maxPrice, sort);
       setOffers(vehiclesWithPictures);
+      setShowSpinner(false);
     } catch (error) {
+      setShowSpinner(false);
       console.error("Error searching for offers:", error);
     }
   };
@@ -68,12 +59,6 @@ function App() {
           value={phrase}
           onChange={(e) => setPhrase(e.target.value)}
           className="sidePanelSearch"
-        />
-        <input
-          type="button"
-          value="Search"
-          onClick={() => searchForOffers(phrase)}
-          className="sidePanelButton"
         />
 
         <div className="sortLabelFrame">
@@ -171,7 +156,7 @@ function App() {
               className="filterButton"
               onClick={() => filterAndSortOffers(phrase, minPrice, maxPrice, sort)}
             >
-              Filter
+              Search and filter
             </button>
             <br />
           </h1>
