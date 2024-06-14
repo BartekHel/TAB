@@ -19,6 +19,25 @@
   font-size: 0.5em;
 }
 
+.nav-buttonSpec {
+  background-color: #294768;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  margin-right: 10px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 20px;
+  margin-top: 3px;
+}
+
+.nav-buttonSpec:hover {
+  background-color: #325981;
+}
+
 .nav-link {
   margin-top: 10px;
   padding: 1px;
@@ -67,10 +86,9 @@
 }
 
 .name {
-  margin-top: 5px;
   font-size: 0.5em;
   margin-left: 13px;
   color: #dbdada;
   border: 1px solid black;
-  padding: 5px;
+  padding: 3px;
 }
