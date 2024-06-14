@@ -24,7 +24,7 @@ const CarDetailsComponent = () => {
       setCar(car);
       setTotalCost(car.price);
     });
-    apiClient.getImage(1).then(image=>setImage(image));
+    apiClient.getImage(parseInt(carId!)).then(image=>setImage(image));
 
     if(role=="DEALER")
     {
@@ -86,14 +86,14 @@ const CarDetailsComponent = () => {
 
   return (
     <div className='wrapper'>
-    <div  className='inside-wrapper'>
+    <div  className='content-wrapper'>
     
-    <div id='car-image-wrapper'> 
-    <div id="image"></div>
-     <img  width='100%'  height='100%'  background-size= 'cover'
+    <div className='car-image-wrapper'> 
+    {/* <div id="image"></div> */}
+     <img  width='85%'  height='85%'  background-size= 'cover'
      src={`data:image/png;base64,${image}`}/>
     </div>
-    <section>
+    <div className='section-wrapper'>
     <Filters modificationChange={(price)=>setTotalCost(car.price+price)}/>
     <div className='summary'>
       <p style={{marginBottom:'10px'}}>{`${car.brand} ${car.model}`}</p>
@@ -122,7 +122,7 @@ const CarDetailsComponent = () => {
       
       
     </div>
-    </section>
+    </div>
       
     </div>
     </div>

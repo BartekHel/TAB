@@ -1,10 +1,12 @@
 package com.TAB.CarShop.Requests;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class VehicleRequest {
 	private String brand;
 	private String model;

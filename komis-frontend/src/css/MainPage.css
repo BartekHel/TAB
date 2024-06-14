@@ -1,3 +1,52 @@
+.spinner-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  height: 200px;
+  width: 200px;
+  background-color: #e2e4e6;
+  border-radius: 50%;
+  overflow: hidden;
+  animation:  rotate 10s linear infinite;
+}
+.spinner{
+  z-index: 1000;
+  height: 150px;
+  width: 150px;
+  
+  animation: jump 0.4s ease-in-out infinite;
+  
+  background-image: url('../../background/szop4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@keyframes rotate{
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(25%);
+  }
+  50% {
+    transform: translateY(40%);
+  }
+  100% {
+    transform: translateY(25%);
+  }
+}
+
 .side-panel {
   position: fixed;
   margin-top: 7.5vh;

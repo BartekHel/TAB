@@ -1,10 +1,14 @@
 package com.TAB.CarShop.Controllers;
 
+import com.TAB.CarShop.CarShopUtils;
 import com.TAB.CarShop.Entities.Showroom;
 import com.TAB.CarShop.Entities.Vehicle;
 import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Repositories.VehicleRepository;
 import com.TAB.CarShop.Requests.VehicleRequest;
+import com.github.javafaker.Faker;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -14,10 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,25 +77,53 @@ public class VehicleController {
 	}
 
 	@GetMapping("/{id}/picture")
-	public String getVehicleImage(@PathVariable Long id) {
+	public ResponseEntity<String> getVehicleImage(@PathVariable Long id) {
 		try {
 			Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
 			if (vehicle == null) {
-				return "Given car does not exist";
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given car does not exist");
 			}
-			Path currentRelativePath = Paths.get("");
-			String path = currentRelativePath.toAbsolutePath() + "\\CarShop\\Images\\Vehicles\\" + vehicle.getPicture_file_name();
 
-			File file = new File(path);
+			Path currentRelativePath = Paths.get("");
+			Path imagePath = currentRelativePath.toAbsolutePath().resolve("Images").resolve("Vehicles").resolve(vehicle.getPicture_file_name());
+
+			File file = imagePath.toFile();
+			if (!file.exists()) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image file does not exist");
+			}
+
 			BufferedImage image = ImageIO.read(file);
+			if (image == null) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cannot read image file");
+			}
 
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			ImageIO.write(image, "png", outputStream);
 
 			byte[] imageBytes = outputStream.toByteArray();
-			return Base64.getEncoder().encodeToString(imageBytes);
+			String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+			return ResponseEntity.ok().body(base64Image);
 		} catch (IOException e) {
-			return e.getMessage();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error reading image file: " + e.getMessage());
+		}
+	}
+
+
+	@PostMapping("/generate/{number}")
+	void generateVehicles(@PathVariable int number){
+		Faker faker=new Faker();
+
+		for (int i = 0; i < number; i++) {
+			int randIndex = faker.number().numberBetween(0, 4);
+			String randomBrand = CarShopUtils.brands.get(randIndex);
+			String model = CarShopUtils.carModels.get(randIndex).get(faker.number().numberBetween(0, 5));
+			addVehicle(VehicleRequest.builder()
+					.brand(randomBrand)
+					.model(model)
+					.price(faker.number().numberBetween(10000,30000))
+					.showroomId(faker.number().numberBetween(1,3))
+					.build());
 		}
 	}
 
@@ -139,6 +168,14 @@ public class VehicleController {
 		Showroom showroom = showroomRepository.findById(showroom_id).orElse(null);
 		if (vehicle == null || showroom == null) return null;
 		vehicle.setShowroom(showroom);
+		return vehicleRepository.save(vehicle);
+	}
+
+	@PutMapping("/{id}/changemodifications")
+	Vehicle changeModifications(@PathVariable Long id, @RequestParam(value = "modifications", defaultValue = "") String modifications) {
+		Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+		if (vehicle == null) return null;
+		vehicle.setModifications(modifications);
 		return vehicleRepository.save(vehicle);
 	}
 

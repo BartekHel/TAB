@@ -59,7 +59,7 @@ public class Vehicle {
 		this.price = price;
 		this.showroom = showroom;
 		this.was_sold = false;
-		this.picture_file_name = "ToyotaYaris.png";
+		this.picture_file_name = brand + model + ".png";
 	}
 
 	public Vehicle(String brand, String model, String modifications, double price, String picture_file_name, Showroom showroom) {
