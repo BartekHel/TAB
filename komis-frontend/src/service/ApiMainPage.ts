@@ -40,38 +40,6 @@ export interface VehicleWithPicture {
       }
     };
 
-    GetSearchedVehicles = async (phrase: string): Promise<VehicleWithPicture[]> => {
-      try {
-        const resp = await axios.get(`http://localhost:8080/car-shop/vehicles/search`, {
-            params: { input: phrase }
-        });
-        const vehicles = resp.data;
-
-        const allVehicles = await Promise.all(vehicles.map(async (vehicle: Vehicle) => {
-          try {
-              const pictureResp = await axios.get(`http://localhost:8080/car-shop/vehicles/${vehicle.vehicle_id}/picture`);
-              const picture = pictureResp.data;
-
-              return {
-                  vehicle: vehicle,
-                  picture: picture
-              } as VehicleWithPicture;
-          } catch (error) {
-              console.error(`Error fetching picture for vehicle ${vehicle.vehicle_id}:`, error);
-              return {
-                  vehicle: vehicle,
-                  picture: null
-              } as VehicleWithPicture;
-          }
-        }));
-
-        return allVehicles;
-      } catch (error) {
-        console.error("Error fetching searched vehicles:", error);
-        throw error;
-      }
-    };
-
     GetFilteredAndSortedVehicles = async (phrase: string, minPrice: number, maxPrice: number, sort: string): Promise<VehicleWithPicture[]> => {
       try {
         if (maxPrice == 0)

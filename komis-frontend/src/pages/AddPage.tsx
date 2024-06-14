@@ -62,10 +62,8 @@ const AddPage = () => {
                     <div className="dropdown-content">
                         <a href="#" onClick={handleNewCar}>New car</a>
                         <a href="#" onClick={handleNewEmployee}>New employee</a>
-                        <a href="#" onClick={handleNewSalon}>New client</a>
                         {user.role=="ADMIN" && (
                             <div>
-                                <a href="#" onClick={handleNewSalon}>New salon</a>
                                 <a href="#" onClick={handleNewSalon}>New manager</a>
                             </div>
                         )}
