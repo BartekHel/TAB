@@ -172,6 +172,7 @@ function App() {
       </div>
       <div className="mainDiv">
         <div className="containersContainer" id="containersContainerID">
+          {offers.length == 0 && <div className="spinner-wrapper"><div className="spinner"></div></div>}
           {offers.map((offer, index) => (
             <div key={index} className="offerCard">
               <div className="offerDetails">
