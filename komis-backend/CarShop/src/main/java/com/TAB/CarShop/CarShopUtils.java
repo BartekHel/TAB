@@ -10,8 +10,8 @@ public record CarShopUtils() {
 
     public static Map<Integer, List<String>> carModels = Map.of(
             0, List.of("Corolla", "Camry", "RAV4", "Prius", "Highlander"),
-            1, List.of("E60", "X5", "M3", "X3", "5 Series"),
-            2, List.of("Civic", "Accord", "CR_V", "Fit", "Pilot"),
+            1, List.of("E60", "X5", "M3", "X3", "5Series"),
+            2, List.of("Civic", "Accord", "CR-V", "Fit", "Pilot"),
             3, List.of("Focus", "Mustang", "Escape", "Explorer", "F-150"));
 
 

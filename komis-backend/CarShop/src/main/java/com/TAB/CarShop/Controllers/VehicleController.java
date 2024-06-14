@@ -102,9 +102,9 @@ public class VehicleController {
 		Faker faker=new Faker();
 
 		for (int i = 0; i < number; i++) {
-			int randIndex = faker.number().numberBetween(0, 3);
+			int randIndex = faker.number().numberBetween(0, 4);
 			String randomBrand = CarShopUtils.brands.get(randIndex);
-			String model = CarShopUtils.carModels.get(randIndex).get(faker.number().numberBetween(0, 4));
+			String model = CarShopUtils.carModels.get(randIndex).get(faker.number().numberBetween(0, 5));
 			addVehicle(VehicleRequest.builder()
 					.brand(randomBrand)
 					.model(model)
@@ -155,6 +155,14 @@ public class VehicleController {
 		Showroom showroom = showroomRepository.findById(showroom_id).orElse(null);
 		if (vehicle == null || showroom == null) return null;
 		vehicle.setShowroom(showroom);
+		return vehicleRepository.save(vehicle);
+	}
+
+	@PutMapping("/{id}/changemodifications")
+	Vehicle changeModifications(@PathVariable Long id, @RequestParam(value = "modifications", defaultValue = "") String modifications) {
+		Vehicle vehicle = vehicleRepository.findById(id).orElse(null);
+		if (vehicle == null) return null;
+		vehicle.setModifications(modifications);
 		return vehicleRepository.save(vehicle);
 	}
 
