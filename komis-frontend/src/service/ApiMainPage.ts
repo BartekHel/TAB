@@ -44,9 +44,13 @@ export interface VehicleWithPicture {
       try {
         if (maxPrice == 0)
           maxPrice = 999999999;
-        const resp = await axios.get(`http://localhost:8080/car-shop/vehicles/filtered`, {
-            params: { marka: phrase, cenamin: minPrice, cenamax: maxPrice, sortby: sort}
-        });
+        let resp;
+        if (sort === "none")
+          resp = await axios.get('http://localhost:8080/car-shop/vehicles');
+        else 
+          resp = await axios.get(`http://localhost:8080/car-shop/vehicles/filtered`, {
+            params: { marka: "", cenamin: minPrice, cenamax: maxPrice, sortby: sort, input: phrase}
+          });
         const vehicles = resp.data;
 
         const allVehicles = await Promise.all(vehicles.map(async (vehicle: Vehicle) => {

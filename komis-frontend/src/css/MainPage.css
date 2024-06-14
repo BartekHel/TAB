@@ -67,7 +67,7 @@
   width: 95%;
   height: 5vh;
   font-size: 0.5em;
-  background-color: #e2e4e6;
+  background-color: #ffffff;
 }
 
 .sidePanelButton,
@@ -359,5 +359,21 @@ h1 {
 }
 
 .footerButton:hover {
+  background-color: #325981;
+}
+
+.moreOffers {
+  background-color: #1f364e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 15%;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.moreOffers:hover {
   background-color: #325981;
 }

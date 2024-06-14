@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../css/MainPage.css";
 import { useNavigate } from "react-router-dom";
 import ApiMainPage from '../service/ApiMainPage'
@@ -14,33 +14,49 @@ function App() {
   const [phrase, setPhrase] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [sort, setSort] = useState("0");
+  const [sort, setSort] = useState("none");
+  const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
+  const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
+  const topRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchOffers();
+    scrollToTop();
+  }, []);
+
+  const fetchOffers = async () => {
+    try {
+      const vehiclesWithPictures = await apiMainPage.GetVehicles();
+      setOffers(vehiclesWithPictures);
+      scrollToTop();
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
+  };
 
   const filterAndSortOffers = async (phrase: string, minPrice: number, maxPrice: number, sort: string) => {
     try {
       const vehiclesWithPictures = await apiMainPage.GetFilteredAndSortedVehicles(phrase, minPrice, maxPrice, sort);
       setOffers(vehiclesWithPictures);
+      setShowAll(false);
+      scrollToTop();
     } catch (error) {
       console.error("Error searching for offers:", error);
     }
   };
 
-  const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
-  useEffect(() => {
-    const fetchOffers = async () => {
-        try {
-            const vehiclesWithPictures = await apiMainPage.GetVehicles();
-            setOffers(vehiclesWithPictures);
-        } catch (error) {
-            console.error("Error fetching offers:", error);
-        }
-    };
-    fetchOffers();
-  }, []);
+  const handleShowMore = () => {
+    setShowAll(true);
+  };
 
-  const handleShow = (id:number) => {
+  const handleShow = (id: number) => {
     navigate(`/carDetails/${id}`);
+  };
+
+  const scrollToTop = () => {
+    if (topRef.current)
+      topRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
   };
 
   return (
@@ -62,11 +78,11 @@ function App() {
             value="0"
             className="customCheckbox"
             name="sort"
-            checked={sort === "0"}
-            onChange={() => setSort("0")}
+            checked={sort === "none"}
+            onChange={() => setSort("none")}
           />
           <label htmlFor="radio0" className="customSortLabel">
-            Most popular
+            None
           </label>
           <br />
           <input
@@ -75,11 +91,11 @@ function App() {
             value="1"
             className="customCheckbox"
             name="sort"
-            checked={sort === "1"}
-            onChange={() => setSort("1")}
+            checked={sort === "marka"}
+            onChange={() => setSort("marka")}
           />
           <label htmlFor="radio1" className="customSortLabel">
-            Least popular
+            Brand
           </label>
           <br />
           <input
@@ -88,8 +104,8 @@ function App() {
             value="2"
             className="customCheckbox"
             name="sort"
-            checked={sort === "2"}
-            onChange={() => setSort("2")}
+            checked={sort === "cenadesc"}
+            onChange={() => setSort("cenadesc")}
           />
           <label htmlFor="radio2" className="customSortLabel">
             Most expensive
@@ -101,8 +117,8 @@ function App() {
             value="3"
             className="customCheckbox"
             name="sort"
-            checked={sort === "3"}
-            onChange={() => setSort("3")}
+            checked={sort === "cenaasc"}
+            onChange={() => setSort("cenaasc")}
           />
           <label htmlFor="radio3" className="customSortLabel">
             Least expensive
@@ -123,7 +139,13 @@ function App() {
             id="minPrice"
             className="customNumber"
             value={minPrice}
-            onChange={(e) => setMinPrice(parseInt(e.target.value))}
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              if (isNaN(value))
+                setMinPrice(0);
+              else
+                setMinPrice(value);
+            }}
             step="1000"
             min="0"
           />
@@ -136,8 +158,14 @@ function App() {
             type="number"
             id="maxIPrice"
             className="customNumber"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+            value={maxPrice === '' ? '' : maxPrice}
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              if (isNaN(value))
+                setMaxPrice(0);
+              else
+                setMaxPrice(value);
+            }}
             step="1000"
             min="0"
           />
@@ -156,20 +184,18 @@ function App() {
         </div>
       </div>
       <div className="mainDiv">
-        <div className="containersContainer" id="containersContainerID">
-          {offers.length == 0 && <div className="spinner-wrapper"><div className="spinner"></div></div>}
-          {offers.map((offer, index) => (
+      <div className="containersContainer" id="containersContainerID">
+        {offers.length === 0 && <div className="spinner-wrapper"><div className="spinner"></div></div>}
+          {offers.slice(0, showAll ? offers.length : 10).map((offer, index) => (
             <div key={index} className="offerCard">
               <div className="offerDetails">
                 <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
                 {offer.picture && 
                   <div className="imageAndOthers">
-                    <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} />
-                    <div className="description"> Price: ${offer.vehicle.price} 
+                    <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} alt={`Offer ${offer.vehicle.brand} ${offer.vehicle.model}`} />
+                    <div className="description">Price: ${offer.vehicle.price} 
                       <div className="buttonContainer">
-                        <button
-                          className="offerButton"
-                          onClick={() => handleShow(offer.vehicle.vehicle_id)}>
+                        <button className="offerButton" onClick={() => handleShow(offer.vehicle.vehicle_id)}>
                           Show
                         </button>
                       </div>
@@ -179,8 +205,14 @@ function App() {
               </div>
             </div>
           ))}
+            {!showAll && offers.length > 10 && (
+              <button className="moreOffers" onClick={handleShowMore}>
+                Show more
+              </button>
+            )}
         </div>
       </div>
+      <div ref={topRef}></div>
     </div>
   );
 }
