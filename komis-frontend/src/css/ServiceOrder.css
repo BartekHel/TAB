@@ -7,6 +7,7 @@ body {
     margin: 0;
     overflow: auto;
     
+    
 }
 
 *{
@@ -26,6 +27,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     opacity: 85%;
     max-height: 85%;
+    min-width: 50%;
     overflow-y: scroll;
 }
 

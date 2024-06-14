@@ -17,12 +17,14 @@ function App() {
   const [sort, setSort] = useState("none");
   const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
   const [showAll, setShowAll] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const navigate = useNavigate();
   const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchOffers();
     scrollToTop();
+    setShowSpinner(true);
   }, []);
 
   const fetchOffers = async () => {
@@ -37,18 +39,30 @@ function App() {
 
   const filterAndSortOffers = async (phrase: string, minPrice: number, maxPrice: number, sort: string) => {
     try {
+      setShowSpinner(true);
       const vehiclesWithPictures = await apiMainPage.GetFilteredAndSortedVehicles(phrase, minPrice, maxPrice, sort);
       setOffers(vehiclesWithPictures);
       setShowAll(false);
       scrollToTop();
+      setShowSpinner(false);
     } catch (error) {
+      setShowSpinner(false);
       console.error("Error searching for offers:", error);
     }
   };
 
-  const handleShowMore = () => {
-    setShowAll(true);
-  };
+  const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
+  useEffect(() => {
+    const fetchOffers = async () => {
+        try {
+            const vehiclesWithPictures = await apiMainPage.GetVehicles();
+            setOffers(vehiclesWithPictures);
+        } catch (error) {
+            console.error("Error fetching offers:", error);
+        }
+    };
+    fetchOffers();
+  }, []);
 
   const handleShow = (id: number) => {
     navigate(`/carDetails/${id}`);
@@ -184,9 +198,9 @@ function App() {
         </div>
       </div>
       <div className="mainDiv">
-      <div className="containersContainer" id="containersContainerID">
-        {offers.length === 0 && <div className="spinner-wrapper"><div className="spinner"></div></div>}
-          {offers.slice(0, showAll ? offers.length : 10).map((offer, index) => (
+        <div className="containersContainer" id="containersContainerID">
+          {showSpinner && <div className="spinner-wrapper"><div className="spinner"></div></div>}
+          {offers.map((offer, index) => (
             <div key={index} className="offerCard">
               <div className="offerDetails">
                 <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
