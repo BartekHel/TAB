@@ -24,15 +24,17 @@ function App() {
   useEffect(() => {
     fetchOffers();
     scrollToTop();
-    setShowSpinner(true);
   }, []);
 
   const fetchOffers = async () => {
     try {
+      setShowSpinner(true);
       const vehiclesWithPictures = await apiMainPage.GetVehicles();
       setOffers(vehiclesWithPictures);
+      setShowSpinner(false);
       scrollToTop();
     } catch (error) {
+      setShowSpinner(false);
       console.error("Error fetching offers:", error);
     }
   };
@@ -51,22 +53,14 @@ function App() {
     }
   };
 
-  const [offers, setOffers] = useState<VehicleWithPicture[]>([]);
-  useEffect(() => {
-    const fetchOffers = async () => {
-        try {
-            const vehiclesWithPictures = await apiMainPage.GetVehicles();
-            setOffers(vehiclesWithPictures);
-        } catch (error) {
-            console.error("Error fetching offers:", error);
-        }
-    };
-    fetchOffers();
-  }, []);
-
   const handleShow = (id: number) => {
     navigate(`/carDetails/${id}`);
   };
+
+  const handleShowMore = () => {
+    setShowAll(true);
+  };
+
 
   const scrollToTop = () => {
     if (topRef.current)
@@ -155,10 +149,19 @@ function App() {
             value={minPrice}
             onChange={(e) => {
               const value = parseInt(e.target.value);
-              if (isNaN(value))
-                setMinPrice(0);
-              else
+              if (isNaN(value)) {
+                setMinPrice("");
+              } else {
                 setMinPrice(value);
+              }
+            }}
+            onBlur={(e) => {
+              const value = parseInt(e.target.value);
+              if (isNaN(value)) {
+                setMinPrice(0);
+              } else {
+                setMinPrice(value);
+              }
             }}
             step="1000"
             min="0"
@@ -172,13 +175,21 @@ function App() {
             type="number"
             id="maxIPrice"
             className="customNumber"
-            value={maxPrice === '' ? '' : maxPrice}
+            value={maxPrice}
             onChange={(e) => {
               const value = parseInt(e.target.value);
               if (isNaN(value))
-                setMaxPrice(0);
+                setMaxPrice("");
               else
                 setMaxPrice(value);
+            }}
+            onBlur={(e) => {
+              const value = parseInt(e.target.value);
+              if (isNaN(value)) {
+                setMaxPrice(0);
+              } else {
+                setMaxPrice(value);
+              }
             }}
             step="1000"
             min="0"
@@ -200,25 +211,25 @@ function App() {
       <div className="mainDiv">
         <div className="containersContainer" id="containersContainerID">
           {showSpinner && <div className="spinner-wrapper"><div className="spinner"></div></div>}
-          {offers.map((offer, index) => (
-            <div key={index} className="offerCard">
-              <div className="offerDetails">
-                <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
-                {offer.picture && 
-                  <div className="imageAndOthers">
-                    <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} alt={`Offer ${offer.vehicle.brand} ${offer.vehicle.model}`} />
-                    <div className="description">Price: ${offer.vehicle.price} 
-                      <div className="buttonContainer">
-                        <button className="offerButton" onClick={() => handleShow(offer.vehicle.vehicle_id)}>
-                          Show
-                        </button>
+            {offers.slice(0, showAll ? offers.length : 10).map((offer, index) => (
+              <div key={index} className="offerCard">
+                <div className="offerDetails">
+                  <h1>{offer.vehicle.brand} {offer.vehicle.model}</h1>
+                  {offer.picture && 
+                    <div className="imageAndOthers">
+                      <img className="offerImage" src={`data:image/png;base64,${offer.picture}`} alt={`Offer ${offer.vehicle.brand} ${offer.vehicle.model}`} />
+                      <div className="description">Price: ${offer.vehicle.price} 
+                        <div className="buttonContainer">
+                          <button className="offerButton" onClick={() => handleShow(offer.vehicle.vehicle_id)}>
+                            Show
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                }
+                  }
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
             {!showAll && offers.length > 10 && (
               <button className="moreOffers" onClick={handleShowMore}>
                 Show more

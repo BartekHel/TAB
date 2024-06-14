@@ -42,15 +42,16 @@ export interface VehicleWithPicture {
 
     GetFilteredAndSortedVehicles = async (phrase: string, minPrice: number, maxPrice: number, sort: string): Promise<VehicleWithPicture[]> => {
       try {
-        if (maxPrice == 0)
-          maxPrice = 999999999;
         let resp;
-        if (sort === "none")
+        if (sort == "none" && phrase.trim() == "" && minPrice == 0 && maxPrice == 0)
           resp = await axios.get('http://localhost:8080/car-shop/vehicles');
-        else 
-          resp = await axios.get(`http://localhost:8080/car-shop/vehicles/filtered`, {
-            params: { marka: "", cenamin: minPrice, cenamax: maxPrice, sortby: sort, input: phrase}
-          });
+        else {
+          if (maxPrice == 0)
+            maxPrice = 999999999;
+            resp = await axios.get(`http://localhost:8080/car-shop/vehicles/filtered`, {
+              params: { marka: "", cenamin: minPrice, cenamax: maxPrice, sortby: sort, input: phrase}
+            });
+        }
         const vehicles = resp.data;
 
         const allVehicles = await Promise.all(vehicles.map(async (vehicle: Vehicle) => {
