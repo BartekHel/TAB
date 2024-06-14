@@ -15,6 +15,7 @@ const DealersTransactions = () => {
   const fetchOrders = async () => {
     try {
       const orders = await apiClient.getDealerOrders(userId);
+      console.log(orders);
       setOrders(orders);
     } catch (err) {
       setError("Error fetching dealers transactions");
@@ -60,7 +61,7 @@ const DealersTransactions = () => {
               <td>{order.submission_date}</td>
               <td>{order.delivery_date}</td>
               <td>{order.price}</td>
-              <td><Link className="nav-button" to={"/carDetails/:" + order.vehicle_id} >Details</Link></td>
+              <td><Link className="nav-button" to={"/carDetails/" + order.vehicle_id} >Details</Link></td>
             </tr>
           ))}
         </tbody>
