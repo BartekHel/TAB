@@ -1,13 +1,13 @@
 import axios from "axios";
 import Vehicle from "../entitiy/Vehicle";
+import Employee from "../entitiy/Employee";
+import { axiosInstance } from "./ApiClient";
 
   class ApiAdd{
     constructor(){}
 
     AddVehicle = async (vehicle: Vehicle) => {
       try {
-        console.log(vehicle.price);
-        console.log(vehicle.showroomId);
         const response = await axios.post('http://localhost:8080/car-shop/vehicles', {
           brand: vehicle.brand,
           model: vehicle.model,
@@ -19,6 +19,67 @@ import Vehicle from "../entitiy/Vehicle";
       } catch (error) {
         console.error("Error adding the vehicle:", error);
         throw error;
+      }
+    };
+    
+    AddEmployee = async (employee: Employee) => {
+      try {
+        const resp = await axiosInstance.post('http://localhost:8080/car-shop/users/reg',
+          {login:employee.email, password:employee.password, email:employee.email, role: employee.role, name:employee.name, surname:employee.surname})
+        return resp.data;
+      } catch (error) {
+        console.error("Error adding the employee:", error);
+        throw error;
+      }
+    };
+
+    ReplaceEmployee = async (id: number, employee: Employee) => {
+      try {
+        const payload = {
+          user_id: id,
+          login: employee.login,
+          password: employee.password,
+          email: employee.email,
+          role: employee.role,
+          name: employee.name,
+          surname: employee.surname
+        };
+        const resp = await axiosInstance.put(`http://localhost:8080/car-shop/users/${id}`, payload);
+        return resp.data;
+      } catch (error) {
+        console.error("Error replacing the employee:", error);
+        throw error;
+      }
+    };
+
+    cchangeRole = async (employee: Employee) => {
+      try {
+        const { login, role } = employee;
+        const resp = await axiosInstance.put(`http://localhost:8080/car-shop/users/chngrole/${login}`, role);
+        return resp.data;
+      } catch (error) {
+        console.error("Error changing the role:", error);
+        throw error;
+      }
+    };    
+    
+    DeleteEmployee = async (id: number) => {
+      try {
+          const resp = await axios.delete(`http://localhost:8080/car-shop/users/${id}`);
+          return resp.data;
+      } catch (error) {
+          console.error("Error deleting the employee:", error);
+          throw error;
+      }
+    };
+
+    DeleteCar = async (id: number) => {
+      try {
+          const resp = await axios.delete(`http://localhost:8080/car-shop/vehicles/${id}`);
+          return resp.data;
+      } catch (error) {
+          console.error("Error deleting the employee:", error);
+          throw error;
       }
     };
   }

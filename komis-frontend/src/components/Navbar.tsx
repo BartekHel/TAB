@@ -133,7 +133,7 @@ useEffect(() => {
             (role=="DEALER") && <Link to="/dealersTransactions" className="nav-button" id="link">Transactions</Link>
           }
           {
-            (role=="MANAGER" || role=="ADMIN") && <Link to="/addPage" className="nav-button" id="link">Staff & Inventory</Link>
+            (role=="MANAGER" || role=="ADMIN") && <Link to="/addPage" className="nav-button" id="link">Staff & Cars</Link>
           }
           {
             role=="MANAGER" && <Link to="/managerPanel" className="nav-button" id="link">Manager panel</Link>

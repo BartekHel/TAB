@@ -11,7 +11,7 @@ body {
 .add-page {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: left;
 }
 
 .dropbtn {
@@ -19,6 +19,7 @@ body {
     color: white;
     padding: 16px;
     font-size: 25px;
+    margin-left: 10px;
     width: 250px;
     border: none;
     margin-top: 69px;
@@ -38,7 +39,6 @@ body {
 }
 
 .dropdown {
-    position: relative;
     display: inline-block;
 }
 
@@ -49,6 +49,7 @@ body {
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    margin-left: 10px;
 }
 
 .dropdown-content a {
@@ -69,17 +70,18 @@ body {
 
 .form-container {
     position: fixed;
-    top: 58%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: ghostwhite;
-    padding: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    z-index: 2;
-    width: 400px;
-    text-align: center;
-    height: 80%;
+    width: 30%;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: 85%;
+    max-height: 75%;
+    overflow-y: scroll;
 }
 
 .car-form label {
@@ -114,7 +116,33 @@ body {
 
 #message {
     margin-top: 20px;
-    color: green;
+    color: rgb(100, 79, 218);
     font-size: 18px;
     text-align: center;
+}
+
+.role-select {
+    width: 150px;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"><path d="M4 6l4 4 4-4"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.role-select option {
+    font-size: 12px;
+}
+
+.role-select:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,.5);
 }
