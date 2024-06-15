@@ -146,3 +146,26 @@ body {
     outline: none;
     box-shadow: 0 0 5px rgba(0,123,255,.5);
 }
+
+.userD {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 10px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #b3b0b0;
+    color: rgb(63, 32, 32);
+}
+
+.user {
+    text-align: center;
+    font-size: 25px;
+    margin-top: 10px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #b3b0b0;
+    border-radius: 5px;
+    color: black;
+}

@@ -82,6 +82,17 @@ import { axiosInstance } from "./ApiClient";
           throw error;
       }
     };
+
+    GetUser = async (user: Employee) => {
+      try {
+          const login = user.login;
+          const resp = await axios.get(`http://localhost:8080/car-shop/users/${login}`);
+          return resp.data;
+      } catch (error) {
+          console.error("Error getting the user data:", error);
+          throw error;
+      }
+    };
   }
 
   export default ApiAdd;

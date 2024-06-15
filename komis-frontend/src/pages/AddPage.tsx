@@ -11,6 +11,7 @@ const AddPage = () => {
     const [showManagerForm, setManagerForm] = useState(false);
     const [showChangeRoleForm, setChangeRoleForm] = useState(false);
     const [showEmployeeDeleteForm, setEmployeeDeleteForm] = useState(false);
+    const [showUserDataForm, setUserDataForm] = useState(false);
     const [id, setId] = useState(-1);
     const [showCarDeleteForm, setCarDeleteForm] = useState(false);
     const [message, setMessage] = useState('');
@@ -29,6 +30,7 @@ const AddPage = () => {
         password: ''
     });
     const user = JSON.parse(localStorage.getItem("user"));
+    const [addedUser, setAddedUser] = useState(null);
 
     const handleInputChange = (data) => {
         const { name, value } = data.target;
@@ -45,6 +47,7 @@ const AddPage = () => {
     };
 
     const handleNewCar = () => {
+        setUserDataForm(false);
         setShowCarForm(true);
         setEmployeeForm(false);
         setEmployeeDeleteForm(false);
@@ -69,6 +72,7 @@ const AddPage = () => {
     };
 
     const handleNewEmployee = () => {
+        setUserDataForm(false);
         setEmployeeForm(true);
         setEmployeeDeleteForm(false);
         setShowCarForm(false);
@@ -93,6 +97,7 @@ const AddPage = () => {
     };
 
     const handleNewManager = () => {
+        setUserDataForm(false);
         setEmployeeDeleteForm(false);
         setEmployeeForm(false);
         setShowCarForm(false);
@@ -118,6 +123,7 @@ const AddPage = () => {
     };
 
     const handleReplaceEmployee = () => {
+        setUserDataForm(false);
         setEmployeeReplaceForm(true);
         setEmployeeForm(false);
         setEmployeeDeleteForm(false);
@@ -143,6 +149,7 @@ const AddPage = () => {
     };
 
     const handleChangeRole = () => {
+        setUserDataForm(false);
         setChangeRoleForm(true);
         setEmployeeReplaceForm(false);
         setEmployeeForm(false);
@@ -168,6 +175,7 @@ const AddPage = () => {
     };
 
     const handleDeleteEmployee = () => {
+        setUserDataForm(false);
         setEmployeeDeleteForm(true);
         setEmployeeForm(false);
         setShowCarForm(false);
@@ -192,6 +200,7 @@ const AddPage = () => {
     };
 
     const handleDeleteCar = () => {
+        setUserDataForm(false);
         setCarDeleteForm(true);
         setEmployeeDeleteForm(false);
         setEmployeeForm(false);
@@ -215,12 +224,38 @@ const AddPage = () => {
         }
     };
 
+    const handleUserData = () => {
+        setUserDataForm(true);
+        setEmployeeDeleteForm(false);
+        setEmployeeForm(false);
+        setShowCarForm(false);
+        setCarDeleteForm(false);
+        setManagerForm(false);
+        setEmployeeReplaceForm(false);
+        setChangeRoleForm(false);
+        setMessage('');
+        setEmployeeDetails({ name: '', surname: '', role: '', login: '', email: '', password: '' });
+        setId(-1);
+    };
+
+    const handleUserDataSubmit = async (data) => {
+        data.preventDefault();
+        try {
+            const user = await apiAdd.GetUser(employeeDetails);
+            setAddedUser(user);
+            setEmployeeDetails({ name: '', surname: '', role: '', login: '', email: '', password: '' });
+        } catch (error) {
+            setMessage("Failed to get user data!");
+        }
+    };
+
     return (
         <div className="add-page">
             <div className="dropdown">
                 <button className="dropbtn">Options &#9660;</button>
                 {(
                     <div className="dropdown-content">
+                        <a href="#" onClick={handleUserData}>User data</a>
                         <a href="#" onClick={handleNewCar}>New car</a>
                         <a href="#" onClick={handleNewEmployee}>New employee</a>
                         {user.role=="ADMIN" && (
@@ -590,6 +625,35 @@ const AddPage = () => {
                 {message && <p id="message">{message}</p>}
             </div>
         )}
+
+            {showUserDataForm && (
+                <div className="form-container">
+                    <form className="car-form" onSubmit={handleUserDataSubmit}>
+                         <label>
+                            Login:
+                            <input 
+                                type="text" 
+                                name="login" 
+                                value={employeeDetails.login} 
+                                onChange={handleInputChange} 
+                                required 
+                            />
+                        </label>
+                        <button type="submit">Get user data</button>
+                    </form>
+                    {addedUser && (
+                        <div className="userD">
+                            User data:
+                            <p className="user">Name: {addedUser.name}</p>
+                            <p className="user">Surname: {addedUser.surname}</p>
+                            <p className="user">Role: {addedUser.role}</p>
+                            <p className="user">Login: {addedUser.login}</p>
+                            <p className="user">Email: {addedUser.email}</p>
+                        </div>
+                    )}
+                    {message && <p id="message">{message}</p>}
+                </div>
+            )}
         </div>
     );
 };
