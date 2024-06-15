@@ -470,6 +470,7 @@ const AddPage = () => {
                                 className="role-select"
                                 required
                             >
+                                <option value="ROLE" >Choose role</option>
                                 <option value="DEALER">Dealer</option>
                                 <option value="REPAIRER">Repairer</option>
                             </select>
@@ -532,7 +533,8 @@ const AddPage = () => {
                                 className="role-select"
                                 required
                             >
-                                <option value="DEALER">Dealer</option>
+                                <option value="ROLE" >Choose role</option>
+                                <option value="DEALER" >Dealer</option>
                                 <option value="REPAIRER">Repairer</option>
                                 <option value="MANAGER">Manager</option>
                             </select>

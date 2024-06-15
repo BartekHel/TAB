@@ -52,7 +52,7 @@ import { axiosInstance } from "./ApiClient";
       }
     };
 
-    cchangeRole = async (employee: Employee) => {
+    ChangeRole = async (employee: Employee) => {
       try {
         const { login, role } = employee;
         const resp = await axiosInstance.put(`http://localhost:8080/car-shop/users/chngrole/${login}`, role);
