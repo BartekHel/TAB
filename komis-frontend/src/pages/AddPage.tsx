@@ -165,6 +165,7 @@ const AddPage = () => {
     const handleChangeRoleSubmit = async (data) => {
         data.preventDefault();
         try {
+            console.log("hello ",data);
             const changedRole = await apiAdd.ChangeRole(employeeDetails);
             setEmployeeDetails({ name: '', surname: '', role: '', login: '', email: '', password: '' });
             setId(-1);
@@ -574,7 +575,7 @@ const AddPage = () => {
                                 <option value="MANAGER">Manager</option>
                             </select>
                         </label>
-                        <button type="submit">Chagne role</button>
+                        <button type="submit">Change role</button>
                     </form>
                     {message && <p id="message">{message}</p>}
                 </div>

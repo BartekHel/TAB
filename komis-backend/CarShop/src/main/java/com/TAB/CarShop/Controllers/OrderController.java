@@ -5,6 +5,9 @@ import com.TAB.CarShop.Repositories.*;
 import com.TAB.CarShop.Requests.CreateOrderByTokenRequest;
 import com.TAB.CarShop.Requests.CreateOrderRequest;
 import com.TAB.CarShop.Responses.CreateOrderResponse;
+import com.github.javafaker.Faker;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
@@ -13,20 +16,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
+@RequiredArgsConstructor
 public class OrderController {
 	private final OrderRepository orderRepository;
 	private final ClientRepository clientRepository;
 	private final ShowroomRepository showroomRepository;
 	private final VehicleRepository vehicleRepository;
 	private final DealerRepository dealerRepository;
+	private final UserRepository userRepository;
+	private final ManagerRepository managerRepository;
 
-	public OrderController(OrderRepository orderRepository, ClientRepository clientRepository, ShowroomRepository showroomRepository, VehicleRepository vehicleRepository, DealerRepository dealerRepository) {
-		this.orderRepository = orderRepository;
-		this.clientRepository = clientRepository;
-		this.showroomRepository = showroomRepository;
-		this.vehicleRepository = vehicleRepository;
-		this.dealerRepository = dealerRepository;
-	}
+
 
 	LocalDate calculateDeliveryDate(LocalDate submission_date, Showroom showroom, Vehicle vehicle) {
 		if (showroom.getShowroom_id() == vehicle.getShowroom().getShowroom_id()) {
@@ -49,6 +49,51 @@ public class OrderController {
 	@GetMapping("/{id}")
 	Order getOrderById(@PathVariable Long id) {
 		return orderRepository.findById(id).orElse(null);
+	}
+
+
+	@PostMapping("/generate/{number}")
+	String generateOrder(@PathVariable int number){
+		Faker faker=new Faker();
+		generateNewDealers(30);
+		List<Vehicle> vehicles = vehicleRepository.findAll();
+		List<Client> clients = clientRepository.findAll();
+		List<Dealer> dealers = dealerRepository.findAll();
+		List<Showroom> showrooms = showroomRepository.findAll();
+
+		for (int i = 0; i < number; i++) {
+			Vehicle vehicle = vehicles.get(faker.number().numberBetween(0, vehicles.size()));
+			var order=new CreateOrderRequest(
+					vehicle.getPrice(),
+					clients.get(faker.number().numberBetween(0,clients.size())).getClient_id(),
+					dealers.get(faker.number().numberBetween(0,dealers.size())).getDealer_id(),
+					showrooms.get(faker.number().numberBetween(0,showrooms.size())).getShowroom_id(),
+					vehicle.getVehicle_id()
+			);
+			createOrder(order);
+		}
+		return "success";
+	}
+
+	private void generateNewDealers(int number) {
+		Faker faker=new Faker();
+		List<Manager> managers = managerRepository.findAll();
+		for (int j = 0; j < number; j++) {
+			User user=new User();
+			user.setLogin(faker.name().username());
+			user.setPassword(faker.internet().password());
+			user.setName(faker.name().firstName());
+			user.setSurname(faker.name().lastName());
+			user.setEmail(faker.internet().emailAddress());
+			user.setRole(Role.DEALER);
+			userRepository.saveAndFlush(user);
+
+			Dealer dealer=new Dealer();
+			dealer.setUser(user);
+			dealer.setManager(managers.get(faker.number().numberBetween(0,managers.size())));
+
+			dealerRepository.saveAndFlush(dealer);
+		}
 	}
 
 	@PostMapping("/createorder")

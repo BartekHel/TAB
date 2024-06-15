@@ -85,7 +85,8 @@ const CarDetailsComponent = () => {
    }
 
   return (
-    <div className='wrapper'>
+    <div className='wrapperr'>
+      <div id='nav-stub' style={{height:'7vh'}}>stub</div>
     <div  className='content-wrapper'>
     
     <div className='car-image-wrapper'> 
@@ -96,18 +97,19 @@ const CarDetailsComponent = () => {
     <div className='section-wrapper'>
     <Filters modificationChange={(price)=>setTotalCost(car.price+price)}/>
     <div className='summary'>
-      <p style={{marginBottom:'10px'}}>{`${car.brand} ${car.model}`}</p>
-      <p style={{marginTop:'20px',fontSize:'20px'}}>Base Cost <span>{car.price} €</span></p>
+      <p>{`${car.brand} ${car.model}`}</p>
+      <p style={{fontSize:'20px',color:'#404040'}}>Base Cost <span>{car.price} €</span></p>
       <p>Total Cost <span>{totalCost} €</span></p>
       {
         role=="DEALER" &&(
-          <div>
+          // <div>
           
             <input 
+            style={{marginTop:'5px'}}
                 name="ClientToken" 
                 placeholder="Client Token"
                 onChange={(e) => setClientToken(e.target.value)}/>
-          </div>
+          // </div>
         )
       }
       {

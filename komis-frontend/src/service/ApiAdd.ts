@@ -55,7 +55,12 @@ import { axiosInstance } from "./ApiClient";
     ChangeRole = async (employee: Employee) => {
       try {
         const { login, role } = employee;
-        const resp = await axiosInstance.put(`http://localhost:8080/car-shop/users/chngrole/${login}`, role);
+        const resp = await axiosInstance.put(`http://localhost:8080/car-shop/users/chngrole/${login}`, role, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
         return resp.data;
       } catch (error) {
         console.error("Error changing the role:", error);

@@ -1,13 +1,3 @@
-body {
-    background-image: url('../../background/background-1113715_1280.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    margin: 0;
-    overflow: auto;
-}
-
 .wrapper{
     min-height: 130%;
     width: 100vw;
@@ -15,11 +5,11 @@ body {
     display: flex;
   }
 
-  .inside-wrapper{
+  .manager-page-wrapper{
     position: relative;
     display: flex;
     padding: 20px;
-    min-height: 130%;
+    min-height: 130vh;
     flex-direction: column;
     flex-grow: 1;
     background-color: white;
@@ -55,7 +45,7 @@ body {
   #downloadButton:hover {
     background-color: #58c75b;
   }
-    .inside-wrapper h5{
+    .manager-page-wrapper h5{
         font-size: 36px;
         font-weight: 500;
         position: absolute;

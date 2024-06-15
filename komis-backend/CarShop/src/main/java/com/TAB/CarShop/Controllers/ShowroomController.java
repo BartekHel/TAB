@@ -27,15 +27,15 @@ public class ShowroomController {
 	}
 
 	@GetMapping("/{id}/profits")
-	double getProfitsFromLastMonth(@PathVariable long id) {
+	double getProfits(@PathVariable long id) {
 		Showroom showroom = showroomRepository.findById(id).orElse(null);
 		if (showroom == null) return -1;
-		LocalDate lastMonth = LocalDate.now().minusMonths(1);
+//		LocalDate lastMonth = LocalDate.now().minusMonths(1);
 		double profitLastMonth = 0;
 		for (Order order : showroom.getOrders()) {
-			if (lastMonth.getMonth() == order.getSubmission_date().getMonth() && lastMonth.getYear() == order.getSubmission_date().getYear()) {
+//			if (lastMonth.getMonth() == order.getSubmission_date().getMonth() && lastMonth.getYear() == order.getSubmission_date().getYear()) {
 				profitLastMonth += order.getPrice();
-			}
+//			}
 		}
 		return profitLastMonth;
 	}
@@ -45,7 +45,7 @@ public class ShowroomController {
 		List<Showroom> showroomList = showroomRepository.findAll();
 		List<ShowroomListResponse> showroomListResponse = new ArrayList<>();
 		for (Showroom showroom : showroomList) {
-			double profitLastMonth = this.getProfitsFromLastMonth(showroom.getShowroom_id());
+			double profitLastMonth = this.getProfits(showroom.getShowroom_id());
 			showroomListResponse.add(new ShowroomListResponse(
 					showroom.getShowroom_id(),
 					showroom.getAddress(),

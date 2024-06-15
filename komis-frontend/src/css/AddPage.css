@@ -1,13 +1,3 @@
-body {
-    background-image: url('../../background/background-1113715_1280.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    margin: 0;
-    overflow: auto;
-}
-
 .add-page {
     display: flex;
     align-items: flex-start;

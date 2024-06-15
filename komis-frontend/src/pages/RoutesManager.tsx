@@ -23,7 +23,7 @@ const RoutesManager = () => {
         <Route path="/" element={<App/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/managerPanel" element={<ManagerPage/>}/>
+        <Route path="/managerPanel/:userId" element={<ManagerPage/>}/>
         <Route path="/carDetails/:carId" element={<CarDetailsComponent/>}/>
         <Route path="/orderService" element={<ServiceOrder/>}/>
         <Route path="/orderServiceSelected/:carId" element={<ServiceOrderSelected/>}/>

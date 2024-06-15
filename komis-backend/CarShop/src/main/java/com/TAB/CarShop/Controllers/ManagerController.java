@@ -8,6 +8,7 @@ import com.TAB.CarShop.Repositories.ManagerRepository;
 import com.TAB.CarShop.Repositories.OrderRepository;
 import com.TAB.CarShop.Repositories.ShowroomRepository;
 import com.TAB.CarShop.Repositories.UserRepository;
+import com.TAB.CarShop.Responses.EmployeeWithEarnings;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -44,9 +45,9 @@ public class ManagerController {
 	}
 
 	@GetMapping("/{id}/employees/money")
-	Map<User, Double> getMoneyMade(@PathVariable long id,
-	                               @RequestParam(value = "year", defaultValue = "-1") int y,
-	                               @RequestParam(value = "month", defaultValue = "-1") int m) {
+	List<EmployeeWithEarnings> getMoneyMade(@PathVariable long id,
+												   @RequestParam(value = "year", defaultValue = "-1") int y,
+												   @RequestParam(value = "month", defaultValue = "-1") int m) {
 		Manager manager = managerRepository.findById(id).orElse(null);
 		if (manager == null)
 			return null;
@@ -62,11 +63,18 @@ public class ManagerController {
 			month = Month.of(m);
 		}
 
-		return orderRepository.findAll().stream()
+		Map<User, Double> result = orderRepository.findAll().stream()
 				.filter(order -> order.getDelivery_date().getMonth() == month
 						&& order.getDelivery_date().getYear() == year)
 				.collect(Collectors.groupingBy(order -> order.getDealer().getUser(),
 						Collectors.summingDouble(Order::getPrice)));
+
+		return result.entrySet().stream().map(entry->new EmployeeWithEarnings(
+				entry.getKey().getName()+" "+entry.getKey().getSurname(),
+				entry.getKey().getEmail(),
+				entry.getValue().toString()
+		)).toList();
+
 	}
 
 	@PutMapping("/{id}/setshow")
