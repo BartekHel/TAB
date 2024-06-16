@@ -112,7 +112,7 @@
 .sortLabelFrame {
   height: 55%;
   margin-top: -10px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .filterLabelFrame {
@@ -201,7 +201,7 @@
 
 .customSortLabel {
   color: #333;
-  font-size: 130%;
+  font-size: 110%;
   border: none;
   border-radius: 100px;
   transition: background-color 0.3s ease;
