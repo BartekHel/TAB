@@ -95,8 +95,8 @@ const CarDetailsComponent = () => {
      src={`data:image/png;base64,${image}`}/>
     </div>
     <div className='section-wrapper'>
-   {!car.was_sold&& 
-   <Filters modificationChange={(price)=>setTotalCost(car.price+price)}/>
+   {car.was_sold&& 
+   <Filters wasSold={car.was_sold} modificationChange={(price)=>setTotalCost(car.price+price)}/>
     }
     <div className='summary'>
       <p>{`${car.brand} ${car.model}`}</p>
@@ -105,14 +105,11 @@ const CarDetailsComponent = () => {
 
       {
         (!car.was_sold) && (role=="DEALER" || role=="MANAGER" || role=="ADMIN") &&(
-          // <div>
-          
             <input 
             style={{marginTop:'5px'}}
                 name="ClientToken" 
                 placeholder="Client Token"
                 onChange={(e) => setClientToken(e.target.value)}/>
-          // </div>
         )
       }
       {!car.was_sold&&
