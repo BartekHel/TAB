@@ -95,7 +95,9 @@ const CarDetailsComponent = () => {
      src={`data:image/png;base64,${image}`}/>
     </div>
     <div className='section-wrapper'>
-    <Filters modificationChange={(price)=>setTotalCost(car.price+price)}/>
+   {!car.was_sold&& 
+   <Filters modificationChange={(price)=>setTotalCost(car.price+price)}/>
+    }
     <div className='summary'>
       <p>{`${car.brand} ${car.model}`}</p>
       <p style={{fontSize:'20px',color:'#404040'}}>Base Cost <span>{car.price} €</span></p>
@@ -112,11 +114,14 @@ const CarDetailsComponent = () => {
           // </div>
         )
       }
-      {
+      {!car.was_sold&&
+      <>
+      { 
         role=="DEALER" ?
         <button onClick={handleBuyForClient}>Buy for client</button>
         :<button onClick={handleBuy}>Buy</button>
       }
+      </>}
       {
         role=="DEALER" &&
         <button onClick={handleOrderForShowroom}>Order car for showroom</button>
@@ -124,7 +129,9 @@ const CarDetailsComponent = () => {
       
       
     </div>
+ 
     </div>
+
       
     </div>
     </div>

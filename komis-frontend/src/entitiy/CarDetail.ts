@@ -5,5 +5,6 @@ export default interface CarDetails {
     modifications: string;
     next_inspection_date: string;
     price: number;
+    was_sold:boolean;
 }
 
