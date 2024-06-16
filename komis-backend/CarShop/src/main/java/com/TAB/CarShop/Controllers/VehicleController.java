@@ -56,7 +56,7 @@ public class VehicleController {
 			case "cenaasc" -> Comparator.comparing(Vehicle::getPrice);
 			case "cenadesc" -> Comparator.comparing(Vehicle::getPrice).reversed();
 
-			default -> Comparator.comparing(Vehicle::getPrice).reversed();
+			default -> Comparator.comparing(Vehicle::getBrand);
 		};
 
 		Pattern pattern = Pattern.compile(search, Pattern.CASE_INSENSITIVE);

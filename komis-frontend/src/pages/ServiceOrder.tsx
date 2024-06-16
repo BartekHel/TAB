@@ -58,7 +58,7 @@ const ServiceOrder = () => {
               <td>{car.next_inspection_date}</td>
               <td>${car.price.toLocaleString()}</td>
               <td><Link className="nav-button" to={"/carDetails/" + car.vehicle_id} >Details</Link></td>
-              <td><Link className="nav-button" to={"/orderServiceSelected/" + car.vehicle_id} >Order Service</Link></td>
+              <td><Link className="nav-button" to={"/orderServiceSelected/:" + car.vehicle_id} >Order Service</Link></td>
             </tr>
           ))}
         </tbody>

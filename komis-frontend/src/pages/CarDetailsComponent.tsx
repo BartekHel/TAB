@@ -102,8 +102,9 @@ const CarDetailsComponent = () => {
       <p>{`${car.brand} ${car.model}`}</p>
       <p style={{fontSize:'20px',color:'#404040'}}>Base Cost <span>{car.price} €</span></p>
       <p>Total Cost <span>{totalCost} €</span></p>
+
       {
-        role=="DEALER" &&(
+        (!car.was_sold) && (role=="DEALER" || role=="MANAGER" || role=="ADMIN") &&(
           // <div>
           
             <input 
@@ -123,7 +124,7 @@ const CarDetailsComponent = () => {
       }
       </>}
       {
-        role=="DEALER" &&
+        (!car.was_sold) && (role=="DEALER") &&
         <button onClick={handleOrderForShowroom}>Order car for showroom</button>
       }
       
