@@ -598,7 +598,7 @@ const AddPage = () => {
                             required 
                         />
                     </label>
-                    <button type="submit">Delete employee</button>
+                    <button type="submit">Delete user</button>
                 </form>
                 {message && <p id="message">{message}</p>}
             </div>
