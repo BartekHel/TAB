@@ -256,7 +256,7 @@ const AddPage = () => {
                 <button className="dropbtn">Options &#9660;</button>
                 {(
                     <div className="dropdown-content">
-                        <a href="#" onClick={handleUserData}>User data</a>
+                        <a href="#" onClick={handleUserData}>Get user data</a>
                         <a href="#" onClick={handleNewCar}>New car</a>
                         <a href="#" onClick={handleNewEmployee}>New employee</a>
                         {user.role=="ADMIN" && (
@@ -269,7 +269,7 @@ const AddPage = () => {
                         {user.role=="ADMIN" && (
                             <div>
                                 <a href="#" onClick={handleDeleteCar}>Delete car</a>
-                                <a href="#" onClick={handleDeleteEmployee}>Delete employee</a>
+                                <a href="#" onClick={handleDeleteEmployee}>Delete user</a>
                             </div>
                         )}
                     </div>
