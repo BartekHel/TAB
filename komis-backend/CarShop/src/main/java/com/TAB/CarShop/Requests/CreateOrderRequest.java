@@ -11,15 +11,17 @@ public class CreateOrderRequest {
 	private Long dealer_id;
 	private Long showroom_id;
 	private Long vehicle_id;
+	private String carMods;
 
 	public CreateOrderRequest() {
 	}
 
-	public CreateOrderRequest(double price, Long client_id, Long dealer_id, Long showroom_id, Long vehicle_id) {
+	public CreateOrderRequest(double price, Long client_id, Long dealer_id, Long showroom_id, Long vehicle_id, String carMods) {
 		this.price = price;
 		this.client_id = client_id;
 		this.dealer_id = dealer_id;
 		this.showroom_id = showroom_id;
 		this.vehicle_id = vehicle_id;
+		this.carMods = carMods;
 	}
 }

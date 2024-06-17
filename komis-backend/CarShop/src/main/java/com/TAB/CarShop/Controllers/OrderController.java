@@ -52,28 +52,28 @@ public class OrderController {
 	}
 
 
-	@PostMapping("/generate/{number}")
-	String generateOrder(@PathVariable int number){
-		Faker faker=new Faker();
-		generateNewDealers(30);
-		List<Vehicle> vehicles = vehicleRepository.findAll();
-		List<Client> clients = clientRepository.findAll();
-		List<Dealer> dealers = dealerRepository.findAll();
-		List<Showroom> showrooms = showroomRepository.findAll();
-
-		for (int i = 0; i < number; i++) {
-			Vehicle vehicle = vehicles.get(faker.number().numberBetween(0, vehicles.size()));
-			var order=new CreateOrderRequest(
-					vehicle.getPrice(),
-					clients.get(faker.number().numberBetween(0,clients.size())).getClient_id(),
-					dealers.get(faker.number().numberBetween(0,dealers.size())).getDealer_id(),
-					showrooms.get(faker.number().numberBetween(0,showrooms.size())).getShowroom_id(),
-					vehicle.getVehicle_id()
-			);
-			createOrder(order);
-		}
-		return "success";
-	}
+//	@PostMapping("/generate/{number}")
+//	String generateOrder(@PathVariable int number){
+//		Faker faker=new Faker();
+//		generateNewDealers(30);
+//		List<Vehicle> vehicles = vehicleRepository.findAll();
+//		List<Client> clients = clientRepository.findAll();
+//		List<Dealer> dealers = dealerRepository.findAll();
+//		List<Showroom> showrooms = showroomRepository.findAll();
+//
+//		for (int i = 0; i < number; i++) {
+//			Vehicle vehicle = vehicles.get(faker.number().numberBetween(0, vehicles.size()));
+//			var order=new CreateOrderRequest(
+//					vehicle.getPrice(),
+//					clients.get(faker.number().numberBetween(0,clients.size())).getClient_id(),
+//					dealers.get(faker.number().numberBetween(0,dealers.size())).getDealer_id(),
+//					showrooms.get(faker.number().numberBetween(0,showrooms.size())).getShowroom_id(),
+//					vehicle.getVehicle_id()
+//			);
+//			createOrder(order);
+//		}
+//		return "success";
+//	}
 
 	private void generateNewDealers(int number) {
 		Faker faker=new Faker();
@@ -122,6 +122,7 @@ public class OrderController {
 			newOrder = orderRepository.saveAndFlush(newOrder);
 			vehicle.setNext_inspection_date(deliveryDate.plusYears(1));
 			vehicle.setWas_sold(true);
+			vehicle.setModifications(createOrderRequest.getCarMods());
 			vehicleRepository.saveAndFlush(vehicle);
 			return new CreateOrderResponse(true, newOrder.getOrder_id(), "order created successfully");
 		} catch (Exception e) {

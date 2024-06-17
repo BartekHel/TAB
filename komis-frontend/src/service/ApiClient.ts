@@ -21,14 +21,14 @@ export const axiosInstance= axios.create({
       .then((response)=>response.data);
     }
 
-    buyCarByDealer=(price:number,client_token:string,dealer_id:number,showroomId:number,vehicle_id:number)=>{
+    buyCarByDealer=(price:number,client_token:string,dealer_id:number,showroomId:number,vehicle_id:number,modifications:string)=>{
        return axiosInstance.post(this.baseURL+'/orders/createorderbytoken',
-      {price:price,client_token:client_token,dealer_id:dealer_id,showroom_id:showroomId,vehicle_id:vehicle_id});
+      {price:price,client_token:client_token,dealer_id:dealer_id,showroom_id:showroomId,vehicle_id:vehicle_id,carMods:modifications});
     }
 
-    buyCar=(price:number,client_id:number,dealer_id:number,showroomId:number,vehicle_id:number)=>{
+    buyCar=(price:number,client_id:number,dealer_id:number,showroomId:number,vehicle_id:number,modifications:string)=>{
       return axiosInstance.post(this.baseURL+'/orders/createorder',
-     {price:price,client_id:client_id,dealer_id:dealer_id,showroom_id:showroomId,vehicle_id:vehicle_id});
+     {price:price,client_id:client_id,dealer_id:dealer_id,showroom_id:showroomId,vehicle_id:vehicle_id,carMods:modifications});
    }
 
     getCarDetails=async(carId:number)=>{

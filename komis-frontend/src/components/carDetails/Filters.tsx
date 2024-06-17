@@ -1,6 +1,6 @@
 
 interface Props{
-    modificationChange:(newTotalPrice:number)=>void;
+    modificationChange:(newTotalPrice:number, newModificationsString:string)=>void;
     wasSold:boolean;
 }
 
@@ -25,11 +25,13 @@ function Filters({modificationChange,wasSold}: Props) {
 
   const handleModificationChange = () => {
     let totalPrice = 0;
+    let modificationsString = ""
   
     detailingOptions.forEach((option) => {
       const checkbox = document.getElementById(option.name) as HTMLInputElement; 
       if (checkbox.checked) {
-        totalPrice += option.price; 
+        totalPrice += option.price;
+        modificationsString += option.name + ", " 
       }
     });
 
@@ -45,7 +47,7 @@ function Filters({modificationChange,wasSold}: Props) {
     const selectedUpholsteryPrice = upholsteryOptions.find(option => option.name === selectedUpholstery)?.price || 0;
     totalPrice += selectedUpholsteryPrice;
     
-    modificationChange(totalPrice);
+    modificationChange(totalPrice, modificationsString);
   }
 
 

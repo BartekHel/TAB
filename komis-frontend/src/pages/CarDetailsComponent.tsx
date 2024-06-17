@@ -18,6 +18,7 @@ const CarDetailsComponent = () => {
   const [ clientToken, setClientToken ] = useState("");
   const [ showroomId, setShowroomId ] = useState(1);
   const navigate=useNavigate();
+  const [modifications, setModifications] = useState("");
   
   useEffect(()=>{
     apiClient.getCarDetails(parseInt(carId!)).then((car)=>{
@@ -37,7 +38,7 @@ const CarDetailsComponent = () => {
   const handleBuy=()=>{
     if(!userId) navigate(`/login`);
 
-    apiClient.buyCar(totalCost!,userId,1,showroomId,parseInt(carId!))
+    apiClient.buyCar(totalCost!,userId,1,showroomId,parseInt(carId!),modifications)
   .then((response)=>{
     if(response.data.success){
       alert('Car bought successfully');
@@ -56,7 +57,7 @@ const CarDetailsComponent = () => {
   const handleBuyForClient=()=>{
    if(!userId) navigate(`/login`);
    
-  apiClient.buyCarByDealer(totalCost!,clientToken,userId,showroomId,parseInt(carId!)) 
+  apiClient.buyCarByDealer(totalCost!,clientToken,userId,showroomId,parseInt(carId!),modifications) 
   .then((response)=>{
     if(response.data.success){
       alert('Car bought successfully');
@@ -95,8 +96,8 @@ const CarDetailsComponent = () => {
      src={`data:image/png;base64,${image}`}/>
     </div>
     <div className='section-wrapper'>
-   {car.was_sold&& 
-   <Filters wasSold={car.was_sold} modificationChange={(price)=>setTotalCost(car.price+price)}/>
+   {!car.was_sold&& 
+   <Filters wasSold={car.was_sold} modificationChange={(price, modificationString)=>{setTotalCost(car.price+price);setModifications(modificationString)}}/>
     }
     <div className='summary'>
       <p>{`${car.brand} ${car.model}`}</p>
