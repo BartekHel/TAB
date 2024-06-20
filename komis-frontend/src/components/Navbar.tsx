@@ -5,15 +5,15 @@ import ReactLogo from '../assets/car.svg';
 import  userContext  from '../PageInfo';
 import ApiClient from '../service/ApiClient';
 import { toast } from 'react-toastify';
+import Tip from './Tip';
 
 const apiClient = new ApiClient();
 
-const Navbar = () => {
- 
-  
+const Navbar = () => { 
   const { logged, userId, role, setLogged, setUserId, setRole, userLogin, setUserLogin } = useContext(userContext);
   const [ userName, setUserName ]=useState("");
   const [ userSurname,setUserSurname ]=useState("");
+  const [ showTip, setShowTip ] = useState(false);
 
   console.log(logged, userId, role)
 
@@ -121,7 +121,10 @@ useEffect(() => {
         ) : (
           <>
           {
-            role=="CLIENT" && <button className="nav-buttonSpec" onClick={handleGenerateToken}>Generate token</button> 
+            role=="CLIENT" && 
+            <Tip show={showTip} text='this button allowed user to generate special token which he can pass to car dealer'>
+              <button className="nav-buttonSpec" onMouseOver={()=>setShowTip(true)} onMouseLeave={()=>setShowTip(false)} onClick={handleGenerateToken}>Generate token</button> 
+            </Tip>
           }
           {
             role === "CLIENT" && <Link to="/orderService" className="nav-button" id="link">Orders</Link>
