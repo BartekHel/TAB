@@ -122,7 +122,7 @@ useEffect(() => {
           <>
           {
             role=="CLIENT" && 
-            <Tip show={showTip} text='this button allowed user to generate special token which he can pass to car dealer'>
+            <Tip show={showTip} text='This button allowes  to generate a special token which  can be pass to a car dealer'>
               <button className="nav-buttonSpec" onMouseOver={()=>setShowTip(true)} onMouseLeave={()=>setShowTip(false)} onClick={handleGenerateToken}>Generate token</button> 
             </Tip>
           }
